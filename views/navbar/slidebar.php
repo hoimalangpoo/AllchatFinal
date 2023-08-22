@@ -21,7 +21,6 @@
             <li><a class="dropdown-item" href="#">กลุ่มการสนทนา</a></li>
             </ul>
             <a href="/dashboard" class="list-group-item list-group-item-action fs-4 bi bi-bar-chart-fill"></a>
-            <a href="/account" class="list-group-item list-group-item-action fs-4 bi bi-person-circle <?= $_SERVER['REQUEST_URI'] === '/Allchat/account.php' ? 'bg-warning' : 'bg-light' ?>"></a>
             <a href="/setting" class="list-group-item list-group-item-action fs-4 bi bi-gear-fill <?= $_SERVER['REQUEST_URI'] === '/Allchat/setting.php' ? 'bg-warning' : 'bg-light' ?>"></a>
             <a href="/logout" class="list-group-item list-group-item-action fs-4 bi bi-box-arrow-right"></a>
     </div>

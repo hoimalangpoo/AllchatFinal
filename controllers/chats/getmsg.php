@@ -42,18 +42,28 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
                     "chat_id" => $chat_id
                 ]);
 
+                if ($chat['reply'] == 1) {
 ?>
 
-                <p class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?php echo $chat["chat_id"] ?>" data-touserid="<?php echo $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $chat["chat_id"] ?>">
-                    <?= $chat['messages'] ?>
-                    <small class="d-block">
-                        <?= date("h:i a", strtotime($chat['created_at'])) ?>
-                    </small>
-                </p>
-                <?php require base_path('controllers/chats/ajax.reply.php'); ?>
+                    <p class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success" id="chatuser<?php echo $chat["chat_id"] ?>" data-touserid="<?php echo $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $chat["chat_id"] ?>">
+                        <?= $chat['messages'] ?>
+                        <small class="d-block">
+                            <?= date("h:i a", strtotime($chat['created_at'])) ?>
+                        </small>
+                    </p>
+                    <?php require base_path('controllers/chats/ajax.reply.php'); ?>
 
-<?php
-
+                <?php
+                
+                } else { ?>
+                    <p class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?php echo $chat["chat_id"] ?>" data-touserid="<?php echo $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $chat["chat_id"] ?>">
+                        <?= $chat['messages'] ?>
+                        <small class="d-block">
+                            <?= date("h:i a", strtotime($chat['created_at'])) ?>
+                        </small>
+                    </p>
+                    <?php require base_path('controllers/chats/ajax.reply.php'); ?>
+<?php   }
             }
         }
     }
