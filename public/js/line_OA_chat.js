@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 	$(".chatButton").on('click', function(){
 		

@@ -1,8 +1,10 @@
 <?php
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
-    $chats = $db->lineOAgetchats($userid, $getalluser, $db);
-    // $db->lineopened($line['lineOAid'], $db, $chat);
+    $agency_id = $db->getagencyid($userid, $db);
+    $chats = $db->lineOAgetchats($agency_id, $getalluser, $db);
+    // check($agency_id);
+    
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">

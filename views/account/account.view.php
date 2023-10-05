@@ -82,10 +82,10 @@
               <input type="text" name="renameuser" class="form-control" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
               <select name="agency" class="form-select" aria-label="Default select example">
                 <option disabled selected value=""><?= $account['agency'] ?></option>
-                <option value="งานบริหารและสารสนเทศ">งานบริหารและสารสนเทศ</option>
-                <option value="งานรับเข้าศึกษาและการตลาด">งานรับเข้าศึกษาและการตลาด</option>
-                <option value="งานบริการและทะเบียนการศึกษา">งานบริการและทะเบียนการศึกษา</option>
-                <option value="งานหลักสูตรและสหกิจศึกษา">งานหลักสูตรและสหกิจศึกษา</option>
+                <option value="1">งานบริหารและสารสนเทศ</option>
+                <option value="2">งานรับเข้าศึกษาและการตลาด</option>
+                <option value="3">งานบริการและทะเบียนการศึกษา</option>
+                <option value="4">งานหลักสูตรและสหกิจศึกษา</option>
               </select>
             </div>
           </div>

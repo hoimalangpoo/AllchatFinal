@@ -6,7 +6,7 @@ use Core\Database;
 $db = App::resolve(Database::class);
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////
 function saveContact($user_id, $display_name, $lineOAid, $db){
-    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_user AS recieve_id 
+    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_agency AS recieve_id 
     FROM line_contact JOIN line_oa 
     ON line_contact.lineOAid = line_oa.id
     WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid", [
@@ -37,7 +37,7 @@ function saveContact($user_id, $display_name, $lineOAid, $db){
 function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
 {
     //////////////////////////////////////////Line_USER/////////////////////////
-    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_user AS recieve_id, line_oa.id AS linech
+    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_agency AS recieve_id, line_oa.id AS linech
     FROM line_contact JOIN line_oa 
     ON line_contact.lineOAid = line_oa.id
     WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid ", [

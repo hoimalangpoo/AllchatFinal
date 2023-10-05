@@ -1,6 +1,8 @@
 <?php
+
 use Core\App;
 use Core\Database;
+
 $db = App::resolve(Database::class);
 function savelineOA($lineOAid, $lineOaDisplayName, $lineOAPictureUrl, $access_token, $user_id, $db)
 {
@@ -9,20 +11,25 @@ function savelineOA($lineOAid, $lineOaDisplayName, $lineOAPictureUrl, $access_to
 
     ])->find();
 
-    if (! $check_lineoa) {
-        $db->query("INSERT INTO line_oa(lineOAid, lineOaDisplayName, access_token, profile, by_user)
-        VALUES(:lineOAid, :lineOaDisplayName, :access_token, :lineOAPictureUrl, :user_id)", [
+    if (!$check_lineoa) {
+
+        $agency_user = $db->query("SELECT agency FROM users WHERE _id = :user_id", [
+            "user_id" => $user_id
+        ])->find();
+        $agency = $agency_user['agency'];
+
+        $db->query("INSERT INTO line_oa(lineOAid, lineOaDisplayName, access_token, profile, by_agency)
+        VALUES(:lineOAid, :lineOaDisplayName, :access_token, :lineOAPictureUrl, :agency)", [
             "lineOAid" => $lineOAid,
             "lineOaDisplayName" => $lineOaDisplayName,
             "access_token" => $access_token,
             "lineOAPictureUrl" => $lineOAPictureUrl,
-            "user_id" => $user_id,
+            "agency" => $agency,
         ]);
-    }else {
+    } else {
         header('location: /setting');
         exit;
     }
-   
 }
 
 $access_token = "";

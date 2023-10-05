@@ -1,4 +1,5 @@
 <?php
+
 use Core\App;
 use Core\Database;
 
@@ -6,7 +7,9 @@ $db = App::resolve(Database::class);
 
 
 $user_id = $_SESSION['user'];
-$account = $db->query("SELECT * FROM users WHERE _id = $user_id",[
+$account = $db->query("SELECT users.name, users.email, users.telephone, agency.agency FROM users 
+                       JOIN agency ON users.agency = agency.id
+                       WHERE users._id = $user_id", [
     "user_id" => $user_id
 ])->find();
 
