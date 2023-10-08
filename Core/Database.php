@@ -118,15 +118,6 @@ class Database
 
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-    public function getagencyid($userid, $db)
-    {
-        $agency_user = $db->query("SELECT agency FROM users WHERE _id = :userid", [
-            "userid" => $userid
-        ])->find();
-
-        $agency = $agency_user['agency'];
-        return $agency;
-    }
     public function getAllid($lineOAid, $db)
     {
         $line_id = $db->query("SELECT line_contact.id FROM line_contact JOIN line_oa 

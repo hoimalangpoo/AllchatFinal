@@ -20,7 +20,7 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
 
     foreach ($line_id as $all_id) {
         $user_fromLine = $all_id['id'];
-        $messages = $db->query("SELECT line_chat.* FROM line_chat WHERE (sender_id = :user_fromLine AND recieve_id = (SELECT agency FROM users WHERE _id = :admin_id))
+        $messages = $db->query("SELECT * FROM line_chat WHERE (sender_id = :user_fromLine AND recieve_id =  :admin_id)
         AND from_ch = :linech
         ORDER BY chat_id ASC", [
             "admin_id" => $admin_id,

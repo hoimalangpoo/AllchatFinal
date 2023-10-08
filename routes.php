@@ -37,3 +37,4 @@ $router->post('/addQA', 'controllers/QnA/add.php')->only('auth');
 
 $router->get('/dashboard', 'controllers/dashboard/show.php')->only('auth');
 
+$router->get('/getdata', 'controllers/dashboard/getdata.php')->only('auth');

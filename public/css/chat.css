@@ -138,3 +138,14 @@ small{
     background-color: #ffc107;
 }
 
+.friendinfo{
+    border: none;
+    float: right;
+    color: black;
+    background-color: #ffffff;
+    font-size: 21px;
+}
+
+#finfo{
+    margin-bottom: 0;
+}

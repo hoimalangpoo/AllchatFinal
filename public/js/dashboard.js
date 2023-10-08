@@ -1,29 +1,44 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const totalValueElement = document.getElementById("totalValue");
-    const totalValue = parseInt(totalValueElement.textContent);
 
-    // ตัวอย่างโค้ดสร้างกราฟด้วย Chart.js
-    const labels = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม']; // ตัวอย่างเท่านั้น
-    const data = [10, 20, 15]; // ตัวอย่างเท่านั้น
+  $.ajax({
+    url: 'getdata',
+    dataTpe: 'json',
+    success: function(data){
 
-    const ctx = document.getElementById("lineChart").getContext("2d");
-    const lineChart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "ข้อความที่ตอบกลับ",
-                data: data,
-                borderColor: "rgba(75, 192, 192, 1)",
-                fill: false
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        console.log(data);
+        var month_year = data.map(function(item){
+            return item.month_year
+        });
+
+        var message_count = data.map(function(item){
+            return item.message_count
+        });
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var chart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: month_year,
+                datasets:[{
+                    label: "จำนวนข้อความ",
+                    borderWidth: 1,
+                    backgroundColor: '#ffc107',
+                    borderColor: '#ffc107',
+                    data: message_count,
+                }],
+            },
+            options:{
+                scales:{
+                    x:{
+                        beginAtZero: true
+                    },
+                    y:{
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        })
+    }
+  })
+
 });

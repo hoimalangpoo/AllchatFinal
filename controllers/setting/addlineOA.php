@@ -6,26 +6,27 @@ use Core\Database;
 $db = App::resolve(Database::class);
 function savelineOA($lineOAid, $lineOaDisplayName, $lineOAPictureUrl, $access_token, $user_id, $db)
 {
+
     $check_lineoa = $db->query("SELECT lineOAid FROM line_oa WHERE lineOAid = :lineOAid ", [
         "lineOAid" => $lineOAid,
 
     ])->find();
 
+
     if (!$check_lineoa) {
 
-        $agency_user = $db->query("SELECT agency FROM users WHERE _id = :user_id", [
-            "user_id" => $user_id
-        ])->find();
-        $agency = $agency_user['agency'];
-
-        $db->query("INSERT INTO line_oa(lineOAid, lineOaDisplayName, access_token, profile, by_agency)
-        VALUES(:lineOAid, :lineOaDisplayName, :access_token, :lineOAPictureUrl, :agency)", [
-            "lineOAid" => $lineOAid,
-            "lineOaDisplayName" => $lineOaDisplayName,
-            "access_token" => $access_token,
-            "lineOAPictureUrl" => $lineOAPictureUrl,
-            "agency" => $agency,
-        ]);
+        try {
+            $db->query("INSERT INTO line_oa(lineOAid, lineOaDisplayName, access_token, profile, by_user)
+        VALUES(:lineOAid, :lineOaDisplayName, :access_token, :lineOAPictureUrl, :user_id)", [
+                "lineOAid" => $lineOAid,
+                "lineOaDisplayName" => $lineOaDisplayName,
+                "access_token" => $access_token,
+                "lineOAPictureUrl" => $lineOAPictureUrl,
+                "user_id" => $user_id,
+            ]);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     } else {
         header('location: /setting');
         exit;
@@ -35,9 +36,9 @@ function savelineOA($lineOAid, $lineOaDisplayName, $lineOAPictureUrl, $access_to
 $access_token = "";
 $lineOAid = "";
 $lineOaDisplayName = "";
-if (isset($_POST['access_token']) && isset($_POST['user_id'])) {
+if (isset($_POST['access_token'])) {
     $access_token = $_POST['access_token'];
-    $user_id = $_POST['user_id'];
+    $user_id = intval($_SESSION['user']);
 
     $chID = curl_init('https://api.line.me/v2/bot/info');
     curl_setopt($chID, CURLOPT_RETURNTRANSFER, true);
@@ -52,7 +53,7 @@ if (isset($_POST['access_token']) && isset($_POST['user_id'])) {
     $lineOAid = $data['userId'];
     $lineOaDisplayName = $data['displayName'];
     $lineOAPictureUrl = $data['pictureUrl'];
-
+    // check($user_id);
     savelineOA($lineOAid, $lineOaDisplayName, $lineOAPictureUrl, $access_token, $user_id, $db);
     header('location: /chat');
     exit();
