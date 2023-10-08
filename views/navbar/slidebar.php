@@ -14,7 +14,7 @@
         <a href="#" class="list-group-item list-group-item-action fs-4 bi bi-people-fill dropdown-toggle" id="list-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"">
             </a>
             <ul class=" dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">สร้างกลุ่ม</a></li>
+            <li><a class="dropdown-item" href="/creategroup">สร้างกลุ่ม</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>

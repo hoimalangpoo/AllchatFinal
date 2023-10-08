@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>รวมแชท</title>
+  <title>ChatHelper</title>
 
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -26,7 +26,6 @@
         <?php require base_path('views/navbar/slidebar.php'); ?>
         <div class="col-3">
           <canvas id="lineChart" width="400" height="200"></canvas>
-          <p>รวมทั้งหมด: <span id="totalValue"><?php echo $totalValue; ?></span> ข้อความ</p>
           <script src="js/dashboard.js"></script>
         </div>
   
@@ -42,7 +41,6 @@
   <script src="js/bootstrap.esm.min.js"></script>
 
 </body>
-<script src="js/line_chat.js"></script>
 <style>
   * {
     padding: 0;

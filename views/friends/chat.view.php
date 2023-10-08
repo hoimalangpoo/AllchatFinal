@@ -27,8 +27,10 @@
             </div>
             <ul class="list-group list-group-flush ">
               <?php foreach ($friends as $friend) { ?>
-                <li class="list-group-item friendlist " id="<?php echo $friend["_id"] ?>" data-touserid="<?php echo $friend["_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $friend["_id"] ?>"><i class="fs-4 bi-person-circle"></i> <?php echo $friend["name"] ?>
-                  <a href="unfriend.php?id=<?php echo $friend["_id"] ?>"><button type="button" class="btn btn-danger text-dark pull-right">ลบเพื่อน</button></a>
+                <li class="list-group-item friendlist " id="<?php echo $friend["_id"] ?>" data-touserid="<?php echo $friend["_id"] ?>" 
+                data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>" aria-expanded="true" >
+                <i class="fs-4 bi-person-circle"></i> <?php echo $friend["name"] ?>
+                 
                 </li>
 
               <?php } ?>
@@ -37,7 +39,7 @@
           </div>
         </div>
         <?php require base_path('controllers/friends/chatroom.php'); ?>
-
+        <?php require base_path('controllers/friends/friendinfo.php'); ?>
       </div>
 
     </div>

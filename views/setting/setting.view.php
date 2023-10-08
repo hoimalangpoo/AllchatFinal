@@ -22,8 +22,7 @@
 
                         <span>เพิ่ม LINE Official Account</span>
                         <input type="text" name="access_token" id="access_token" class="form-control mb-2" placeholder="ใส่ Channel access token">
-                        <input type="hidden" name="user_id" value="<?=$user_id?>">
-                        <input type="submit" name="search" class="btn btn-warning text-dark" value="เพิ่ม">
+                        <input type="submit" name="add" class="btn btn-warning text-dark" value="เพิ่ม">
 
                     </form>
 

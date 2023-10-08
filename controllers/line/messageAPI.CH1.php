@@ -82,7 +82,10 @@ if (isset($events['events']) && is_array($events['events'])) {
                 $data = json_decode($response, true);
 
                 $lineOAid = $data['userId'];
-                saveChat($user_id, $message_type, $message_text, $lineOAid, $db);
+
+                if (isQuestion($message_text)) {
+                    saveChat($user_id, $message_type, $message_text, $lineOAid, $db);
+                }
                 
             }
         }

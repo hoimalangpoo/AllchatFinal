@@ -145,4 +145,20 @@ function sendLineMessage($userId, $messages, $access_token)
         return "Message sent successfully.";
     }
 }
+
+function isQuestion($text) {
+    // ตรวจสอบว่าข้อความมีลักษณะคำถามหรือไม่
+    // ตัวอย่าง: ประโยคลงท้ายด้วย "?"
+    $text = trim($text);
+    $endsWithQuestionMark = mb_substr($text, -1) === "?";
+    $containsWhat = mb_strpos($text, "อะไร") !== false;
+    $containsWhere = mb_strpos($text, "ที่ไหน") !== false;
+    $containsWhen = mb_strpos($text, "เมื่อไหร่") !== false;
+    $containsWhy = mb_strpos($text, "ทำไม") !== false;
+    $containsHow = mb_strpos($text, "อย่างไร") !== false;
+    
+
+    return $endsWithQuestionMark || $containsWhat || $containsWhere || $containsWhen || $containsWhy || $containsHow;
+    
+}
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////

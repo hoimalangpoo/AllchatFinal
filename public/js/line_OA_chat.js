@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 	$(".chatButton").on('click', function(){
 		
@@ -114,5 +112,11 @@ $(document).ready(function() {
 
 	});
 	
+
+	$("#toggleButton").click(function() {
+		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
+		$("#inputField").toggleClass("d-none"); // แสดงช่องกรอก
+
+	});
 	
 });

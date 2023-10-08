@@ -1,17 +1,13 @@
 <?php
+use Core\App;
+use Core\Database;
 
-$dataFromDatabase = [
-    ['label' => 'January', 'value' => 10],
-    ['label' => 'February', 'value' => 20],
-    ['label' => 'March', 'value' => 15],
-    // ...
-];
+$db = App::resolve(Database::class);
 
-$totalValue = 0;
+// $count_msg = $db->query("SELECT CONCAT(MONTHNAME(created_at),' ',YEAR(created_at)) AS month_year, 
+// COUNT(*) AS message_count FROM chat GROUP BY month_year ORDER BY created_at")->findAll();
 
-foreach ($dataFromDatabase as $item) {
-    $totalValue += $item['value'];
-}
+// check($count_msg);
 
 
 include base_path("views/dashboard/show.view.php");

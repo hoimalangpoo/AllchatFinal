@@ -118,7 +118,6 @@ class Database
 
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-
     public function getAllid($lineOAid, $db)
     {
         $line_id = $db->query("SELECT line_contact.id FROM line_contact JOIN line_oa 
@@ -129,8 +128,8 @@ class Database
 
         return $line_id;
     }
-    public function lineOAgetchats($userid, $getalluser, $db)
-    {  
+    public function lineOAgetchats($agency_id, $getalluser, $db)
+    {
         $chat = [];
 
         foreach ($getalluser as $user) {
@@ -138,7 +137,7 @@ class Database
             $chats = $db->query("SELECT * FROM line_chat WHERE (sender_id = :sender_id AND recieve_id = :recieve_id)
                                                 OR  (sender_id = :recieve_id AND recieve_id = :sender_id)
                                                 ORDER BY chat_id ASC", [
-                "sender_id" => $userid,
+                "sender_id" => $agency_id,
                 "recieve_id" => $recieve_id
             ])->findAll();
 
