@@ -50,9 +50,9 @@ $(document).ready(function() {
 			if(message == "") return;
 			chatwith = $('#'+id).attr('id');
 			lineOA = $('#'+lineid).attr('id');
-			console.log(lineOA);
+			console.log(chatwith);
 
-			
+
 			$.post("/line_oa_chat",
 				{
 					message: message,

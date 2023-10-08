@@ -116,6 +116,7 @@ ul.listmsg {
     max-width: 50%;
 }
 .ltext{
+    cursor: pointer;
     width: auto;
     max-width: 50%;
 }
@@ -148,4 +149,8 @@ small{
 
 #finfo{
     margin-bottom: 0;
+}
+
+.linelist{
+    cursor: pointer;
 }
