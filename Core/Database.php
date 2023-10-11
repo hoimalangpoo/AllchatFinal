@@ -27,10 +27,16 @@ class Database
 
         return $this;
     }
+    
 
     public function findAll()
     {
         return $this->statement->fetchAll();
+    }
+
+    public function lastInsertId()
+    {
+        return $this->conn->lastInsertId();
     }
 
     public function fetchColumn()

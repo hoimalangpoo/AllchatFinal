@@ -18,7 +18,7 @@
             <li>
                 <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">กลุ่มการสนทนา</a></li>
+            <li><a class="dropdown-item" href="/chatgroup">กลุ่มการสนทนา</a></li>
             </ul>
             <a href="/dashboard" class="list-group-item list-group-item-action fs-4 bi bi-bar-chart-fill"></a>
             <a href="/setting" class="list-group-item list-group-item-action fs-4 bi bi-gear-fill <?= $_SERVER['REQUEST_URI'] === '/Allchat/setting.php' ? 'bg-warning' : 'bg-light' ?>"></a>
