@@ -37,3 +37,6 @@ $router->post('/addQA', 'controllers/QnA/add.php')->only('auth');
 
 $router->get('/dashboard', 'controllers/dashboard/show.php')->only('auth');
 
+$router->get('/creategroup', 'controllers/group/group.php')->only('auth');
+
+

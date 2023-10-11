@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row ">
                 <div class="col-lg-5">
-                    <img src="ภาพ/yellow-bg.JPG" alt="img-fluid" alt="" >
+                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" >
                 </div>
                 <div class="col-lg-7 my-4">
                     <h1 class="font-weight-bold py-4 pl-5">เข้าสู่ระบบ รวมแชท</h1>
@@ -26,8 +26,8 @@
                 <div class="social-login ">
                     
                     <div class="social-login-element ml-5">
-                        <img src="../ภาพ/facebook.png" alt="facebook-image">
-                        <span>เข้าสู่ระบบด้วย Facebook</span>
+                        <img src="../ภาพ/line-icon.png" alt="line-image">
+                        <span>เข้าสู่ระบบด้วย line</span>
                     </div>
                 </div>
                 <p class="or pl-5">หรือ</p>
@@ -112,9 +112,10 @@
         }
 
         .social-login-element img {
-            width: 1.875rem;
-            height: 1.875rem;
+            width: 2.5rem;
+            height: 2.5rem;
             position: relative;
+            border-radius: 5px;
             top: 0;
             left: -0.625rem;
         }
