@@ -17,7 +17,7 @@ $router->post('/insert_chat', 'controllers/friends/insert_chat.php')->only('auth
 
 $router->get('/chat', 'controllers/chats/chat.php')->only('auth');
 $router->post('/getlineOAmsg', 'controllers/chats/getmsg.php')->only('auth');
-$router->post('/line_oa_chat', 'controllers/chats/insert_chat.php')->only('auth');
+$router->post('/line_oa_chat', 'controllers/chats/insert_announce.php')->only('auth');
 $router->post('/reply', 'controllers/chats/reply_insert.php')->only('auth');
 $router->post('/getreply', 'controllers/chats/replyget.php')->only('auth');
 

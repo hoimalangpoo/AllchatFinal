@@ -6,7 +6,6 @@ use Core\Database;
 $db = App::resolve(Database::class);
 
 if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
-    $admin_id  = $_SESSION['user'];
     $lineOAid  = $_POST['lineOAid'];
     $linech = $_POST['linech'];
 
@@ -20,10 +19,8 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
 
     foreach ($line_id as $all_id) {
         $user_fromLine = $all_id['id'];
-        $messages = $db->query("SELECT * FROM line_chat WHERE (sender_id = :user_fromLine AND recieve_id =  :admin_id)
-        AND from_ch = :linech
+        $messages = $db->query("SELECT * FROM line_chat WHERE (sender_id = :user_fromLine AND recieve_id =  :linech)
         ORDER BY chat_id ASC", [
-            "admin_id" => $admin_id,
             "user_fromLine" => $user_fromLine,
             "linech" => $linech
         ])->findAll();
@@ -42,28 +39,28 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
                     "chat_id" => $chat_id
                 ]);
 
-                if ($chat['reply'] == 1) {
-?>
+                if ($chat['reply'] == 1) { ?>
 
-                    <p class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success" id="chatuser<?php echo $chat["chat_id"] ?>" data-touserid="<?php echo $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $chat["chat_id"] ?>">
-                        <?= $chat['messages'] ?>
-                        <small class="d-block">
-                            <?= date("h:i a", strtotime($chat['created_at'])) ?>
-                        </small>
-                    </p>
-                    <?php require base_path('controllers/chats/ajax.reply.php'); ?>
+                    <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                        <p class="mb-0">
+                            <?= $chat['messages'] ?>
+                            <small class="d-block">
+                                <?= date("h:i a", strtotime($chat['created_at'])) ?>
+                            </small>
+                        </p>
+                    </div>
+                <?php } else { ?>
+                    <div class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                        <p class="mb-0">
+                            <?= $chat['messages'] ?>
+                            <small class="d-block">
+                                <?= date("h:i a", strtotime($chat['created_at'])) ?>
+                            </small>
+                        </p>
+                    </div>
+                <?php } ?>
+                    <?php require base_path('controllers/chats/ajax.reply.php'); 
 
-                <?php
-                
-                } else { ?>
-                    <p class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?php echo $chat["chat_id"] ?>" data-touserid="<?php echo $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?php echo $chat["chat_id"] ?>">
-                        <?= $chat['messages'] ?>
-                        <small class="d-block">
-                            <?= date("h:i a", strtotime($chat['created_at'])) ?>
-                        </small>
-                    </p>
-                    <?php require base_path('controllers/chats/ajax.reply.php'); ?>
-<?php   }
             }
         }
     }

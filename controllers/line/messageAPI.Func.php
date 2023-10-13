@@ -37,7 +37,7 @@ function saveContact($user_id, $display_name, $lineOAid, $db){
 function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
 {
     //////////////////////////////////////////Line_USER/////////////////////////
-    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_user AS recieve_id, line_oa.id AS linech
+    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.id AS recieve_id
     FROM line_contact JOIN line_oa 
     ON line_contact.lineOAid = line_oa.id
     WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid ", [
@@ -47,15 +47,13 @@ function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
     if ($check_id) {
         $sender_id = $check_id['sender_id'];
         $recieve_id = $check_id['recieve_id'];
-        $linech = $check_id['linech'];
 
-        $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, from_ch)
-        VALUES(:message_text, :message_type, :sender_id, :recieve_id, :linech)", [
+        $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id)
+        VALUES(:message_text, :message_type, :sender_id, :recieve_id)", [
             "message_text" => $message_text,
             "message_type" => $message_type,
             "sender_id" => $sender_id,
             "recieve_id" => $recieve_id,
-            "linech" => $linech,
 
         ]);
 

@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row ">
                 <div class="col-lg-5">
-                    <img src="ภาพ/yellow-bg.JPG" alt="img-fluid" alt="">
+                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="">
                 </div>
                 <div class="col-lg-7 my-2">
                     <h1 class="font-weight-bold py-3 pl-5">เริ่มใช้งาน รวมแชท</h1>

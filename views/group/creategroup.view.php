@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/chat.css">
-  <link rel="stylesheet" href="css/index.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
@@ -21,7 +20,7 @@
   <section class=" min-vh-100">
     <?php require base_path('views/navbar/navbar.php'); ?>
     <div class="container-fluid">
-      <div class="row" id="accordionExample">
+      <div class="row mt-3" id="accordionExample">
         <?php require base_path('views/navbar/slidebar.php'); ?>
         <div class="col">
           <div class="card">
@@ -38,7 +37,18 @@
               <div class="container">
                 <span>สร้างชื่อกลุ่ม<br>
                   <input type="text" name="groupname" class="namegroup col-3 align-center mb-3" placeholder="พิมพ์ชื่อกลุ่ม" required>
-                </span>
+                </span><br>
+                <p>สำหรับไลน์ <b>:</b>
+                  <select name="lineoa">
+                    <option value="0">เลือกไลน์สำหรับกลุ่มนี้</option>
+                    <?php foreach ($forline as $for) { ?>
+
+                      <option value="<?= $for['id'] ?>"><?= $for['lineOaDisplayName'] ?></option>
+
+                    <?php } ?>
+                  </select>
+
+                </p>
                 <table>
                   <thead>
                     <tr>
@@ -81,7 +91,7 @@
           </div>
         </div>
 
-     
+
       </div>
 
     </div>
@@ -90,5 +100,98 @@
 
 </body>
 <script src="js/chat.js"></script>
+
+<style>
+  body {
+    background-image: url(ภาพ/background.jpg);
+  }
+
+
+
+  .btn:hover {
+    background-color: #ffffff;
+
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+  }
+
+  body {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #F2F3F4;
+    color: #273746;
+  }
+
+  .container {
+    align-items: center;
+    margin-top: 3rem;
+    width: 700px;
+
+  }
+
+  h4 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+  }
+
+  thead {
+
+    position: sticky;
+    top: 0px;
+
+  }
+
+  table {
+    border: 1px solid #5D6D7E;
+    text-align: center;
+  }
+
+  th {
+    height: 50px;
+    vertical-align: center;
+
+  }
+
+  .name {
+    text-align: left;
+    padding-left: 30px;
+  }
+
+  tr th .check {
+    margin: 0 auto;
+    margin-right: 10rem;
+
+  }
+
+  span {
+    font-size: 25px;
+    margin-top: 20px;
+  }
+
+  span .namegroup {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+
+  button {
+    margin-top: 16px;
+    align-items: center;
+    width: 500px;
+  }
+
+  tbody {
+    max-height: 200px;
+    /* กำหนดความสูงสูงสุดของ tbody */
+    overflow-y: auto;
+    /* ทำให้ tbody เป็น scrollable ในแนวตั้ง */
+    display: block;
+    /* ทำให้ tbody เป็น block element */
+  }
+</style>
 
 </html>

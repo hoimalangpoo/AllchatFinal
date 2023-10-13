@@ -11,6 +11,9 @@ WHERE friend.status = 'F' AND friend._to = :userid AND users._id != :userid",[
     "userid" => $userid
 ])->findAll();
 
+$forline = $db->query("SELECT * FROM line_oa WHERE by_user = :userid",[
+    "userid" => $userid
+])->findAll();;
 // check($friends);
 
 

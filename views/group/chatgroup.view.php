@@ -48,5 +48,14 @@
 </body>
 <script src="js/line_OA_chat.js"></script>
 <script src="js/reply.js"></script>
+<style>
+      body {
+    background-image: url(ภาพ/background.jpg);
+  }
 
+  .btn:hover {
+    background-color: #ffffff;
+
+  }
+</style>
 </html>

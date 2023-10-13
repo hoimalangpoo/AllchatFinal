@@ -5,16 +5,19 @@ use Core\Database;
 
 $db = App::resolve(Database::class);
 
-if (isset($_POST['selected_values']) && isset($_POST['groupname'])) {
+if (isset($_POST['selected_values']) && isset($_POST['groupname']) && isset($_POST['lineoa']) ) {
     unset($_SESSION['error']);
 
     $userid = $_SESSION['user'];
     $groupname = $_POST['groupname'];
+    $lineoaID = $_POST['lineoa'];
     $selectedfriend = $_POST['selected_values'];
+    // check($lineoaID);
 
-    $addgroup = $db->query("INSERT INTO groups (group_name, created_by) VALUES (:groupname, :userid)", [
+    $addgroup = $db->query("INSERT INTO groups (group_name, created_by, for_line) VALUES (:groupname, :userid, :lineoaID)", [
         "groupname" => $groupname,
         "userid" => $userid,
+        "lineoaID" => $lineoaID
     ]);
 
     if ($addgroup) {

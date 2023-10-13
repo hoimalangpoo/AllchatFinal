@@ -1,7 +1,7 @@
 <?php
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
-    $chats = $db->lineOAgetchats($userid, $getalluser, $db);
+    $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
     // check($agency_id);
 
 ?>
@@ -18,7 +18,7 @@ foreach ($fromline as $line) {
                 <?php
                 foreach ($chats as $chat) {
 
-                    if ($chat['sender_id'] == $_SESSION['user']) { ?>
+                    if (($chat['sender_id'] == $_SESSION['user']) || strpos($chat['chat_id'], 'announce')){ ?>
                         <p class="rtext align-self-end border rounded p-2 mb-2">
                             <?= $chat['messages'] ?>
                             <small class="d-block">
@@ -30,7 +30,7 @@ foreach ($fromline as $line) {
                         <?php } else {
                         if ($chat['reply'] == 1) { ?>
 
-                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['from_ch'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success text-white" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
                                 <p class="mb-0">
                                     <?= $chat['messages'] ?>
                                     <small class="d-block">
@@ -39,7 +39,7 @@ foreach ($fromline as $line) {
                                 </p>
                             </div>
                         <?php } else { ?>
-                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['from_ch'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
                                 <p class="mb-0">
                                     <?= $chat['messages'] ?>
                                     <small class="d-block">

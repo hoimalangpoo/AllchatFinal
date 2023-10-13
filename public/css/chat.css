@@ -8,9 +8,6 @@ img {
     width: auto;  
     max-height: calc(1.275rem + .3vw);  
 }  
-body {
-    background-image: url(ภาพ/background.jpg);
-  }
 
   .friendlist {
     text-decoration: none;
@@ -156,5 +153,9 @@ small{
 }
 
 .groupinfo{
+    cursor: pointer;
+}
+
+.grouplist{
     cursor: pointer;
 }
