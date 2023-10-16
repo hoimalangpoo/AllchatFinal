@@ -7,7 +7,7 @@ $db = App::resolve(Database::class);
 
 
 $user_id = $_SESSION['user'];
-$account = $db->query("SELECT users.name, users.email, users.telephone, agency.agency FROM users 
+$account = $db->query("SELECT users.name, users.email, users.telephone, agency.agency, agency.id FROM users 
                        JOIN agency ON users.agency = agency.id
                        WHERE users._id = $user_id", [
     "user_id" => $user_id

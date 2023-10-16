@@ -27,8 +27,11 @@
         <div class="col-3">
           <canvas id="lineChart" width="400" height="200"></canvas>
           <script src="js/dashboard.js"></script>
+          <?php if (isset($count_msg[0])) { ?>
+            <p>จำนวนข้อความที่ตอบกลับ : <?= $count_msg[0]['message_count'] ?></p>
+          <?php } ?>
         </div>
-  
+
 
       </div>
 

@@ -112,9 +112,15 @@ $(document).ready(function() {
 	});
 	
 
-	$("#toggleButton").click(function() {
+	$("#toggleButton1").click(function() {
 		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
-		$("#inputField").toggleClass("d-none"); // แสดงช่องกรอก
+		$("#inputField1").toggleClass("d-none"); // แสดงช่องกรอก
+
+	});
+
+	$("#toggleButton2").click(function() {
+		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
+		$("#inputField2").toggleClass("d-none"); // แสดงช่องกรอก
 
 	});
 	
