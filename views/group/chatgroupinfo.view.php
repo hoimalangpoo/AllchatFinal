@@ -54,6 +54,9 @@ foreach ($groups as $group) {
                     <div class="card-body shadow p-4 rounded">
                         <p>เพิ่มสมาชิก</p>
                         <p>เปลี่ยนชื่อ</p>
+                        <?php if ($group['for_line'] == 0) { ?>
+                            <p>เพิ่ม lineOA</p>
+                        <?php } else ?>
 
                     </div>
 

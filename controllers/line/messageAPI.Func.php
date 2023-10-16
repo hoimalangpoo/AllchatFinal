@@ -154,9 +154,9 @@ function isQuestion($text) {
     $containsWhen = mb_strpos($text, "เมื่อไหร่") !== false;
     $containsWhy = mb_strpos($text, "ทำไม") !== false;
     $containsHow = mb_strpos($text, "อย่างไร") !== false;
-    
+    $containsMai = mb_strpos($text, "ไหม") !== false;
 
-    return $endsWithQuestionMark || $containsWhat || $containsWhere || $containsWhen || $containsWhy || $containsHow;
+    return $endsWithQuestionMark || $containsWhat || $containsWhere || $containsWhen || $containsWhy || $containsHow || $containsMai;
     
 }
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////

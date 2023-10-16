@@ -2,7 +2,7 @@
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
     $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
-
+// check($chats);
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
@@ -60,9 +60,9 @@ foreach ($fromline as $line) {
             <div class="message-input" id="replySection">
                 <div class="message-input" id="replyContainer">
                     <div class="d-flex justify-content-center align-items-center">
-                        <button id="toggleButton" class="btn btn-warning">ประกาศ</button>
+                        <button id="toggleButton<?= $line['id'] ?>" class="btn btn-warning">ประกาศ</button>
                     </div>
-                    <div class="wrap d-none" id="inputField">
+                    <div class="wrap d-none" id="inputField<?= $line['id'] ?>">
                         <input type="text" class="chatMessage " id="message<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>" placeholder="ประกาศถึงทุกคน" />
 
                         <button class="chatButton" id="<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>

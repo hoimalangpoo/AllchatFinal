@@ -98,9 +98,10 @@ class Database
             "lineOAid" => $lineOAid,
         ])->findAll();
 
-        
+
         return $line_id;
     }
+
     public function lineOAgetchats($userid, $lineId, $getalluser, $db)
     {
         $chat = [];
@@ -132,33 +133,37 @@ class Database
             FROM line_chat
             JOIN line_oa ON line_chat.recieve_id = line_oa.id
             JOIN groups ON line_oa.id = groups.for_line
-            WHERE groups.created_by = :userid AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
-            
-            UNION ALL
-            SELECT CONCAT(id, prefix), messages, NULL, sender_id, recieve_id, NULL, NULL, created_at
-            FROM line_announce WHERE to_line = :lineId)
-            ORDER BY created_at;", [
+            WHERE groups.created_by = :userid AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) )
+            ORDER BY created_at", [
                 "userid" => $userid,
                 "lineId" => $lineId,
                 "lineuser" => $lineuser
             ])->findAll();
 
             $chat[] = $chats;
-       
         }
-        
+        $announce = $db->query("SELECT CONCAT(id, prefix) as chat_id, messages, sender_id, recieve_id, created_at
+        FROM line_announce WHERE to_line = :lineId", [
+            "lineId" => $lineId
+        ])->findAll();
 
+        $chat[] = $announce;
+
+
+
+        // check($chat);
         $all_chat = [];
         foreach ($chat as $innerArray) {
             $all_chat = array_merge($all_chat, $innerArray);
         }
 
-
-        $sort_id = [];
         foreach ($all_chat as $chat) {
-            $sort_id[] = $chat['chat_id'];
+            $chat['created_at'] = strtotime($chat['created_at']);
         }
-        array_multisort($sort_id, SORT_ASC, $all_chat);
+
+        array_multisort(array_column($all_chat, 'created_at'), SORT_ASC, $all_chat);
+
+
         // check($all_chat);
         return $all_chat;
     }

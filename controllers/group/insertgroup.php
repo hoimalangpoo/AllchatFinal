@@ -10,10 +10,10 @@ if (isset($_POST['selected_values']) && isset($_POST['groupname']) && isset($_PO
 
     $userid = $_SESSION['user'];
     $groupname = $_POST['groupname'];
-    $lineoaID = $_POST['lineoa'];
+    $lineoaID = isset($_POST['lineoa']) ? $_POST['lineoa'] : 0;
     $selectedfriend = $_POST['selected_values'];
-    // check($lineoaID);
 
+    // check($userid);
     $addgroup = $db->query("INSERT INTO groups (group_name, created_by, for_line) VALUES (:groupname, :userid, :lineoaID)", [
         "groupname" => $groupname,
         "userid" => $userid,

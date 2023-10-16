@@ -40,7 +40,7 @@
                 </span><br>
                 <p>สำหรับไลน์ <b>:</b>
                   <select name="lineoa">
-                    <option value="0">เลือกไลน์สำหรับกลุ่มนี้</option>
+                    <option selected value="0">เลือกไลน์สำหรับกลุ่มนี้</option>
                     <?php foreach ($forline as $for) { ?>
 
                       <option value="<?= $for['id'] ?>"><?= $for['lineOaDisplayName'] ?></option>
