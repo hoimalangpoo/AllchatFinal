@@ -90,7 +90,7 @@ $(document).ready(function() {
 		let scrollToBottom = function() {
 			chatBox.scrollTop(chatBox.prop("scrollHeight"));
 		};
-		// console.log(lineid);
+		console.log(id);
 		let fechData = function() {
 			$.post("/getlineOAmsg", {
 				lineOAid: id,

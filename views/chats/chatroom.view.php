@@ -2,7 +2,6 @@
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
     $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
-    // check($agency_id);
 
 ?>
 

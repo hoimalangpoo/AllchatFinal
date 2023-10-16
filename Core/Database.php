@@ -98,6 +98,7 @@ class Database
             "lineOAid" => $lineOAid,
         ])->findAll();
 
+        
         return $line_id;
     }
     public function lineOAgetchats($userid, $lineId, $getalluser, $db)
@@ -106,19 +107,36 @@ class Database
 
         foreach ($getalluser as $user) {
             $lineuser = $user['id'];
-            $chats = $db->query("SELECT DISTINCT chat_id, messages, created_at, sender_id, recieve_id, reply
-            FROM (
-              SELECT line_chat.chat_id, line_chat.messages, line_chat.created_at, line_chat.sender_id, line_chat.recieve_id, line_chat.reply
-              FROM line_chat
-              JOIN groups ON line_chat.recieve_id = groups.for_line
-              JOIN group_users ON groups.group_id = group_users.group_id
-              WHERE (sender_id = 1 AND recieve_id = 1)
-              OR  (sender_id = 1 AND recieve_id = 1)
-              OR  (group_users.user_id = 46)
-              UNION ALL
-              SELECT CONCAT(id, prefix), messages, created_at, sender_id, recieve_id, NULL
-              FROM line_announce
-            ) AS combined_data
+            $chats = $db->query("-- กรณีที่มีกลุ่มและเป็นสมาชิกในกลุ่ม
+            (SELECT line_chat.*
+            FROM line_chat
+            JOIN line_oa ON line_chat.recieve_id = line_oa.id 
+            JOIN groups ON line_oa.id = groups.for_line
+            JOIN group_users ON groups.group_id = group_users.group_id
+            WHERE (groups.created_by != :userid AND group_users.user_id = :userid) AND 
+            (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
+            
+            UNION
+            
+            -- กรณีที่ไม่มีกลุ่มและเป็นคนสร้าง
+            SELECT line_chat.*
+            FROM line_chat
+            JOIN line_oa ON line_chat.recieve_id = line_oa.id
+            WHERE line_oa.by_user = :userid AND line_oa.id NOT IN (SELECT for_line FROM groups)
+            AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
+            
+            -- กรณีที่มีกลุ่มและเป็นคนสร้าง
+            UNION
+            
+            SELECT line_chat.*
+            FROM line_chat
+            JOIN line_oa ON line_chat.recieve_id = line_oa.id
+            JOIN groups ON line_oa.id = groups.for_line
+            WHERE groups.created_by = :userid AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
+            
+            UNION ALL
+            SELECT CONCAT(id, prefix), messages, NULL, sender_id, recieve_id, NULL, NULL, created_at
+            FROM line_announce WHERE to_line = :lineId)
             ORDER BY created_at;", [
                 "userid" => $userid,
                 "lineId" => $lineId,
