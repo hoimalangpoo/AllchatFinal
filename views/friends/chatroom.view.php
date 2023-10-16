@@ -4,7 +4,7 @@ foreach ($friends as $friend) {
     $db->opened($friend['_id'], $db, $chat);
 ?>
 
-    <div class="content col collapse" id="collapse<?php echo $friend['_id'] ?>" aria-labelledby="heading<?php echo $friend['_id'] ?>" data-parent="#accordionExample">
+    <div class="content col collapse" id="collapse<?php echo $friend['_id'] ?>" data-parent="#accordionExample">
         <div class="card">
             <div class="contact-profile card-header bg-transparent" id="userSection">
                 <img src="ภาพ/avatar2.png" alt="" />
@@ -50,8 +50,11 @@ foreach ($friends as $friend) {
                 </div>
             </div>
         </div>
-    </div>
 
+
+    </div>
 
 <?php
 }
+
+?>

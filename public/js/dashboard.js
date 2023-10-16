@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     dataTpe: 'json',
     success: function(data){
 
-        console.log(data);
+        // console.log(data);
         var month_year = data.map(function(item){
             return item.month_year
         });

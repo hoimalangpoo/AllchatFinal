@@ -17,7 +17,7 @@ $router->post('/insert_chat', 'controllers/friends/insert_chat.php')->only('auth
 
 $router->get('/chat', 'controllers/chats/chat.php')->only('auth');
 $router->post('/getlineOAmsg', 'controllers/chats/getmsg.php')->only('auth');
-$router->post('/line_oa_chat', 'controllers/chats/insert_chat.php')->only('auth');
+$router->post('/line_oa_chat', 'controllers/chats/insert_announce.php')->only('auth');
 $router->post('/reply', 'controllers/chats/reply_insert.php')->only('auth');
 $router->post('/getreply', 'controllers/chats/replyget.php')->only('auth');
 
@@ -36,5 +36,8 @@ $router->get('/delQA', 'controllers/QnA/delete.php')->only('auth');
 $router->post('/addQA', 'controllers/QnA/add.php')->only('auth');
 
 $router->get('/dashboard', 'controllers/dashboard/show.php')->only('auth');
-
 $router->get('/getdata', 'controllers/dashboard/getdata.php')->only('auth');
+
+$router->get('/creategroup', 'controllers/group/creategroup.php')->only('auth');
+$router->post('/insertgroup', 'controllers/group/insertgroup.php');
+$router->get('/chatgroup', 'controllers/group/chatgroup.php')->only('auth');

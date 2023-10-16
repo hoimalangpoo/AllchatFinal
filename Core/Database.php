@@ -28,9 +28,15 @@ class Database
         return $this;
     }
 
+
     public function findAll()
     {
         return $this->statement->fetchAll();
+    }
+
+    public function lastInsertId()
+    {
+        return $this->conn->lastInsertId();
     }
 
     public function fetchColumn()
@@ -82,40 +88,6 @@ class Database
     }
     // ////////////////////////////////CHATROOM///////////////////////////////////////////
 
-    // ////////////////////////////////LINECHATROOM///////////////////////////////////////////
-    public function linegetchats($id1, $id2, $db)
-    {
-        $line_id = $db->query("SELECT * FROM line_contact WHERE user_id = :user_id", [
-            "user_id" => $id2,
-        ])->find();
-        $recieve_id = $line_id['id'];
-
-        $chat = $db->query("SELECT * FROM line_chat WHERE (sender_id = :sender_id AND recieve_id = :recieve_id)
-                                                OR  (sender_id = :recieve_id AND recieve_id = :sender_id)
-                                                ORDER BY chat_id ASC", [
-            "sender_id" => $id1,
-            "recieve_id" => $recieve_id
-        ])->findAll();
-
-        return $chat;
-    }
-
-    public function lineopened($id_1, $db, $chats)
-    {
-        foreach ($chats as $chat) {
-            if ($chat['opened'] == 0) {
-                $opened = 1;
-                $chat_id = $chat['chat_id'];
-                $db->query("UPDATE line_chat SET opened = :opened WHERE sender_id = :sender_id AND chat_id = :chat_id", [
-                    "opened" => $opened,
-                    "sender_id" => $id_1,
-                    "chat_id" => $chat_id
-                ]);
-            }
-        }
-    }
-    // ////////////////////////////////LINECHATROOM///////////////////////////////////////////
-
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
     public function getAllid($lineOAid, $db)
@@ -126,35 +98,67 @@ class Database
             "lineOAid" => $lineOAid,
         ])->findAll();
 
+        
         return $line_id;
     }
-    public function lineOAgetchats($agency_id, $getalluser, $db)
+    public function lineOAgetchats($userid, $lineId, $getalluser, $db)
     {
         $chat = [];
 
         foreach ($getalluser as $user) {
-            $recieve_id = $user['id'];
-            $chats = $db->query("SELECT * FROM line_chat WHERE (sender_id = :sender_id AND recieve_id = :recieve_id)
-                                                OR  (sender_id = :recieve_id AND recieve_id = :sender_id)
-                                                ORDER BY chat_id ASC", [
-                "sender_id" => $agency_id,
-                "recieve_id" => $recieve_id
+            $lineuser = $user['id'];
+            $chats = $db->query("-- กรณีที่มีกลุ่มและเป็นสมาชิกในกลุ่ม
+            (SELECT line_chat.*
+            FROM line_chat
+            JOIN line_oa ON line_chat.recieve_id = line_oa.id 
+            JOIN groups ON line_oa.id = groups.for_line
+            JOIN group_users ON groups.group_id = group_users.group_id
+            WHERE (groups.created_by != :userid AND group_users.user_id = :userid) AND 
+            (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
+            
+            UNION
+            
+            -- กรณีที่ไม่มีกลุ่มและเป็นคนสร้าง
+            SELECT line_chat.*
+            FROM line_chat
+            JOIN line_oa ON line_chat.recieve_id = line_oa.id
+            WHERE line_oa.by_user = :userid AND line_oa.id NOT IN (SELECT for_line FROM groups)
+            AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
+            
+            -- กรณีที่มีกลุ่มและเป็นคนสร้าง
+            UNION
+            
+            SELECT line_chat.*
+            FROM line_chat
+            JOIN line_oa ON line_chat.recieve_id = line_oa.id
+            JOIN groups ON line_oa.id = groups.for_line
+            WHERE groups.created_by = :userid AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
+            
+            UNION ALL
+            SELECT CONCAT(id, prefix), messages, NULL, sender_id, recieve_id, NULL, NULL, created_at
+            FROM line_announce WHERE to_line = :lineId)
+            ORDER BY created_at;", [
+                "userid" => $userid,
+                "lineId" => $lineId,
+                "lineuser" => $lineuser
             ])->findAll();
 
             $chat[] = $chats;
+       
         }
+        
 
         $all_chat = [];
         foreach ($chat as $innerArray) {
             $all_chat = array_merge($all_chat, $innerArray);
         }
 
+
         $sort_id = [];
         foreach ($all_chat as $chat) {
             $sort_id[] = $chat['chat_id'];
         }
         array_multisort($sort_id, SORT_ASC, $all_chat);
-
         // check($all_chat);
         return $all_chat;
     }

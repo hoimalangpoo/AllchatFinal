@@ -18,6 +18,10 @@ if (isset($_POST['message']) && isset($_POST['chat_id']) && isset($_POST['linech
         "linech" => $linech,
     ]);
 
+    $reply = $db->query("UPDATE line_chat SET reply = 1 WHERE chat_id = :chat_id",[
+        "chat_id" => $chat_id
+    ]);
+
 
     define('TIMEZONE', 'Asia/Bangkok');
     date_default_timezone_set(TIMEZONE);

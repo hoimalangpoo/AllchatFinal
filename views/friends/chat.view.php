@@ -6,10 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css'>
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/chat.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </head>
@@ -27,10 +29,9 @@
             </div>
             <ul class="list-group list-group-flush ">
               <?php foreach ($friends as $friend) { ?>
-                <li class="list-group-item friendlist " id="<?php echo $friend["_id"] ?>" data-touserid="<?php echo $friend["_id"] ?>" 
-                data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>" aria-expanded="true" >
-                <i class="fs-4 bi-person-circle"></i> <?php echo $friend["name"] ?>
-                 
+                <li class="list-group-item friendlist " id="<?php echo $friend["_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>">
+                  <i class="fs-4 bi-person-circle"></i> <?php echo $friend["name"] ?>
+
                 </li>
 
               <?php } ?>
@@ -47,7 +48,16 @@
 
 
 </body>
-<script src="js/chat.js"></script>  
+<script src="js/chat.js"></script>
+<style>
+    body {
+    background-image: url(ภาพ/background.jpg);
+  }
 
+  .btn:hover {
+    background-color: #ffffff;
+
+  }
+</style>
 
 </html>
