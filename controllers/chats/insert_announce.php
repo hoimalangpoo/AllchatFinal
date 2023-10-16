@@ -27,7 +27,7 @@ if (isset($_POST['message']) && isset($_POST['linech'])) {
 ?>
 
     <p class="rtext align-self-end border rounded p-2 mb-2">
-        ประกาศ : <?= $messages ?>
+        <?= $messages ?>
         <small class="d-block"><?= $time ?> </small>
     </p>
 

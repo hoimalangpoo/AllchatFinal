@@ -2,7 +2,7 @@
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
     $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
-
+// check($chats);
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
