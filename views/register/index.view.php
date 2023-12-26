@@ -26,8 +26,8 @@
                     <div class="social-login">
 
                         <div class="social-login-element ml-5">
-                            <img src="ภาพ/facebook.png" alt="facebook-image">
-                            <span>เข้าสู่ระบบด้วย Facebook</span>
+                            <img src="ภาพ/line-icon.png" alt="line-image">
+                            <span>เข้าสู่ระบบด้วย Line</span>
                         </div>
                     </div>
                     <p class="or pl-5">หรือ</p>
@@ -145,9 +145,10 @@
     }
 
     .social-login-element img {
-        width: 1.875rem;
-        height: 1.875rem;
+        width: 2rem;
+        height: 2rem;
         position: relative;
+        border-radius: 5px;
         top: 0;
         left: -0.625rem;
     }

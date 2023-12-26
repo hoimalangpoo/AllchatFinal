@@ -27,8 +27,8 @@
                     <div class="social-login ">
 
                         <div class="social-login-element ml-5">
-                            <img src="../ภาพ/facebook.png" alt="facebook-image">
-                            <span>เข้าสู่ระบบด้วย Facebook</span>
+                            <img src="../ภาพ/line-icon.png" alt="line-image">
+                            <span>เข้าสู่ระบบด้วย line</span>
                         </div>
                     </div>
                     <p class="or pl-5">หรือ</p>
@@ -62,76 +62,72 @@
 
 
 <style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        background-image: url(../ภาพ/background.jpg);
-    }
-
-    .row {
-        background: white;
-        border-radius: 30px;
-        box-shadow: 10px 10px 10px gray;
-    }
-
-    img {
-        border-top-left-radius: 30px;
-        border-bottom-left-radius: 30px;
-    }
-
-    .btn1 {
-        border: none;
-        outline: none;
-        height: 50px;
-        width: 100%;
-        background-color: #ffc107;
-        color: black;
-        border-radius: 4px;
-        font-weight: bold;
-    }
-
-    .btn1:hover {
-        background: #fff176;
-        border: 1px solid;
-        color: black;
-    }
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-image: url(../ภาพ/background.jpg);
+        }
+        .row{
+            background: white;
+            border-radius: 30px;
+            box-shadow: 10px 10px 10px gray;
+        }
+        img{
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
+        .btn1{
+            border: none;
+            outline: none;
+            height: 50px;
+            width: 100%;
+            background-color: #ffc107;
+            color: black;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .btn1:hover{
+            background: #fff176;
+            border: 1px solid;
+            color: black;
+        }
 
 
+       
 
+        .social-login-element {
+            width: 20rem;
+            height: 3.75rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 5px;
+            border: 0.5px solid gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
 
-    .social-login-element {
-        width: 20rem;
-        height: 3.75rem;
-        font-size: 1.2rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        border-radius: 5px;
-        border: 0.5px solid gray;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        .social-login-element img {
+            width: 2.5rem;
+            height: 2.5rem;
+            position: relative;
+            border-radius: 5px;
+            top: 0;
+            left: -0.625rem;
+        }
 
-    }
+        .social-login-element:hover {
+            background-color: #fff9c4;
+        }
+        .or{
+            margin-top: 1rem;
+        }
 
-    .social-login-element img {
-        width: 1.875rem;
-        height: 1.875rem;
-        position: relative;
-        top: 0;
-        left: -0.625rem;
-    }
-
-    .social-login-element:hover {
-        background-color: #fff9c4;
-    }
-
-    .or {
-        margin-top: 1rem;
-    }
-</style>
+    </style>
 
 </html>

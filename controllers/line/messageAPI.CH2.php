@@ -6,17 +6,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['message']) && isset($_POST['lineOAid'])) {
         $messages = $_POST['message'];
         $lineOAid = $_POST['lineOAid']; //LINEOAID
+        
         $users = getUsersFromDatabase($lineOAid, $db);
 
         foreach ($users as $user) {
             $userId = $user['user_id'];
-            sendLineMessage($userId, $messages, $access_token);
+            sendLineMessage($userId, $messages, $token_reply,$access_token);
         }
     } else if (isset($_POST['reply']) && isset($_POST['chat_id'])) {
         $reply = $_POST['reply'];
-        $chat_id = $_POST['chat_id']; //chat_id
+        $chat_id = $_POST['chat_id']; 
+        $token_reply = getreplyToken($chat_id, $db);
+        
         $idfromchat = getUserID($chat_id, $db);
-        sendLineMessage($idfromchat, $reply, $access_token);
+        
+        sendLineMessage($idfromchat, $reply, $token_reply["reply_token"], $access_token);
     }
 }
 
@@ -68,6 +72,7 @@ if (isset($events['events']) && is_array($events['events'])) {
             $user_id = $event['source']['userId'];
             $message_text = $event['message']['text'];
             $message_type = $event['message']['type'];
+            $quoteToken = $event['message']['quoteToken'];
 
             $chID = curl_init('https://api.line.me/v2/bot/info');
             curl_setopt($chID, CURLOPT_RETURNTRANSFER, true);
@@ -83,7 +88,7 @@ if (isset($events['events']) && is_array($events['events'])) {
                 $lineOAid = $data['userId'];
 
                 if (isQuestion($message_text)) {
-                    saveChat($user_id, $message_type, $message_text, $lineOAid, $db);
+                    saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db);
                 }
                 
             }

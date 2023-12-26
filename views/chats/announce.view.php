@@ -4,16 +4,48 @@
             <h5>คำถามที่พบบ่อย</h5>
             <button class="btn bg-warning" data-bs-toggle="modal" data-bs-target="#modalAddQ">เพิ่มQ&A</button>
         </div>
-        <ul class="list-group list-group-flush ">
-            <li class="list-group-item ">
-                <?php foreach ($announces as $result) { ?>
-                    <b>คำถาม:</b> <?= $result['question'] ?> <br>
-                    <b>คำตอบ:</b> <?= $result['answer'] ?>
-                    <a href="/delQA?id=<?= $result['qa_id'] ?>"><button type="button" class="btn btn-danger btn-sm text-dark pull-right">ลบ</button></a>
-                    <hr>
-                <?php  } ?>
+        <form method="post" class="d-inline-flex justify-content-center align-items-center" action="/filterQA">
+            <label for="filterKeyword" class="mx-2">เลือกคำที่ต้องการคัดคำ:</label>
+            <select name="filterKeyword" id="filterKeyword">
+                <option value="เลือก">เลือกคำเพื่อกรอง</option>
+                <option value="ที่ไหน">ที่ไหน</option>
+                <option value="อย่างไร">อย่างไร</option>
+                <option value="ทำไม">ทำไม</option>
+                <!-- เพิ่มตัวเลือกคำต่าง ๆ ตามที่คุณต้องการ -->
+            </select>
 
+            <button type="submit" class="btn btn-primary mx-2">กรอง</button>
+            <a href="/chat" class="btn btn-danger mx-2">รีเซ็ต</a>
+        </form>
 
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <?php
+                $filter = isset($_SESSION['filter']) ? $_SESSION['filter'] : null;
+                $selectedKeyword = isset($_SESSION['selectedKeyword']) ? $_SESSION['selectedKeyword'] : null;
+                unset($_SESSION['filter']);
+                unset($_SESSION['selectedKeyword']);
+                if (!empty($filter)) {
+                    foreach ($filter as $filter_question) {
+                        echo "<b>คำถาม:</b> " . $filter_question['question'] . "<br>";
+                        echo "<b>คำตอบ:</b> " . $filter_question['answer'] . "<br>";
+                        echo "<a href=\"/delQA?id=" . $filter_question['qa_id'] . "\"><button type=\"button\" class=\"btn btn-danger btn-sm text-dark pull-right\">ลบ</button></a>";
+                        echo "<hr>";
+                    }
+                } else {
+                    if (empty($selectedKeyword)) {
+                        foreach ($announces as $announce) {
+                            echo "<b>คำถาม:</b> " . $announce['question'] . "<br>";
+                            echo "<b>คำตอบ:</b> " . $announce['answer'] . "<br>";
+                            echo "<a href=\"/delQA?id=" . $announce['qa_id'] . "\"><button type=\"button\" class=\"btn btn-danger btn-sm text-dark pull-right\">ลบ</button></a>";
+                            echo "<hr>";
+                        }
+                    } else {
+                        echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
+                    }
+                }
+
+                ?>
             </li>
         </ul>
     </div>

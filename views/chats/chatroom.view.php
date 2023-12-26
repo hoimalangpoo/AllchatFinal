@@ -2,7 +2,8 @@
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
     $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
-// check($chats);
+    // check($chats);
+
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
@@ -16,8 +17,12 @@ foreach ($fromline as $line) {
             <div class="card-body shadow p-4 rounded d-flex flex-column messages" id="conversation<?= $line['lineOAid'] ?>">
                 <?php
                 foreach ($chats as $chat) {
+                    // check($chat);
+                    $chat_id = strpos($chat['chat_id'], 'announce');
+                    $linech = $chat['recieve_id'];
 
-                    if (($chat['sender_id'] == $_SESSION['user']) || strpos($chat['chat_id'], 'announce')){ ?>
+
+                    if (($chat['sender_id'] == $_SESSION['user']) || $chat_id) { ?>
                         <p class="rtext align-self-end border rounded p-2 mb-2">
                             <?= $chat['messages'] ?>
                             <small class="d-block">
@@ -53,6 +58,7 @@ foreach ($fromline as $line) {
                 <?php
                     }
                 }
+
                 ?>
 
             </div>

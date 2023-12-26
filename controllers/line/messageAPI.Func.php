@@ -34,7 +34,7 @@ function saveContact($user_id, $display_name, $lineOAid, $db){
         exit;
     }
 }
-function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
+function saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db)
 {
     //////////////////////////////////////////Line_USER/////////////////////////
     $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.id AS recieve_id
@@ -48,12 +48,13 @@ function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
         $sender_id = $check_id['sender_id'];
         $recieve_id = $check_id['recieve_id'];
 
-        $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id)
-        VALUES(:message_text, :message_type, :sender_id, :recieve_id)", [
+        $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token)
+        VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken)", [
             "message_text" => $message_text,
             "message_type" => $message_type,
             "sender_id" => $sender_id,
             "recieve_id" => $recieve_id,
+            "quoteToken" => $quoteToken
 
         ]);
 
@@ -94,31 +95,27 @@ function getUserID($chat_id, $db)
     return $idfromchat;
 }
 
-function getLineOAID($chat_id, $db)
+function getreplyToken($chat_id, $db)
 {
-    $all_user = $db->query("SELECT line_contact.user_id FROM line_chat 
-    JOIN line_contact ON line_chat.sender_id = line_contact.id
-    WHERE line_chat.chat_id = :chat_id", [
+    $token_reply = $db->query("SELECT reply_token FROM line_chat WHERE chat_id = :chat_id",[
         "chat_id" => $chat_id,
     ])->find();
 
-    $idfromchat = $all_user['user_id'];
-
-    return $idfromchat;
+    return $token_reply;
 }
 
 
-function sendLineMessage($userId, $messages, $access_token)
+function sendLineMessage($userId, $messages, $quoteToken, $access_token)
 {
-    // Data to be sent
     $data = array(
         'to' => $userId,
         'messages' => array(
             array(
                 'type' => 'text',
-                'text' => $messages
-            )
-        )
+                'text' => $messages,
+                'quoteToken' => $quoteToken, 
+            ),
+        ),
     );
 
     $url = 'https://api.line.me/v2/bot/message/push';
@@ -134,19 +131,23 @@ function sendLineMessage($userId, $messages, $access_token)
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    
+    echo "Request JSON: " . json_encode($data) . "\n";
+
     $result = curl_exec($ch);
-    curl_close($ch);
 
     if ($result === FALSE) {
-        return "Error sending message.";
+        echo "Error sending message. cURL Error: " . curl_error($ch);
     } else {
-        return "Message sent successfully.";
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        echo "HTTP Code: " . $http_code . "\n";
+        echo "Response: " . $result . "\n";
     }
+
+    curl_close($ch);
 }
 
 function isQuestion($text) {
-    // ตรวจสอบว่าข้อความมีลักษณะคำถามหรือไม่
-    // ตัวอย่าง: ประโยคลงท้ายด้วย "?"
     $text = trim($text);
     $endsWithQuestionMark = mb_substr($text, -1) === "?";
     $containsWhat = mb_strpos($text, "อะไร") !== false;

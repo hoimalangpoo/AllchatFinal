@@ -41,7 +41,7 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
 
                 if ($chat['reply'] == 1) { ?>
 
-                    <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                    <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success text-white" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
                         <p class="mb-0">
                             <?= $chat['messages'] ?>
                             <small class="d-block">
@@ -59,10 +59,12 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
                         </p>
                     </div>
                 <?php } ?>
-                    <?php require base_path('controllers/chats/ajax.reply.php'); 
+
+                <?php require base_path('controllers/chats/ajax.reply.php'); 
 
             }
         }
     }
+    
 }
 ?>

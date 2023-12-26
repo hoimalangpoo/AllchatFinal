@@ -26,9 +26,16 @@
               <h5>บัญชีไลน์</h5>
             </div>
             <ul class="list-group list-group-flush ">
-              <?php foreach ($fromline as $line) { ?>
+              <?php foreach ($fromline as $line) { 
+                $lineOA_id = $line["id"];
+                $not_reply = $db->query("SELECT COUNT(*) as not_reply FROM line_chat where (reply = 0 AND recieve_id = :lineOA_id)",[
+                    "lineOA_id" => $lineOA_id
+                ])->find();
+             
+                ?>
                 <li class="list-group-item linelist" id="<?= $line["lineOAid"] ?>lineOAid<?= $line["id"] ?>" data-touserid="<?= $line["lineOAid"] ?>" data-toggle="collapse" data-target="#collapse<?= $line["lineOAid"] ?>" aria-expanded="true" aria-controls="collapse<?= $line["lineOAid"] ?>">
                   <img src="<?= $line["profile"] ?>" class="img-fluid rounded-circle" alt="Responsive image"> <?= $line["lineOaDisplayName"] ?>
+                  <span class="badge badge-secondary text-warning rounded-circle bg-dark mx-2"><?=$not_reply["not_reply"]?></span>
                 </li>
 
               <?php } ?>
@@ -39,6 +46,8 @@
         <?php require base_path('controllers/chats/chatroom.php'); ?>
 
         <?php require base_path('controllers/chats/announce.php'); ?>
+
+        
       </div>
 
     </div>
