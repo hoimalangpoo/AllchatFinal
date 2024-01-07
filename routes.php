@@ -40,7 +40,7 @@ $router->post('/addlineoa', 'controllers/setting/addlineOA.php');
 // ---------------------------------------------Q&A-----------------------------------------
 $router->get('/delQA', 'controllers/QnA/delete.php')->only('auth');
 $router->post('/addQA', 'controllers/QnA/add.php')->only('auth');
-$router->post('/filterQA', 'controllers/QnA/filter.php')->only('auth');
+$router->post('/searchQA', 'controllers/QnA/search.php')->only('auth');
 
 
 // ---------------------------------------------DASHBOARD-----------------------------------------

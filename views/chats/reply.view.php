@@ -18,7 +18,7 @@
     </div>
     <div class="message-input" id="replySection">
         <div class="message-input" id="replyContainer">
-            <div class="wrap">
+            <div class="wrap" style="display: flex;">
 
                 <input type="text" class="chatMessage" id="reply<?php echo $chat['chat_id'] ?>chat_id<?= $chat['recieve_id'] ?>" placeholder="Reply to ..." />
 

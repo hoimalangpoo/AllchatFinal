@@ -3,6 +3,8 @@
 use Core\App;
 use Core\Database;
 
+require __DIR__.'/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/notyes/thsplitlib/THSplitLib/segment.php';
 $db = App::resolve(Database::class);
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////
 function saveContact($user_id, $display_name, $lineOAid, $db){
@@ -34,6 +36,39 @@ function saveContact($user_id, $display_name, $lineOAid, $db){
         exit;
     }
 }
+function checkmsg($message_text, $db)
+{
+  $segment = new Segment();
+  $result = $segment->get_segment_array($message_text);
+  //  check($wordsString);
+  $query = "SELECT question FROM announceqa WHERE ";
+
+  foreach ($result as $word) {
+    $query .= "question LIKE '%$word%' OR ";
+  }
+  $query = rtrim($query, " OR ");
+  $query .= " GROUP BY question";
+
+  $message = $db->query($query, [
+    "message_text" => '%' . $message_text . '%'
+  ])->findAll();
+  if (!empty($message)) {
+    foreach ($message as $sentence) {
+      $count = 0;
+      $columnName = $sentence['question'];
+      foreach ($result as $word) {
+        $count += substr_count($columnName, $word);
+        if ($count > 2) {
+          return $count;
+          exit;
+        }
+      }
+    }
+  }else{
+    echo "ไม่พบข้อมูล";
+  }
+}
+
 function saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db)
 {
     //////////////////////////////////////////Line_USER/////////////////////////
@@ -47,18 +82,30 @@ function saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken
     if ($check_id) {
         $sender_id = $check_id['sender_id'];
         $recieve_id = $check_id['recieve_id'];
-
-        $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token)
-        VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken)", [
-            "message_text" => $message_text,
-            "message_type" => $message_type,
-            "sender_id" => $sender_id,
-            "recieve_id" => $recieve_id,
-            "quoteToken" => $quoteToken
-
-        ]);
-
-        exit();
+        $match_qa = checkmsg($message_text,$db);
+        if($match_qa > 2){
+            $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token, match_qa)
+            VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken, :match_qa)", [
+                "message_text" => $message_text,
+                "message_type" => $message_type,
+                "sender_id" => $sender_id,
+                "recieve_id" => $recieve_id,
+                "quoteToken" => $quoteToken,
+                "match_qa" => $match_qa
+    
+            ]);
+        }else{
+            $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token)
+            VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken)", [
+                "message_text" => $message_text,
+                "message_type" => $message_type,
+                "sender_id" => $sender_id,
+                "recieve_id" => $recieve_id,
+                "quoteToken" => $quoteToken,
+    
+            ]);
+        }
+        
     } else {
       
         exit();
