@@ -1,125 +1,88 @@
+var isSending = false;
 
+function handleReplyButton() {
+    if (isSending) {
+        return;
+    }
 
-$(document).ready(function() {
-    var isSending = false;
-    var isClicked = {};
-	$(".replyButton").on('click', function(){
-        
+    var rawid = $(this).attr('id');
+    chat_id = rawid.split("chat_id")[0];
+    lineid = rawid.split("chat_id")[1];
+    message = $("#reply" + chat_id + "chat_id" + lineid).val();
+
+    console.log(message);
+    if (message == "") return;
+    chatwith = $('#' + chat_id).attr('id');
+
+    console.log(chatwith);
+    isSending = true;
+    $.post("/reply", {
+            message: message,
+            chat_id: chat_id,
+            reply_linech: lineid
+        },
+        function(data, status) {
+            $("#reply" + chat_id + "chat_id" + lineid).val("");
+            $("#conversation" + chat_id).append(data);
+
+            isSending = false;
+        });
+
+    if (lineid == "1") {
+        $.post("/webhookch1", {
+            reply: message,
+            chat_id: chat_id
+        })
+    } else if (lineid == "2") {
+        $.post("/webhookch2", {
+            reply: message,
+            chat_id: chat_id
+        })
+    }
+}
+
+function handleReplyInput(e) {
+    if (e.which == 13) {
+        e.preventDefault();
+
         if (isSending) {
             return;
-        }var rawid = $(this).attr('id');
-		id = rawid.split("lineOAid")[0];
-		lineOA = rawid.split("lineOAid")[1];
-		message = $("#reply"+id+"lineOAid"+lineOA).val();
-        
-        console.log(message);
-        if(message == "") return;
-        chatwith = $('#'+id).attr('id');
-            
-        console.log(chatwith);
+        }
+
+        var rawid = $(this).attr('id');
+        chat_id = rawid.split("reply")[1].split("chat_id")[0];
+        lineid = rawid.split("chat_id")[1];
+        message = $("#reply" + chat_id + "chat_id" + lineid).val();
+
+        if (message == "") return;
+
         isSending = true;
-        $.post("/reply",
-                {
-                    message: message,
-                    chat_id: id,
-                    linech:lineOA
-                },
-        function(data, status){
-                    $("#reply"+id+"lineOAid"+lineOA).val("");
-                    $("#conversation"+id).append(data);
-				
-                    isSending = false;
-                })
-        if(lineid == "1"){
-				$.post("/webhookch1",
-				{
-					reply: message,
-				    chat_id: id
-				})
-			}else if(lineid == "2"){
-				$.post("/webhookch2",
-				{
-					reply: message,
-				    chat_id: id
-				})
-			}
-        
-		
-	});
-	
-    $("input[id^='reply']").on("keydown", function(e){
-        if(e.which == 13){
-			e.preventDefault();
+        $.post("/reply", {
+                message: message,
+                chat_id: chat_id,
+                reply_linech: lineid
+            },
+            function(data, status) {
+                $("#reply" + chat_id + "chat_id" + lineid).val("");
+                $("#conversation" + chat_id).append(data);
 
-            if (isSending) {
-                return;
-            }
+                isSending = false;
+            });
 
-            var rawid = $(this).attr('id');
-            id = rawid.split("reply")[1].split("lineOAid")[0];
-			lineid = rawid.split("lineOAid")[1];
-			message = $("#reply"+id+"lineOAid"+lineid).val();
-
-			console.log(message);
-			if(message == "") return;
-			
-
-            isSending = true;
-			$.post("/reply",
-				{
-					message: message,
-					chat_id: id,
-                    linech:lineid
-				},
-				function(data, status){
-					$("#reply"+id+"lineOAid"+lineid).val("");
-                    $("#conversation"+id).append(data);
-				
-                    isSending = false;
-				})
-             if(lineid == "1"){
-				$.post("/webhookch1",
-				{
-					reply: message,
-				    chat_id: id
-				})
-			}else if(lineid == "2"){
-				$.post("/webhookch2",
-				{
-					reply: message,
-				    chat_id: id
-				})
-			}
- 
+        if (lineid == "1") {
+            $.post("/webhookch1", {
+                reply: message,
+                chat_id: chat_id
+            })
+        } else if (lineid == "2") {
+            $.post("/webhookch2", {
+                reply: message,
+                chat_id: chat_id
+            })
         }
-    });
+    }
+}
 
-    $(".msglist").on('click', function(){
-		var rawid = this.id;
-		id = rawid.split("chatuser")[1].split("lineOAid")[0];
-        lineid = rawid.split("lineOAid")[1];
-
-        // console.log(id); 
-        if (!isClicked[id]){
-            isClicked[id] = true;
-            $.post("/getreply", {
-                chat_id: id,
-                linech:lineid
-              },
-              function(data, status) {
-                $("#conversation"+id).append(data);
-                
-                
-              });
-             
-        }
-              
-	});
-
- 
-    
-
-	
-
-	
-});
+// Attach event handlers
+$(".replyButton").on('click', handleReplyButton);
+$("input[id^='reply']").on("keydown", handleReplyInput);

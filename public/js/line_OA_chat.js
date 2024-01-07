@@ -49,8 +49,8 @@ $(document).ready(function() {
 			console.log(message);
 			if(message == "") return;
 			chatwith = $('#'+id).attr('id');
-			console.log(lineid);
-
+			// console.log(lineid);
+		
 
 			$.post("/line_oa_chat",
 				{
@@ -90,8 +90,9 @@ $(document).ready(function() {
 		let scrollToBottom = function() {
 			chatBox.scrollTop(chatBox.prop("scrollHeight"));
 		};
-		console.log(id);
+
 		let fechData = function() {
+			console.log("lineOAid =" + id + " AND " + "linech = " + lineid); 
 			$.post("/getlineOAmsg", {
 				lineOAid: id,
 				linech:lineid 	
@@ -113,14 +114,14 @@ $(document).ready(function() {
 	
 
 	$("#toggleButton1").click(function() {
-		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
-		$("#inputField1").toggleClass("d-none"); // แสดงช่องกรอก
+		$(this).toggleClass("d-none"); 
+		$("#inputField1").toggleClass("d-none"); 
 
 	});
 
 	$("#toggleButton2").click(function() {
-		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
-		$("#inputField2").toggleClass("d-none"); // แสดงช่องกรอก
+		$(this).toggleClass("d-none"); 
+		$("#inputField2").toggleClass("d-none"); 
 
 	});
 	

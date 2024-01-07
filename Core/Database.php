@@ -168,7 +168,25 @@ class Database
         return $all_chat;
     }
 
+    public function getreply($userid, $chat_id, $linech, $db)
+    {
+        $reply = $db->query("SELECT line_reply.*
+    FROM line_reply
+    WHERE 
+        (line_reply.sender_id = :userid AND line_reply.chat_id = :chat_id AND line_reply.from_ch = :linech)
+        OR
+        ((SELECT by_user FROM line_oa WHERE by_user = :userid) 
+        AND line_reply.from_ch = :linech AND line_reply.chat_id = :chat_id)", [
+            "userid" => $userid,
+            "chat_id" => $chat_id,
+            "linech" => $linech
+        ])->findAll();
+
+        // check($reply);
+        return $reply;
+    }
+
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-
+   
 }
