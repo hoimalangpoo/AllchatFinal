@@ -36,9 +36,10 @@ foreach ($fromline as $line) {
                         $backgroundColor = '';
                         if ($chat['reply'] == 1) {
                             $backgroundColor = 'bg-success text-white';
-                        } else if ($chat['match_qa'] > 2 && $chat['reply'] == 0) {
+                        } else if ($chat['match_qa'] > 3 && $chat['reply'] == 0) {
                             $backgroundColor = 'bg-warning text-black';
                         } ?>
+
 
                         <div class="ltext align-self-start border rounded p-2 mb-2 msglist <?= $backgroundColor ?> " id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
                             <p class="mb-0">
@@ -47,7 +48,16 @@ foreach ($fromline as $line) {
                                     <?= date("h:i a", strtotime($chat['created_at'])) ?>
                                 </small>
                             </p>
+                            <?php if ($chat['match_qa'] > 3 && $chat['reply'] == 0) : ?>
+                                <form method="POST" action="/search">
+                                    <input type="hidden" name="match_message" value="<?= $chat['messages'] ?>">
+                                    <button type="submit">ค้นหา</button>
+                                </form>
+                            <?php endif; ?>
                         </div>
+
+
+
 
 
                         <?php require base_path('controllers/chats/reply.php'); ?>

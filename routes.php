@@ -23,6 +23,7 @@ $router->post('/line_oa_chat', 'controllers/chats/insert_announce.php')->only('a
 $router->post('/reply', 'controllers/chats/reply_insert.php')->only('auth');
 $router->post('/getreply', 'controllers/chats/replyget.php')->only('auth');
 
+
 // ---------------------------------------------ACCOUNT-----------------------------------------
 $router->get('/account', 'controllers/account/account.php')->only('auth');
 $router->post('/updated_account', 'controllers/account/updated_account.php')->only('auth');
@@ -41,6 +42,7 @@ $router->post('/addlineoa', 'controllers/setting/addlineOA.php');
 $router->get('/delQA', 'controllers/QnA/delete.php')->only('auth');
 $router->post('/addQA', 'controllers/QnA/add.php')->only('auth');
 $router->post('/searchQA', 'controllers/QnA/search.php')->only('auth');
+$router->post('/search', 'controllers/QnA/search.php')->only('auth');
 
 
 // ---------------------------------------------DASHBOARD-----------------------------------------

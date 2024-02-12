@@ -42,7 +42,7 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
                 $backgroundColor = '';
                 if ($chat['reply'] == 1) {
                     $backgroundColor = 'bg-success text-white';
-                } else if ($chat['match_qa'] > 2 && $chat['reply'] == 0) {
+                } else if ($chat['match_qa'] > 3 && $chat['reply'] == 0) {
                     $backgroundColor = 'bg-warning text-black';
                 } ?>
 
@@ -53,6 +53,12 @@ if (isset($_POST['lineOAid']) && isset($_POST['linech'])) {
                             <?= date("h:i a", strtotime($chat['created_at'])) ?>
                         </small>
                     </p>
+                    <?php if ($chat['match_qa'] > 3 && $chat['reply'] == 0) : ?>
+                                <form method="POST" action="/search">
+                                    <input type="hidden" name="match_message" value="<?= $chat['messages'] ?>">
+                                    <button type="submit">ค้นหา</button>
+                                </form>
+                            <?php endif; ?>
                 </div>
 
                 <?php require base_path('controllers/chats/ajax.reply.php'); 
