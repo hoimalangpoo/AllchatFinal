@@ -72,6 +72,19 @@ class Database
         return $chat;
     }
 
+    public function getgroupchats($user_id, $group_id, $db)
+    {
+        $groupchat = $db->query("SELECT group_messages.*, users.name as name_user FROM group_messages JOIN users ON group_messages.user_id = users._id
+        WHERE (group_messages.user_id != :user_id AND group_messages.group_id = :group_id)
+        OR  (group_messages.user_id = :user_id AND group_messages.group_id = :group_id)
+        ORDER BY group_messages.group_msg_id ASC", [
+            "group_id" => $group_id,
+            "user_id" => $user_id
+        ])->findAll();
+
+        return $groupchat;
+    }
+
     public function opened($id_1, $db, $chats)
     {
         foreach ($chats as $chat) {
@@ -82,6 +95,20 @@ class Database
                     "opened" => $opened,
                     "sender_id" => $id_1,
                     "chat_id" => $chat_id
+                ]);
+            }
+        }
+    }
+    public function openedgroup($user_id, $db, $groupchat)
+    {
+        foreach ($groupchat as $chat) {
+            if ($chat['opened'] == 0) {
+                $opened = 1;
+                $group_msg_id = $chat['group_msg_id'];
+                $db->query("UPDATE group_messages SET opened = :opened WHERE user_id != :user_id AND group_msg_id = :group_msg_id", [
+                    "opened" => $opened,
+                    "sender_id" => $user_id,
+                    "group_msg_id" => $group_msg_id
                 ]);
             }
         }
@@ -188,5 +215,5 @@ class Database
 
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-   
+
 }

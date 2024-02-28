@@ -16,6 +16,8 @@ $router->get('/chatfriend', 'controllers/friends/chat.php')->only('auth');
 $router->post('/getmsg', 'controllers/friends/getmsg.php')->only('auth');
 $router->post('/insert_chat', 'controllers/friends/insert_chat.php')->only('auth');
 
+
+
 // ---------------------------------------------CHAT LINEOA-----------------------------------------
 $router->get('/chat', 'controllers/chats/chat.php')->only('auth');
 $router->post('/getlineOAmsg', 'controllers/chats/getmsg.php')->only('auth');
@@ -53,3 +55,5 @@ $router->get('/getdata', 'controllers/dashboard/getdata.php')->only('auth');
 $router->get('/creategroup', 'controllers/group/creategroup.php')->only('auth');
 $router->post('/insertgroup', 'controllers/group/insertgroup.php');
 $router->get('/chatgroup', 'controllers/group/chatgroup.php')->only('auth');
+$router->post('/getgroupmsg', 'controllers/group/getgroupmsg.php')->only('auth');
+$router->post('/insert_groupchat', 'controllers/group/insert_groupchat.php')->only('auth');

@@ -1,7 +1,9 @@
 <?php
 foreach ($groups as $group) {
-    // $chat = $db->getchats($userid, $group['group_id'], $db);
-    // $db->opened($group['group_id'], $db, $chat);
+    $groupchat = $db->getgroupchats($userid, $group['group_id'], $db);
+    $db->openedgroup($userid, $db, $groupchat);
+    // check($groupchat);
+
 ?>
 
     <div class="content col collapse" id="collapse<?php echo $group['group_id'] ?>" aria-labelledby="heading<?php echo $group['group_id'] ?>" data-parent="#accordionExample">
@@ -16,8 +18,27 @@ foreach ($groups as $group) {
             </div>
 
             <div class="card-body shadow p-4 rounded d-flex flex-column messages" id="conversation<?php echo $group['group_id'] ?>">
-                
+                <?php
+                foreach ($groupchat as $msg) {
 
+                    if ($msg['user_id'] == $_SESSION['user']) { ?>
+                        <p class="rtext align-self-end border rounded p-2 ">
+                            <?= $msg['messages'] ?>
+                            <small class="d-block">
+                                <?= date("h:i a", strtotime($msg['send_at'])) ?>
+                            </small>
+                        </p>
+                    <?php } else { ?>
+                        <p class="ltext align-self-start border rounded p-2 ">
+                            <span class="sender-name"><?= $msg['name_user'] ?>: </span>
+                            <?= $msg['messages'] ?>
+                            <small class="d-block">
+                                <?= date("h:i a", strtotime($msg['send_at'])) ?>
+                            </small>
+                        </p>
+                <?php }
+                }
+                ?>
             </div>
 
             <div class="message-input" id="replySection">

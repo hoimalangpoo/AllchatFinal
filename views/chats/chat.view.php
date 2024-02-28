@@ -57,7 +57,7 @@
 </body>
 <script src="js/line_OA_chat.js"></script>
 <script src="js/reply.js"></script>
-<script src="js/search.js"></script>
+
 <style>
   body {
     background-image: url(ภาพ/background.jpg);

@@ -2,6 +2,7 @@
 foreach ($friends as $friend) {
     $chat = $db->getchats($userid, $friend['_id'], $db);
     $db->opened($friend['_id'], $db, $chat);
+    // check($chat);
 ?>
 
     <div class="content col collapse" id="collapse<?php echo $friend['_id'] ?>" data-parent="#accordionExample">
