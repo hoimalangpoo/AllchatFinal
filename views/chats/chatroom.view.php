@@ -1,8 +1,8 @@
 <?php
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
-    $chats = $db->lineOAgetchats($userid, $getalluser, $db);
-    // $db->lineopened($line['lineOAid'], $db, $chat);
+    $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
+// check($chats);
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
@@ -17,7 +17,7 @@ foreach ($fromline as $line) {
                 <?php
                 foreach ($chats as $chat) {
 
-                    if ($chat['sender_id'] == $_SESSION['user']) { ?>
+                    if (($chat['sender_id'] == $_SESSION['user']) || strpos($chat['chat_id'], 'announce')){ ?>
                         <p class="rtext align-self-end border rounded p-2 mb-2">
                             <?= $chat['messages'] ?>
                             <small class="d-block">
@@ -29,7 +29,7 @@ foreach ($fromline as $line) {
                         <?php } else {
                         if ($chat['reply'] == 1) { ?>
 
-                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['from_ch'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success text-white" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
                                 <p class="mb-0">
                                     <?= $chat['messages'] ?>
                                     <small class="d-block">
@@ -38,7 +38,7 @@ foreach ($fromline as $line) {
                                 </p>
                             </div>
                         <?php } else { ?>
-                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['from_ch'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
                                 <p class="mb-0">
                                     <?= $chat['messages'] ?>
                                     <small class="d-block">
@@ -59,8 +59,11 @@ foreach ($fromline as $line) {
 
             <div class="message-input" id="replySection">
                 <div class="message-input" id="replyContainer">
-                    <div class="wrap">
-                        <input type="text" class="chatMessage" id="message<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>" placeholder="Write your message to everyone" />
+                    <div class="d-flex justify-content-center align-items-center" >
+                        <button id="toggleButton<?= $line['id'] ?>" class="btn btn-warning " style="width:100%">ประกาศ</button>
+                    </div>
+                    <div class="wrap d-none" id="inputField<?= $line['id'] ?>">
+                        <input type="text" class="chatMessage " id="message<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>" placeholder="ประกาศถึงทุกคน" />
 
                         <button class="chatButton" id="<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 

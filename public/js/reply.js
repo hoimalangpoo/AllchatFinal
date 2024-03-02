@@ -99,7 +99,7 @@ $(document).ready(function() {
 		id = rawid.split("chatuser")[1].split("lineOAid")[0];
         lineid = rawid.split("lineOAid")[1];
 
-        // console.log(id); 
+       
         if (!isClicked[id]){
             isClicked[id] = true;
             $.post("/getreply", {

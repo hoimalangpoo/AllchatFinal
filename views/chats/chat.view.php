@@ -27,7 +27,7 @@
             </div>
             <ul class="list-group list-group-flush ">
               <?php foreach ($fromline as $line) { ?>
-                <li class="list-group-item linelist " id="<?= $line["lineOAid"] ?>lineOAid<?= $line["id"] ?>" data-touserid="<?= $line["lineOAid"] ?>" data-toggle="collapse" data-target="#collapse<?= $line["lineOAid"] ?>" aria-expanded="true" aria-controls="collapse<?= $line["lineOAid"] ?>">
+                <li class="list-group-item linelist" id="<?= $line["lineOAid"] ?>lineOAid<?= $line["id"] ?>" data-touserid="<?= $line["lineOAid"] ?>" data-toggle="collapse" data-target="#collapse<?= $line["lineOAid"] ?>" aria-expanded="true" aria-controls="collapse<?= $line["lineOAid"] ?>">
                   <img src="<?= $line["profile"] ?>" class="img-fluid rounded-circle" alt="Responsive image"> <?= $line["lineOaDisplayName"] ?>
                 </li>
 
@@ -39,14 +39,29 @@
         <?php require base_path('controllers/chats/chatroom.php'); ?>
 
         <?php require base_path('controllers/chats/announce.php'); ?>
+        
+        <br>
+        <?php require base_path('controllers/chats/translate.php'); ?>
       </div>
 
     </div>
   </section>
 
+  
 
 </body>
 <script src="js/line_OA_chat.js"></script>
 <script src="js/reply.js"></script>
+<!-- <script src="js/translate.js"></script> -->
 
+<style>
+    body {
+    background-image: url(ภาพ/background.jpg);
+  }
+
+  .btn:hover {
+    background-color: #ffffff;
+
+  }
+</style>
 </html>

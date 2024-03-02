@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 	$(".chatButton").on('click', function(){
 		
@@ -51,15 +49,14 @@ $(document).ready(function() {
 			console.log(message);
 			if(message == "") return;
 			chatwith = $('#'+id).attr('id');
-			lineOA = $('#'+lineid).attr('id');
-			console.log(lineOA);
+			console.log(lineid);
 
-			
+
 			$.post("/line_oa_chat",
 				{
 					message: message,
 					lineOAid: chatwith,
-					linech:lineOA
+					linech:lineid
 					
 				},
 				function(data, status){
@@ -68,13 +65,13 @@ $(document).ready(function() {
 					let chatBox = document.getElementById('conversation'+id);
 					chatBox.scrollTop = chatBox.scrollHeight;
 				})
-			if(lineOA == "1"){
+			if(lineid == "1"){
 				$.post("/webhookch1",
 				{
 					message: message,
 					lineOAid: chatwith
 				})
-			}else if(lineOA == "2"){
+			}else if(lineid == "2"){
 				$.post("/webhookch2",
 				{
 					message: message,
@@ -93,11 +90,11 @@ $(document).ready(function() {
 		let scrollToBottom = function() {
 			chatBox.scrollTop(chatBox.prop("scrollHeight"));
 		};
-		// console.log(id);
+		console.log(id);
 		let fechData = function() {
 			$.post("/getlineOAmsg", {
 				lineOAid: id,
-				linech:lineid
+				linech:lineid 	
 			  },
 			  function(data, status) {
 				let beforeHeight = chatBox.prop("scrollHeight");
@@ -114,5 +111,17 @@ $(document).ready(function() {
 
 	});
 	
+
+	$("#toggleButton1").click(function() {
+		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
+		$("#inputField1").toggleClass("d-none"); // แสดงช่องกรอก
+
+	});
+
+	$("#toggleButton2").click(function() {
+		$(this).toggleClass("d-none"); // ซ่อนปุ่ม
+		$("#inputField2").toggleClass("d-none"); // แสดงช่องกรอก
+
+	});
 	
 });

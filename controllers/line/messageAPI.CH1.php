@@ -1,4 +1,4 @@
-    <?php
+<?php
 include base_path("controllers/line/messageAPI.Func.php");
 $access_token = "6FwZwSMzdaCzs0FrSxphJL8FWCXNcHTg3kkcNH8f1D2oecZ2vXDxQHFHvfXiNEC/uoE+/vn5q6ctsHMp6WTn9c1gug/ct1x7Jnu8fhn0wC80QZPoprXyq/Y+HKb3MOOMawCK7rxqdQD9tfRpBA5QDAdB04t89/1O/w1cDnyilFU=";
 
@@ -82,7 +82,10 @@ if (isset($events['events']) && is_array($events['events'])) {
                 $data = json_decode($response, true);
 
                 $lineOAid = $data['userId'];
-                saveChat($user_id, $message_type, $message_text, $lineOAid, $db);
+
+                if (isQuestion($message_text)) {
+                    saveChat($user_id, $message_type, $message_text, $lineOAid, $db);
+                }
                 
             }
         }

@@ -75,7 +75,7 @@
                                 <button name="register" type="submit" class="btn1 mt-3 mb-5">สมัครสมาชิก</button>
                             </div>
                         </div>
-                        <p class="pl-5">หากมีบัญชีอยู่แล้ว <a href="login.php">เข้าสู่ระบบ</a>ที่นี่</p>
+                        <p class="pl-5">หากมีบัญชีอยู่แล้ว <a href="/login">เข้าสู่ระบบ</a>ที่นี่</p>
                     </form>
                 </div>
             </div>

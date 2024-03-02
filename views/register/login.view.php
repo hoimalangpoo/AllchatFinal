@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="/js/validation.js" defer></script>
+
 
     <?php require base_path('views/navbar/navbar.php'); ?>
   </head>
@@ -47,8 +49,8 @@
                                 <button name="login" type="submit" class="btn1 mt-3 mb-5">เข้าสู่ระบบ</button>
                             </div>
                         </div>
-                        <a href="#" class="pl-5">ลืมรหัสผ่าน</a>
-                        <p class="pl-5">หากยังไม่มีบัญชีผู้ใช้กรุณา <a href="register.php">สมัครสมาชิก</a>ที่นี่</p>
+                        <a href="/forgotpassword" class="pl-5">ลืมรหัสผ่าน</a>
+                        <p class="pl-5">หากยังไม่มีบัญชีผู้ใช้กรุณา <a href="/register">สมัครสมาชิก</a>ที่นี่</p>
                     </form>
                 </div>
             </div>
