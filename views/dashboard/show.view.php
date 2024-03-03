@@ -1,39 +1,158 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>ChatHelper</title>
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/chat.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </head>
 
-<body>
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "allchat";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+?>
+
+<body>
   <section class=" min-vh-100">
     <?php require base_path('views/navbar/navbar.php'); ?>
     <div class="container-fluid">
       <div class="row mt-3" id="accordionExample">
         <?php require base_path('views/navbar/slidebar.php'); ?>
-        <div class="col-3">
-          <canvas id="lineChart" width="400" height="200"></canvas>
-          <script src="js/dashboard.js"></script>
-          <?php if (isset($count_msg[0])) { ?>
-            <p>จำนวนข้อความที่ตอบกลับ : <?= $count_msg[0]['message_count'] ?></p>
-          <?php } ?>
+        <div class="col">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5>แดชบอร์ด</h5>
+            </div>
+
+            <tbody>
+              <div class="container">
+
+                <div class="item item-1">
+
+                  <select name="lineOa" id="lineOaDropdown" style="width: 200px;">
+                    <option value="NULL">เลือกบัญชีไลน์</option>
+                    <?php
+                    $sql = "SELECT * FROM line_oa";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                      while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["id"] . "'>" . $row["lineOaDisplayName"] . "</option>";
+                      }
+                    } else {
+                      echo "<option value=''>ไม่พบข้อมูล</option>";
+                    }
+                    ?>
+                  </select>
+
+                </div>
+
+
+                <div class="item item-2">
+
+                  <p> จำนวนผู้สอบถามทั้งหมด</p> <br>
+                  <span id="totalContacts"></span>
+
+                </div>
+
+                <div class="item item-3">
+
+                  <p>จำนวนคำถามทั้งหมด</p><br>
+                  <span id="totalQuestion"></span>
+
+                </div>
+
+                <div class="item item-4">
+
+                  <p>จำนวนการตอบกลับทั้งหมด</p><br>
+                  <span id="totalReplies"></span>
+
+                </div>
+
+
+
+              </div>
+
+
+
+              <div class="col-3">
+                <div class="item item-5">
+                  <P class="linechart">จำนวนคำถามในแต่ละเดือน(6เดือนย้อนหลัง)</P>
+                  <canvas id="linechart"></canvas><br>
+                </div>
+                <div class="item item-7">
+                  <P class="barchart">จำนวนตอบกลับในแต่ละเดือน</P>
+                  <canvas id="barchart"></canvas><br>
+                </div>
+                <div class="item item-6">
+                  <p class="topmost clickable">รายชื่อผู้ตอบกลับข้อความทั้งหมด</p>
+                  <div id="result">
+                    <table id="userTable">
+                      <thead>
+                        <tr>
+                          <th>ชื่อผู้ใช้</th>
+                          <th>จำนวนการตอบกลับ</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <?php
+
+                        $top_users = $db->query("SELECT u._id, u.name, COUNT(*) as message_count FROM line_reply r
+                                              JOIN users u ON r.sender_id = u._id
+                                              GROUP BY r.sender_id
+                                              ORDER BY message_count DESC")->findAll();
+
+
+                        // check($top_users);
+                        foreach ($top_users as $top_user) {
+                        ?>
+                          <tr>
+                            <td class="userlist" id="<?= $top_user["_id"] ?>"> <?= $top_user['name'] ?> </td>
+                            <td> <?= $top_user['message_count'] ?></td>
+                          </tr>
+                        <?php
+                        } ?>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+
+                </div>
+
+
+
+
+                <script src="js/dashboard.js"></script>
+              </div>
+          </div>
+          </tbody>
+
         </div>
-
-
       </div>
+
+
+    </div>
 
     </div>
   </section>
@@ -41,45 +160,11 @@
 
 
 
-  <script src="js/bootstrap.esm.min.js"></script>
 
 </body>
-<style>
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+<script src="js/bootstrap.esm.min.js"></script>
 
-  body {
-    background-image: url(ภาพ/background.jpg);
-  }
 
-  .social-login-element {
-    width: 27rem;
-    height: 3.75rem;
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    border-radius: 5px;
-    border: 0.5px solid gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-  }
-
-  .social-login-element img {
-    width: 1.875rem;
-    height: 1.875rem;
-    position: relative;
-    top: 0;
-    left: -0.625rem;
-  }
-
-  .social-login-element:hover {
-    background-color: #fff9c4;
-  }
-</style>
 
 </html>

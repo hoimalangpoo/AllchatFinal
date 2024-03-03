@@ -50,6 +50,10 @@ $router->post('/search', 'controllers/QnA/search.php')->only('auth');
 // ---------------------------------------------DASHBOARD-----------------------------------------
 $router->get('/dashboard', 'controllers/dashboard/show.php')->only('auth');
 $router->get('/getdata', 'controllers/dashboard/getdata.php')->only('auth');
+$router->post('/getreplydata', 'controllers/dashboard/getreplydata.php')->only('auth');
+$router->get('/getreplydata', 'controllers/dashboard/getreplydata.php')->only('auth');
+$router->post('/dropdownfilter', 'controllers/dashboard/dropdownfilter.php')->only('auth');
+$router->get('/dropdownfilter', 'controllers/dashboard/dropdownfilter.php')->only('auth');
 
 // ---------------------------------------------GROUP-----------------------------------------
 $router->get('/creategroup', 'controllers/group/creategroup.php')->only('auth');

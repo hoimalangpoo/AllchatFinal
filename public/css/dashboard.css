@@ -1,0 +1,135 @@
+
+  body {
+    background-image: url(ภาพ/background.jpg);
+  }
+
+
+
+  .btn:hover {
+    background-color: #ffffff;
+
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+  }
+
+  body {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #F2F3F4;
+    color: #273746;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .item {
+    margin-top: 3rem;
+    width: 500px;
+    height: 150px;
+    background-color: whitesmoke;
+    padding: 1em;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+  }
+
+  .item1 {
+    margin-top: 3rem;
+    width: 500px;
+    height: 100px;
+  }
+
+  .item-2 {
+    margin-left: 5rem;
+  }
+
+  .item-3 {
+    margin-left: 5rem;
+  }
+
+  .item-4 {
+    margin-left: 5rem;
+  }
+
+  .col-3 {
+    margin-top: 3rem;
+    margin-left: 3rem;
+    width: 90%;
+    height: 30rem;
+    display: flex;
+  }
+
+  .item-5 {
+    width: 40rem;
+    height: 25rem;
+
+
+  }
+
+  .item-6 {
+    width: 40rem;
+    height: 25rem;
+    margin-left: 3rem;
+  }
+
+  .item-7 {
+    width: 40rem;
+    height: 25rem;
+    margin-left: 3rem;
+  }
+
+  #result table {
+    border: 3px solid #D3D3D3;
+    /* กำหนดขอบของตารางให้เป็นเส้นกรอบ 3px สีเทาเข้ม (#D3D3D3) */
+    width: 25rem;
+    /* กำหนดความกว้างของตารางให้เต็ม container ในขนาด 30rem */
+    border-collapse: collapse;
+    /* กำหนดให้ขอบของตารางมีการถูกตัดกลางเมื่อมีการผสมผสานกัน */
+    margin: 0 auto;
+    /* กำหนดให้ตารางอยู่ตรงกลางของ container */
+    margin-top: 2rem;
+    /* กำหนดระยะห่างด้านบนของตาราง */
+  }
+
+
+  #result th {
+    border: 2px solid #D3D3D3;
+    /* กำหนดขอบของเซลล์ในตารางเป็นเส้นกรอบ 1px สีเทาเข้ม (#333) */
+    padding: 8px;
+    /* กำหนดระยะห่างของข้อความภายในเซลล์ */
+    text-align: center;
+    /* จัดเนื้อหาของเซลล์ให้อยู่ชิดซ้าย */
+    background-color: #ffc107;
+  }
+
+  #result td {
+    border: 2px solid #D3D3D3;
+    /* กำหนดขอบของเซลล์ในตารางเป็นเส้นกรอบ 1px สีเทาเข้ม (#333) */
+    padding: 8px;
+    /* กำหนดระยะห่างของข้อความภายในเซลล์ */
+    text-align: left;
+
+    color: #ffc107;
+    /* เปลี่ยนสีของข้อมูลเป็นสีน้ำเงิน */
+    cursor: pointer;
+  }
+
+  .userlist.active {
+    background-color: red; 
+}
+.userlist {
+    background-color: white; 
+}
+.filterusergroup.active {
+  background-color: red; 
+}
+.filterusergroup {
+  background-color: white; 
+}
