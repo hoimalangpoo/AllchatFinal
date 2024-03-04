@@ -28,7 +28,7 @@
                         <ul class="list-group list-group-flush ">
                             <?php foreach ($groups as $group) { ?>
                                 <li class="list-group-item grouplist " id="<?php echo $group["group_id"] ?>" data-touserid="<?php echo $group["group_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $group["group_id"] ?>" aria-expanded="true">
-                                    <i class="fs-4 bi-person-circle"></i> <?php echo $group["group_name"] ?>
+                                     <?php echo $group["group_name"] ?>
 
                                 </li>
 

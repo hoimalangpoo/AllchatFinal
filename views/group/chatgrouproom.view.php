@@ -9,7 +9,7 @@ foreach ($groups as $group) {
     <div class="content col collapse" id="collapse<?php echo $group['group_id'] ?>" aria-labelledby="heading<?php echo $group['group_id'] ?>" data-parent="#accordionExample">
         <div class="card">
             <div class="contact-profile card-header bg-transparent" id="userSection">
-                <img src="ภาพ/avatar2.png" alt="" />
+            
                 <span> <?= $group['group_name'] ?> </span>
                 <span id="<?php echo $group['group_id'] ?>" class="getiduser<?php echo $group['group_id'] ?>" group_name="<?php echo $group['group_id'] ?>"> </span>
                 <button id="friendinfo" class="friendinfo" data-toggle="collapse" data-target="#groupinfo<?php echo $group['group_id'] ?>">
