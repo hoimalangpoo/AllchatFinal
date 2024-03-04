@@ -15,14 +15,15 @@
     <?php require base_path('views/navbar/navbar.php'); ?>
     <div class="container-fluid">
       <div class="row mt-3">
-      <?php require base_path('views/navbar/slidebar.php'); ?>
+        <?php require base_path('views/navbar/slidebar.php'); ?>
         <div class="col d-flex justify-content-center align-items-center ">
           <div class="card-sm  ">
             <div class="card-body ">
               <div class="row d-flex justify-content-center">
                 <div class="col-sm-5">
-                  <img src="ภาพ/avatar2.png" class="w-100 rounded-circle">
+                  <img src="data:image/png;base64,<?= $imageUrl ?>" class="w-100 rounded-circle">
                 </div>
+
               </div>
               <h2 class="data mt-5">ข้อมูลส่วนตัว</h2>
               <hr>
@@ -73,14 +74,25 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalEditnameLabel">แก้ไขชื่อและหน่วยงาน</h5>
+          <h5 class="modal-title" id="modalEditnameLabel">แก้ไขข้อมูลส่วนตัว</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/updated_account" method="POST">
+        <form action="/updated_account" method="POST" enctype="multipart/form-data">
           <div class="modal-body">
             <div class="mb-3">
-              <input type="text" name="renameuser" class="form-control" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
-              <select name="agency" class="form-select" aria-label="Default select example">
+
+              <label for="profileImage">รูปโปรไฟล์</label><br>
+              <input type="file" id="profileImage" name="profileImage"><br><br>
+           
+
+
+              ชื่อ <input type="text" name="renameuser" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
+
+              อีเมล <input type="text" name="reemail" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['email'] ?>">
+
+              เบอร์โทรศัพท์ <input name="rephone" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" name="rephone" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['telephone'] ?>">
+
+              แผนก <select name="agency" class="form-select" aria-label="Default select example">
                 <option selected value="<?= $account['id'] ?>"><?= $account['agency'] ?></option>
                 <option value="1">งานบริหารและสารสนเทศ</option>
                 <option value="2">งานรับเข้าศึกษาและการตลาด</option>
