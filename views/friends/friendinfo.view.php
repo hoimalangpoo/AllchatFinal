@@ -6,16 +6,12 @@ foreach ($friends as $friend) {
         <div class="card">
 
             <div class="contact-profile card-header bg-transparent text-center align-middle" id="userSection">
-                <img src="ภาพ/avatar2.png" alt="" />
-                <span> <?= $friend['name'] ?> </span>
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#info<?= $friend['_id'] ?>">ข้อมูล</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#file<?= $friend['_id'] ?>">ไฟล์</a>
-                    </li>
+                   
                 </ul>
 
             </div>
@@ -35,13 +31,7 @@ foreach ($friends as $friend) {
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="file<?= $friend['_id'] ?>">
-
-                    <div class="card-body shadow p-4 rounded">
-                        ไฟล์/รูป
-                    </div>
-
-                </div>
+              
 
 
             </div>

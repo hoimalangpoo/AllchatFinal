@@ -24,18 +24,20 @@
       <div class="container-fluid">
         <div class="row mt-3" id="accordionExample">
           <?php require base_path('views/navbar/slidebar.php'); ?>
-        
+          
 
         </div>
 
       </div>
     </section>
-    
+
+
   <?php } else { ?>
     <section class=" min-vh-100">
       <?php
-
       include('navbar/navbar.php'); ?>
+
+     
     </section>
 
 
@@ -43,9 +45,9 @@
 
 
   <script src="js/bootstrap.esm.min.js"></script>
-  
+
 </body>
-<script src="js/line_chat.js"></script>  
+<script src="js/line_chat.js"></script>
 <style>
   * {
     padding: 0;

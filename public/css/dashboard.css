@@ -26,6 +26,7 @@
   .container {
     display: flex;
   }
+  
 
   .item {
     margin-top: 3rem;
@@ -67,28 +68,29 @@
   }
 
   .item-5 {
-    width: 40rem;
+    width: 25rem;
     height: 25rem;
-
+    margin-left: 3rem;
 
   }
 
   .item-6 {
-    width: 40rem;
+    width: 25rem;
     height: 25rem;
-    margin-left: 3rem;
+    margin-left: 2rem;
+
   }
 
   .item-7 {
-    width: 40rem;
+    width: 25rem;
     height: 25rem;
-    margin-left: 3rem;
+    margin-left: 2rem;
   }
 
   #result table {
-    border: 3px solid #D3D3D3;
+    
     /* กำหนดขอบของตารางให้เป็นเส้นกรอบ 3px สีเทาเข้ม (#D3D3D3) */
-    width: 25rem;
+    width: 20rem;
     /* กำหนดความกว้างของตารางให้เต็ม container ในขนาด 30rem */
     border-collapse: collapse;
     /* กำหนดให้ขอบของตารางมีการถูกตัดกลางเมื่อมีการผสมผสานกัน */
@@ -122,14 +124,70 @@
   }
 
   .userlist.active {
-    background-color: red; 
+    background-color: #9c9c9c; 
+    
 }
 .userlist {
     background-color: white; 
 }
 .filterusergroup.active {
-  background-color: red; 
+  background-color: #9c9c9c; 
+  
 }
 .filterusergroup {
   background-color: white; 
+}
+
+#lineOaDropdown {
+  width: 200px; 
+  height: 30px;
+}
+
+#resetButton {
+  width: 100px;
+  height: 30px;
+  background-color: initial; 
+  transition: background-color 0.3s ease; 
+  border-radius: 4px;
+  border: 1px solid #bebebe;
+}
+
+#resetButton:hover {
+  background-color: #ffc107; 
+}
+
+
+table {
+  width: 50%; /* หรือความกว้างที่คุณต้องการ */
+}
+#userTable th,
+  #userTable td {
+    font-size: 15px; /* หรือขนาดที่คุณต้องการ */
+  }
+
+/* To display the block as level element */
+table.scrolldown tbody,
+table.scrolldown thead {
+  display: block;
+}
+
+
+
+table.scrolldown tbody {
+ 
+  /* Set the height of table body */
+  height: 10rem;
+
+  /* Set vertical scroll */
+  overflow-y: auto;
+
+  /* Hide the horizontal scroll */
+  overflow-x: hidden;
+}
+
+
+tbody td,
+thead th {
+  width: 200px;
+  
 }

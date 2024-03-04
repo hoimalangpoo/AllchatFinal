@@ -72,6 +72,19 @@ class Database
         return $chat;
     }
 
+    public function getgroupchats($user_id, $group_id, $db)
+    {
+        $groupchat = $db->query("SELECT group_messages.*, users.name as name_user FROM group_messages JOIN users ON group_messages.user_id = users._id
+        WHERE (group_messages.user_id != :user_id AND group_messages.group_id = :group_id)
+        OR  (group_messages.user_id = :user_id AND group_messages.group_id = :group_id)
+        ORDER BY group_messages.group_msg_id ASC", [
+            "group_id" => $group_id,
+            "user_id" => $user_id
+        ])->findAll();
+
+        return $groupchat;
+    }
+
     public function opened($id_1, $db, $chats)
     {
         foreach ($chats as $chat) {
@@ -82,6 +95,20 @@ class Database
                     "opened" => $opened,
                     "sender_id" => $id_1,
                     "chat_id" => $chat_id
+                ]);
+            }
+        }
+    }
+    public function openedgroup($user_id, $db, $groupchat)
+    {
+        foreach ($groupchat as $chat) {
+            if ($chat['opened'] == 0) {
+                $opened = 1;
+                $group_msg_id = $chat['group_msg_id'];
+                $db->query("UPDATE group_messages SET opened = :opened WHERE user_id != :user_id AND group_msg_id = :group_msg_id", [
+                    "opened" => $opened,
+                    "sender_id" => $user_id,
+                    "group_msg_id" => $group_msg_id
                 ]);
             }
         }
@@ -168,21 +195,33 @@ class Database
         return $all_chat;
     }
 
+    public function getreply($userid, $chat_id, $linech, $db)
+    {
+        $reply = $db->query("SELECT line_reply.*
+    FROM line_reply
+    WHERE 
+        (line_reply.sender_id = :userid AND line_reply.chat_id = :chat_id AND line_reply.from_ch = :linech)
+        OR
+        ((SELECT by_user FROM line_oa WHERE by_user = :userid) 
+        AND line_reply.from_ch = :linech AND line_reply.chat_id = :chat_id)", [
+            "userid" => $userid,
+            "chat_id" => $chat_id,
+            "linech" => $linech
+        ])->findAll();
+
+        // check($reply);
+        return $reply;
+    }
+
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-    // ////////////////////////////////GROUPINFO///////////////////////////////////////////
-    public function getgroupmember($group_id, $db){
-
-        $members = $db->query("SELECT users.name, users._id, group_users.role FROM users JOIN group_users 
+    public function getMembersByGroupId($groupid, $db){
+        $members = $db->query("SELECT users.name, users._id, group_users.role, users.profile FROM users JOIN group_users 
         ON users._id = group_users.user_id WHERE group_id = :groupid;", [
-            "groupid" => $group_id
+            "groupid" => $groupid
         ])->findAll();
-        
+
         return $members;
     }
-   
-        
-    
 
-    // ////////////////////////////////GROUPINFO///////////////////////////////////////////
 }

@@ -2,7 +2,9 @@
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
     $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
-// check($chats);
+    // check($chats);
+
+
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
@@ -16,8 +18,12 @@ foreach ($fromline as $line) {
             <div class="card-body shadow p-4 rounded d-flex flex-column messages" id="conversation<?= $line['lineOAid'] ?>">
                 <?php
                 foreach ($chats as $chat) {
+                    // check($chat);
+                    $chat_id = strpos($chat['chat_id'], 'announce');
+                    $linech = $chat['recieve_id'];
 
-                    if (($chat['sender_id'] == $_SESSION['user']) || strpos($chat['chat_id'], 'announce')){ ?>
+
+                    if (($chat['sender_id'] == $_SESSION['user']) || $chat_id) { ?>
                         <p class="rtext align-self-end border rounded p-2 mb-2">
                             <?= $chat['messages'] ?>
                             <small class="d-block">
@@ -26,41 +32,48 @@ foreach ($fromline as $line) {
                         </p>
 
 
-                        <?php } else {
-                        if ($chat['reply'] == 1) { ?>
+                    <?php } else {
+                        $backgroundColor = '';
+                        if ($chat['reply'] == 1) {
+                            $backgroundColor = 'bg-success text-white';
+                        } else if ($chat['match_qa'] > 3 && $chat['reply'] == 0) {
+                            $backgroundColor = 'bg-warning text-black';
+                        } ?>
 
-                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist bg-success text-white" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
-                                <p class="mb-0">
-                                    <?= $chat['messages'] ?>
-                                    <small class="d-block">
-                                        <?= date("h:i a", strtotime($chat['created_at'])) ?>
-                                    </small>
-                                </p>
-                            </div>
-                        <?php } else { ?>
-                            <div class="ltext align-self-start border rounded p-2 mb-2 msglist" id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
-                                <p class="mb-0">
-                                    <?= $chat['messages'] ?>
-                                    <small class="d-block">
-                                        <?= date("h:i a", strtotime($chat['created_at'])) ?>
-                                    </small>
-                                </p>
-                            </div>
-                        <?php } ?>
+
+                        <div class="ltext align-self-start border rounded p-2 mb-2 msglist <?= $backgroundColor ?> " id="chatuser<?= $chat["chat_id"] ?>lineOAid<?= $chat['recieve_id'] ?>" data-touserid="<?= $chat["chat_id"] ?>" data-toggle="collapse" data-target="#collapse<?= $chat["chat_id"] ?>" aria-expanded="true" aria-controls="collapse<?= $chat["chat_id"] ?>">
+                            <p class="mb-0">
+                                <?= $chat['messages'] ?>
+                                <small class="d-block">
+                                    <?= date("h:i a", strtotime($chat['created_at'])) ?>
+                                </small>
+                            </p>
+                            <?php if ($chat['match_qa'] > 3 && $chat['reply'] == 0) : ?>
+                                <form method="POST" action="/search">
+                                    <input type="hidden" name="match_message" value="<?= $chat['messages'] ?>">
+                                    <button type="submit">ค้นหา</button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+
+
+
+
 
                         <?php require base_path('controllers/chats/reply.php'); ?>
 
                 <?php
                     }
                 }
+
                 ?>
 
             </div>
 
             <div class="message-input" id="replySection">
                 <div class="message-input" id="replyContainer">
-                    <div class="d-flex justify-content-center align-items-center" >
-                        <button id="toggleButton<?= $line['id'] ?>" class="btn btn-warning " style="width:100%">ประกาศ</button>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button id="toggleButton<?= $line['id'] ?>" class="btn btn-warning">ประกาศ</button>
                     </div>
                     <div class="wrap d-none" id="inputField<?= $line['id'] ?>">
                         <input type="text" class="chatMessage " id="message<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>" placeholder="ประกาศถึงทุกคน" />

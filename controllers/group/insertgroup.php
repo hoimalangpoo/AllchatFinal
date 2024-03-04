@@ -6,7 +6,7 @@ use Core\Database;
 $db = App::resolve(Database::class);
 
 if (isset($_POST['selected_values']) && isset($_POST['groupname']) && isset($_POST['lineoa']) ) {
-    
+    unset($_SESSION['error']);
 
     $userid = $_SESSION['user'];
     $groupname = $_POST['groupname'];

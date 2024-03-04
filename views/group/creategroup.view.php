@@ -9,6 +9,7 @@
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/chat.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
@@ -26,7 +27,6 @@
             <?php if (isset($_SESSION['error'])) { ?>
               <div class="alert alert-danger">
                 <?= $_SESSION['error'] ?>
-                <?php unset($_SESSION['error']); ?>
               </div>
             <?php } ?>
             <div class="card-header d-flex justify-content-between align-items-center">

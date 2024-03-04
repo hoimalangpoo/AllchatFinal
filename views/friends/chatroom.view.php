@@ -2,12 +2,14 @@
 foreach ($friends as $friend) {
     $chat = $db->getchats($userid, $friend['_id'], $db);
     $db->opened($friend['_id'], $db, $chat);
+    $imageData = base64_encode($friend['profile']);
+    // check($chat);
 ?>
 
     <div class="content col collapse" id="collapse<?php echo $friend['_id'] ?>" data-parent="#accordionExample">
         <div class="card">
             <div class="contact-profile card-header bg-transparent" id="userSection">
-                <img src="ภาพ/avatar2.png" alt="" />
+                <img src="data:image/png;base64,<?= $imageData ?>" alt="" class="rounded-circle" />
                 <span> <?= $friend['name'] ?> </span>
                 <span id="<?php echo $friend['_id'] ?>" class="getiduser<?php echo $friend['_id'] ?>" name="<?php echo $friend['_id'] ?>"> </span>
                 <button id="friendinfo" class="friendinfo" data-toggle="collapse" data-target="#friendinfo<?php echo $friend['_id'] ?>">

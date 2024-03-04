@@ -27,8 +27,8 @@
                         </div>
                         <ul class="list-group list-group-flush ">
                             <?php foreach ($groups as $group) { ?>
-                                <li class="list-group-item grouplist " id="<?php echo $group["groupgroup_id"] ?>" data-touserid="<?php echo $group["group_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $group["group_id"] ?>" aria-expanded="true">
-                                    <i class="fs-4 bi-person-circle"></i> <?php echo $group["group_name"] ?>
+                                <li class="list-group-item grouplist " id="<?php echo $group["group_id"] ?>" data-touserid="<?php echo $group["group_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $group["group_id"] ?>" aria-expanded="true">
+                                     <?php echo $group["group_name"] ?>
 
                                 </li>
 
@@ -46,8 +46,8 @@
 
 
 </body>
-<script src="js/line_OA_chat.js"></script>
-<script src="js/reply.js"></script>
+
+<script src="js/chat_group.js"></script>
 <style>
       body {
     background-image: url(ภาพ/background.jpg);

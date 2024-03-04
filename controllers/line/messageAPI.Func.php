@@ -3,9 +3,12 @@
 use Core\App;
 use Core\Database;
 
+require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/notyes/thsplitlib/THSplitLib/segment.php';
 $db = App::resolve(Database::class);
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////
-function saveContact($user_id, $display_name, $lineOAid, $db){
+function saveContact($user_id, $display_name, $lineOAid, $db)
+{
     $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_user AS recieve_id 
     FROM line_contact JOIN line_oa 
     ON line_contact.lineOAid = line_oa.id
@@ -13,10 +16,9 @@ function saveContact($user_id, $display_name, $lineOAid, $db){
         "user_id" => $user_id,
         "lineOAid" => $lineOAid,
     ])->find();
-    if ($check_id){
+    if ($check_id) {
         exit;
-
-    }else{
+    } else {
         $OAid = $db->query("SELECT id FROM line_oa WHERE lineOAid = :lineOAid", [
             "lineOAid" => $lineOAid,
         ])->find();
@@ -34,7 +36,41 @@ function saveContact($user_id, $display_name, $lineOAid, $db){
         exit;
     }
 }
-function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
+function checkmsg($message_text, $db)
+{
+    $segment = new Segment();
+    $words = $segment->get_segment_array($message_text);
+    //  check($wordsString);
+    $query = "SELECT question, COUNT(*) AS match_qa FROM announceqa WHERE ";
+
+    foreach ($words as $word) {
+        $query .= "question LIKE '%$word%' OR ";
+    }
+    $query = rtrim($query, " OR ");
+    $query .= " GROUP BY question ";
+
+    $message = $db->query($query)->findAll();
+
+    if (!empty($message)) {
+        foreach ($message as $sentence) {
+            $count = 0;
+            $columnName = $sentence['question'];
+            foreach ($words as $word) {
+                if (strpos($columnName, $word) !== false) {
+                    $count++;
+                }
+            }
+            if ($count > 3) {
+                return $count;
+                exit;
+            }
+        }
+    } else {
+        echo "ไม่พบข้อมูล";
+    }
+}
+
+function saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db)
 {
     //////////////////////////////////////////Line_USER/////////////////////////
     $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.id AS recieve_id
@@ -47,21 +83,33 @@ function saveChat($user_id, $message_type, $message_text, $lineOAid, $db)
     if ($check_id) {
         $sender_id = $check_id['sender_id'];
         $recieve_id = $check_id['recieve_id'];
+        $match_qa = checkmsg($message_text, $db);
+        
+        if ($match_qa > 3) {
+            $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token, match_qa)
+            VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken, :match_qa)", [
+                "message_text" => $message_text,
+                "message_type" => $message_type,
+                "sender_id" => $sender_id,
+                "recieve_id" => $recieve_id,
+                "quoteToken" => $quoteToken,
+                "match_qa" => $match_qa
 
-        $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id)
-        VALUES(:message_text, :message_type, :sender_id, :recieve_id)", [
-            "message_text" => $message_text,
-            "message_type" => $message_type,
-            "sender_id" => $sender_id,
-            "recieve_id" => $recieve_id,
+            ]);
+        } else {
+            $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token)
+            VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken)", [
+                "message_text" => $message_text,
+                "message_type" => $message_type,
+                "sender_id" => $sender_id,
+                "recieve_id" => $recieve_id,
+                "quoteToken" => $quoteToken,
 
-        ]);
-
-        exit();
+            ]);
+        }
     } else {
-      
-        exit();
 
+        exit();
     }
 }
 
@@ -94,31 +142,27 @@ function getUserID($chat_id, $db)
     return $idfromchat;
 }
 
-function getLineOAID($chat_id, $db)
+function getreplyToken($chat_id, $db)
 {
-    $all_user = $db->query("SELECT line_contact.user_id FROM line_chat 
-    JOIN line_contact ON line_chat.sender_id = line_contact.id
-    WHERE line_chat.chat_id = :chat_id", [
+    $token_reply = $db->query("SELECT reply_token FROM line_chat WHERE chat_id = :chat_id", [
         "chat_id" => $chat_id,
     ])->find();
 
-    $idfromchat = $all_user['user_id'];
-
-    return $idfromchat;
+    return $token_reply;
 }
 
 
-function sendLineMessage($userId, $messages, $access_token)
+function sendLineMessage($userId, $messages, $quoteToken, $access_token)
 {
-    // Data to be sent
     $data = array(
         'to' => $userId,
         'messages' => array(
             array(
                 'type' => 'text',
-                'text' => $messages
-            )
-        )
+                'text' => $messages,
+                'quoteToken' => $quoteToken,
+            ),
+        ),
     );
 
     $url = 'https://api.line.me/v2/bot/message/push';
@@ -134,28 +178,33 @@ function sendLineMessage($userId, $messages, $access_token)
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+
+    echo "Request JSON: " . json_encode($data) . "\n";
+
     $result = curl_exec($ch);
-    curl_close($ch);
 
     if ($result === FALSE) {
-        return "Error sending message.";
+        echo "Error sending message. cURL Error: " . curl_error($ch);
     } else {
-        return "Message sent successfully.";
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        echo "HTTP Code: " . $http_code . "\n";
+        echo "Response: " . $result . "\n";
     }
+
+    curl_close($ch);
 }
 
-function isQuestion($text) {
-    // ตรวจสอบว่าข้อความมีลักษณะคำถามหรือไม่
-    // ตัวอย่าง: ประโยคลงท้ายด้วย "?"
+function isQuestion($text)
+{
     $text = trim($text);
     $endsWithQuestionMark = mb_substr($text, -1) === "?";
     $containsWhat = mb_strpos($text, "อะไร") !== false;
     $containsWhere = mb_strpos($text, "ที่ไหน") !== false;
     $containsWhen = mb_strpos($text, "เมื่อไหร่") !== false;
     $containsWhy = mb_strpos($text, "ทำไม") !== false;
-    $containsHow = mb_strpos($text, "อย่างไร") !== false;  
+    $containsHow = mb_strpos($text, "อย่างไร") !== false;
+    $containsMai = mb_strpos($text, "ไหม") !== false;
 
-    return $endsWithQuestionMark || $containsWhat || $containsWhere || $containsWhen || $containsWhy || $containsHow;
-    
+    return $endsWithQuestionMark || $containsWhat || $containsWhere || $containsWhen || $containsWhy || $containsHow || $containsMai;
 }
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////

@@ -36,7 +36,7 @@ if (isset($_POST['selectedValue'])) {
                 JOIN group_users ON group_users.user_id = line_reply.sender_id
                 JOIN users ON group_users.user_id = users._id
                 JOIN groups ON groups.group_id = group_users.group_id
-                WHERE groups.for_line = :lineOAid AND line_reply.from_ch = :lineOAid
+                WHERE groups.for_line = :lineOAid OR line_reply.from_ch = :lineOAid
                 GROUP BY users._id, users.name ORDER BY message_count DESC", [
         "lineOAid" => $lineOA_id
     ])->findAll();

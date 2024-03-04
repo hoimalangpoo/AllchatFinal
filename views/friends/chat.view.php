@@ -28,9 +28,11 @@
               <h5>เพื่อน</h5>
             </div>
             <ul class="list-group list-group-flush ">
-              <?php foreach ($friends as $friend) { ?>
-                <li class="list-group-item friendlist " id="<?php echo $friend["_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>">
-                  <i class="fs-4 bi-person-circle"></i> <?php echo $friend["name"] ?>
+              <?php foreach ($friends as $friend) { 
+                $imageData = base64_encode($friend['profile']); ?>
+                
+                <li class="list-group-item friendlist " id="<?= $friend["_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>">
+                  <img src="data:image/png;base64,<?= $imageData ?>" alt="" class="rounded-circle"> <?= $friend["name"] ?>
 
                 </li>
 
@@ -41,7 +43,6 @@
         </div>
         <?php require base_path('controllers/friends/chatroom.php'); ?>
         <?php require base_path('controllers/friends/friendinfo.php'); ?>
-  
       </div>
 
     </div>
@@ -50,7 +51,6 @@
 
 </body>
 <script src="js/chat.js"></script>
-
 <style>
     body {
     background-image: url(ภาพ/background.jpg);

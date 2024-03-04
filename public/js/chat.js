@@ -66,14 +66,14 @@ $(document).ready(function() {
 			  });
 		  }
 		  fechData();
-		  setInterval(fechData, 500);
+		  setInterval(fechData, 1000);
 
 	});
 	
-
+	
+	
 	
 });
-
 
 
 

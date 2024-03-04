@@ -15,14 +15,15 @@
     <?php require base_path('views/navbar/navbar.php'); ?>
     <div class="container-fluid">
       <div class="row mt-3">
-      <?php require base_path('views/navbar/slidebar.php'); ?>
+        <?php require base_path('views/navbar/slidebar.php'); ?>
         <div class="col d-flex justify-content-center align-items-center ">
           <div class="card-sm  ">
             <div class="card-body ">
               <div class="row d-flex justify-content-center">
                 <div class="col-sm-5">
-                  <img src="ภาพ/avatar2.png" class="w-100 rounded-circle">
+                  <img src="data:image/png;base64,<?= $imageUrl ?>" class="w-100   rounded-circle">
                 </div>
+
               </div>
               <h2 class="data mt-5">ข้อมูลส่วนตัว</h2>
               <hr>
@@ -63,59 +64,9 @@
           </div>
         </div>
       </div>
-
-      <div class="card translate">
-        <textarea id="input_area" name="message" rows="2" >ลองทำการแปลภาษา</textarea>
-        <br/>
-        <button onclick="submit_thai2en()">แปลภาษาจากไทยเป็นอังกฤษ</button>
-
-        
-        <textarea id="translated_area" name="message" rows="1" ></textarea>
-    </div>
-
-</div>
-
-
-
     </div>
   </section>
 
-
- 
-
-
- 
-<script>
-
-function translate(sentences, targetDiv, from_lang ='th', to_lang='en'){
-	
-  
-  sentences = sentences.replace(/\n/g, '<br>')
-  let endPoint = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from_lang}&tl=${to_lang}&dt=t&ie=UTF-8&oe=UTF-8&q=${encodeURIComponent(sentences)}` ;
-						
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-		var jsonText = JSON.parse(this.responseText);
-		text = jsonText[0][0][0]
-		text = text.replace(/<br>/g, '\n')
-      targetDiv.innerHTML = "&nbsp;" + text;	  
-    }
-  };
-  xhttp.open("GET", endPoint, true);
-  xhttp.send();
-}
-
-function submit_thai2en(){		
-	translate(input_area.value, translated_area)
-}
-
-
-</script>
-
-
-
-  
 
   <!-----------------Modal Add friend---------------------------------------->
 
@@ -123,14 +74,25 @@ function submit_thai2en(){
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalEditnameLabel">แก้ไขชื่อและหน่วยงาน</h5>
+          <h5 class="modal-title" id="modalEditnameLabel">แก้ไขข้อมูลส่วนตัว</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/updated_account" method="POST">
+        <form action="/updated_account" method="POST" enctype="multipart/form-data">
           <div class="modal-body">
             <div class="mb-3">
-              <input type="text" name="renameuser" class="form-control" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
-              <select name="agency" class="form-select" aria-label="Default select example">
+
+              <label for="profileImage">รูปโปรไฟล์</label><br>
+              <input type="file" id="profileImage" name="profileImage"><br><br>
+           
+
+
+              ชื่อ <input type="text" name="renameuser" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
+
+              อีเมล <input type="text" name="reemail" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['email'] ?>">
+
+              เบอร์โทรศัพท์ <input name="rephone" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" name="rephone" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['telephone'] ?>">
+
+              แผนก <select name="agency" class="form-select" aria-label="Default select example">
                 <option selected value="<?= $account['id'] ?>"><?= $account['agency'] ?></option>
                 <option value="1">งานบริหารและสารสนเทศ</option>
                 <option value="2">งานรับเข้าศึกษาและการตลาด</option>

@@ -41,14 +41,9 @@ if ($conn->connect_error) {
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h5>แดชบอร์ด</h5>
-            </div>
+              <div class="item-1">
 
-            <tbody>
-              <div class="container">
-
-                <div class="item item-1">
-
-                  <select name="lineOa" id="lineOaDropdown" style="width: 200px;">
+                  <select name="lineOa" id="lineOaDropdown" >
                     <option value="NULL">เลือกบัญชีไลน์</option>
                     <?php
                     $sql = "SELECT * FROM line_oa";
@@ -63,38 +58,41 @@ if ($conn->connect_error) {
                     }
                     ?>
                   </select>
-
+                  <button id="resetButton">รีเซ็ตข้อมูล</button>
+                  <script>
+                      document.getElementById('resetButton').addEventListener('click', function() {
+                          
+                          location.reload();
+                      });
+                  </script>
                 </div>
+                
+            </div>
+            <div class="container">
 
+              <div class="item item-2">
 
-                <div class="item item-2">
-
-                  <p> จำนวนผู้สอบถามทั้งหมด</p> <br>
-                  <span id="totalContacts"></span>
-
-                </div>
-
-                <div class="item item-3">
-
-                  <p>จำนวนคำถามทั้งหมด</p><br>
-                  <span id="totalQuestion"></span>
-
-                </div>
-
-                <div class="item item-4">
-
-                  <p>จำนวนการตอบกลับทั้งหมด</p><br>
-                  <span id="totalReplies"></span>
-
-                </div>
-
-
+                <p> จำนวนผู้สอบถามทั้งหมด</p> <br>
+                <span id="totalContacts"></span>
 
               </div>
 
+              <div class="item item-3">
 
+                <p>จำนวนคำถามทั้งหมด</p><br>
+                <span id="totalQuestion"></span>
 
-              <div class="col-3">
+              </div>
+
+              <div class="item item-4">
+
+                <p>จำนวนการตอบกลับทั้งหมด</p><br>
+                <span id="totalReplies"></span>
+
+              </div>
+
+            </div>
+            <div class="col-3">
                 <div class="item item-5">
                   <P class="linechart">จำนวนคำถามในแต่ละเดือน(6เดือนย้อนหลัง)</P>
                   <canvas id="linechart"></canvas><br>
@@ -105,16 +103,16 @@ if ($conn->connect_error) {
                 </div>
                 <div class="item item-6">
                   <p class="topmost clickable">รายชื่อผู้ตอบกลับข้อความทั้งหมด</p>
-                  <div id="result">
-                    <table id="userTable">
+                  <div id="result" >
+                    <table id="userTable" class="scrolldown">
                       <thead>
                         <tr>
                           <th>ชื่อผู้ใช้</th>
-                          <th>จำนวนการตอบกลับ</th>
+                          <th>จำนวนตอบกลับ</th>
                         </tr>
                       </thead>
 
-                      <tbody>
+                      <tbody >
                         <?php
 
                         $top_users = $db->query("SELECT u._id, u.name, COUNT(*) as message_count FROM line_reply r
@@ -126,7 +124,7 @@ if ($conn->connect_error) {
                         // check($top_users);
                         foreach ($top_users as $top_user) {
                         ?>
-                          <tr>
+                          <tr >
                             <td class="userlist" id="<?= $top_user["_id"] ?>"> <?= $top_user['name'] ?> </td>
                             <td> <?= $top_user['message_count'] ?></td>
                           </tr>
@@ -139,22 +137,15 @@ if ($conn->connect_error) {
 
 
                 </div>
-
-
-
-
-                <script src="js/dashboard.js"></script>
-              </div>
           </div>
-          </tbody>
-
+          <script src="js/dashboard.js"></script>
         </div>
       </div>
 
 
     </div>
 
-    </div>
+    
   </section>
 
 

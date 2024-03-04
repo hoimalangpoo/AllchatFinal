@@ -256,6 +256,30 @@ function updateTable(userData) {
     
 }
 
+//******************************************************************************************************* */
+function loadDataAndCreateChart() {
+    // โหลดข้อมูลกราฟแท่ง
+    $.ajax({
+        url: 'getreplydata',
+        dataType: 'json',
+        success: function(data) {
+            createBarChart(data);
+        }
+    });
+
+    // โหลดข้อมูลกราฟเส้น
+    $.ajax({
+        url: 'getdata',
+        dataType: 'json',
+        success: function(data) {
+            createLineChart(data);
+        }
+    });
+}
+
+
+
+
 
 });
 });
