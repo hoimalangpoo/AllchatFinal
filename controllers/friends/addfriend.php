@@ -15,13 +15,14 @@ if (isset($_POST['search'])) {
     $search = $_POST['friendSearch'];
     $id = intval($userid);
 
-    $searchFriend = $db->query("SELECT users._id, users.name FROM users 
+    $searchFriend = $db->query("SELECT DISTINCT users._id, users.name, users.profile FROM users 
     LEFT JOIN friend ON users._id = friend._from WHERE users.email LIKE :search 
-    AND users._id NOT IN(:id) AND friend.status IS NULL", [
+    AND users._id <> :id AND (friend._to <> :id OR friend._to IS NULL);", [
         "search" => '%' . $search . '%',
         "id" => $id
     ])->findAll();
 
+    // check($searchFriend);
 } else {
     $searchFriend = NULL;
 }

@@ -23,14 +23,7 @@
                     <h1 class="font-weight-bold py-3 pl-5">เริ่มใช้งาน รวมแชท</h1>
                     <h4 class="pl-5">ระบบจัดการแชท</h4>
 
-                    <div class="social-login">
-
-                        <div class="social-login-element ml-5">
-                            <img src="ภาพ/line-icon.png" alt="facebook-image">
-                            <span>เข้าสู่ระบบด้วย Line</span>
-                        </div>
-                    </div>
-                    <p class="or pl-5">หรือ</p>
+                    
                     <form action="/register" method="POST">
                         <div class="form-row">
                             <div class="col-lg-7 pl-5">
@@ -60,7 +53,7 @@
                         <div class="form-row">
                             <div class="col-lg-7 pl-5">
                                 <select name="agency" class="form-select" aria-label="Default select example">
-                                    <option disabled selected>แผนก</option>
+                                    <option disabled selected>กลุ่มงาน</option>
                                     <option value="งานบริหารและสารสนเทศ">งานบริหารและสารสนเทศ</option>
                                     <option value="งานรับเข้าศึกษาและการตลาด">งานรับเข้าศึกษาและการตลาด</option>
                                     <option value="งานบริการและทะเบียนการศึกษา">งานบริการและทะเบียนการศึกษา</option>

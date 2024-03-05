@@ -33,11 +33,12 @@
                 $friend = $db->query("SELECT * FROM users WHERE _id = :fid", [
                   "fid" => $request
                 ])->find();
-                $id = $friend['_id']; ?>
-                <li class="list-group-item mb-3 shadow-sm bg-body rounded"><i class="fs-4 bi-person-circle"></i> <?php echo $friend['name'] ?>
+                $id = $friend['_id']; 
+                 ?>
+                <li class="list-group-item mb-3 shadow-sm bg-body rounded ">  <?= $friend['name'] ?>
                   <div class="text-right">
-                    <a href="/faccept?id=<?php echo $id ?>"><button type="button" class=" btn btn-success btn-lg text-dark">รับคำขอ</button></a>
-                    <a href="/fdecline?id=<?php echo $id ?>"><button type="button" class="btn btn-danger btn-lg text-dark pull-right">ไม่ยอมรับคำขอ</button></a>
+                    <a href="/faccept?id=<?= $id ?>"><button type="button" class=" btn btn-success btn-lg text-dark">รับคำขอ</button></a>
+                    <a href="/fdecline?id=<?= $id ?>"><button type="button" class="btn btn-danger btn-lg text-dark pull-right">ไม่ยอมรับคำขอ</button></a>
                   </div>
 
                 </li>
@@ -83,8 +84,8 @@
             foreach ($searchFriend as $sFriend) {
           ?>
               <li class="list-group-item"><i class="fs-4 bi-person-circle"></i>
-                <?php echo $sFriend['name'] ?>
-                <a href="/friend_req?id=<?php echo $sFriend['_id'] ?>" class="btn btn-success btn-lg text-dark ml-2" role="button" aria-disabled="true">ส่งคำขอ</a>
+                <?= $sFriend['name'] ?>
+                <a href="/friend_req?id=<?= $sFriend['_id'] ?>" class="btn btn-success btn-lg text-dark ml-2" role="button" aria-disabled="true">ส่งคำขอ</a>
               </li>
             <?php }
           } else if ($searchFriend == NULL){   

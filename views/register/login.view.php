@@ -16,23 +16,17 @@
   
   <body>
     <section class="Form my-4 mx-5">
-        <div class="container">
+        <div class="container" style="margin-top: 5rem;">
             <div class="row ">
                 <div class="col-lg-5">
                     <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" >
                 </div>
-                <div class="col-lg-7 my-4">
+                <div class="col-lg-7 my-4" >
                     <h1 class="font-weight-bold py-4 pl-5">เข้าสู่ระบบ รวมแชท</h1>
                     <h4 class="pl-5">ระบบจัดการแชท</h4>
                 
-                <div class="social-login ">
-                    
-                    <div class="social-login-element ml-5">
-                        <img src="../ภาพ/line-icon.png" alt="line-image">
-                        <span>เข้าสู่ระบบด้วย line</span>
-                    </div>
-                </div>
-                <p class="or pl-5">หรือ</p>
+                
+               
                     <form action="/login" method="POST">
                         <div class="form-row">
                             <div class="col-lg-7 pl-5">
@@ -99,35 +93,7 @@
 
        
 
-        .social-login-element {
-            width: 20rem;
-            height: 3.75rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            border-radius: 5px;
-            border: 0.5px solid gray;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-        }
-
-        .social-login-element img {
-            width: 2.5rem;
-            height: 2.5rem;
-            position: relative;
-            border-radius: 5px;
-            top: 0;
-            left: -0.625rem;
-        }
-
-        .social-login-element:hover {
-            background-color: #fff9c4;
-        }
-        .or{
-            margin-top: 1rem;
-        }
+        
 
     </style>
 

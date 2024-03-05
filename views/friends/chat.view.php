@@ -32,7 +32,7 @@
                 $imageData = base64_encode($friend['profile']); ?>
                 
                 <li class="list-group-item friendlist " id="<?= $friend["_id"] ?>" data-toggle="collapse" data-target="#collapse<?php echo $friend["_id"] ?>">
-                  <img src="data:image/png;base64,<?= $imageData ?>" alt="" class="rounded-circle"> <?= $friend["name"] ?>
+                  <img class="logolineOA rounded-circle" src="data:image/png;base64,<?= $imageData ?>" alt=""> <?= $friend["name"] ?>
 
                 </li>
 

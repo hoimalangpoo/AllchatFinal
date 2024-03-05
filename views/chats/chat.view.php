@@ -34,7 +34,7 @@
 
               ?>
                 <li class="list-group-item linelist" id="<?= $line["lineOAid"] ?>lineOAid<?= $line["id"] ?>" data-touserid="<?= $line["lineOAid"] ?>" data-toggle="collapse" data-target="#collapse<?= $line["lineOAid"] ?>" aria-expanded="true" aria-controls="collapse<?= $line["lineOAid"] ?>">
-                  <img src="<?= $line["profile"] ?>" class="img-fluid rounded-circle" alt="Responsive image"> <?= $line["lineOaDisplayName"] ?>
+                  <img class="logolineOA" src="<?= $line["profile"] ?>" class="img-fluid rounded-circle" alt="Responsive image"> <?= $line["lineOaDisplayName"] ?>
                   <span class="badge badge-secondary text-warning rounded-circle bg-dark mx-2"><?= $not_reply["not_reply"] ?></span>
                 </li>
 

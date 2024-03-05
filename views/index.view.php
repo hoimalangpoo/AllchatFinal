@@ -22,10 +22,14 @@
     <section class=" min-vh-100">
       <?php require base_path('views/navbar/navbar.php'); ?>
       <div class="container-fluid">
-        <div class="row mt-3" id="accordionExample">
+        <div class="row mt-3" id="accordionExample" >
           <?php require base_path('views/navbar/slidebar.php'); ?>
-          
-
+          <div class="col ">
+                <div>
+                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" id="imglogoin">
+                </div>
+                
+            </div>
         </div>
 
       </div>
@@ -36,7 +40,12 @@
     <section class=" min-vh-100">
       <?php
       include('navbar/navbar.php'); ?>
-
+      <div class="col ">
+                <div>
+                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" id="imglogoout">
+                </div>
+                
+            </div>
      
     </section>
 
@@ -84,6 +93,16 @@
   .social-login-element:hover {
     background-color: #fff9c4;
   }
+
+#imglogoin{
+  margin-left:25%;
+}
+
+#imglogoout{
+  margin-left: 30%;
+}
+        
+
 </style>
 
 </html>

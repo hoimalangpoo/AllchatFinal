@@ -10,7 +10,7 @@ foreach ($fromline as $line) {
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
         <div class="card">
             <div class="contact-profile card-header bg-transparent" id="userSection">
-                <img src="<?= $line['profile'] ?>" class="img-fluid rounded-circle" alt="" />
+                <img class="logolineOA" src="<?= $line['profile'] ?>" class="img-fluid rounded-circle" alt="" />
                 <span> <?= $line['lineOaDisplayName'] ?> </span>
                 <span id="<?= $line['lineOAid'] ?>" class="getiduser<?= $line['lineOAid'] ?>" name="<?= $line['lineOAid'] ?>"> </span>
             </div>
@@ -73,7 +73,7 @@ foreach ($fromline as $line) {
             <div class="message-input" id="replySection">
                 <div class="message-input" id="replyContainer">
                     <div class="d-flex justify-content-center align-items-center">
-                        <button id="toggleButton<?= $line['id'] ?>" class="btn btn-warning">ประกาศ</button>
+                        <button id="toggleButton<?= $line['id'] ?>" class="btn btn-warning" style="width: 100%;">ประกาศ</button>
                     </div>
                     <div class="wrap d-none" id="inputField<?= $line['id'] ?>">
                         <input type="text" class="chatMessage " id="message<?= $line['lineOAid'] ?>lineOAid<?= $line['id'] ?>" placeholder="ประกาศถึงทุกคน" />

@@ -9,7 +9,7 @@ foreach ($friends as $friend) {
     <div class="content col collapse" id="collapse<?php echo $friend['_id'] ?>" data-parent="#accordionExample">
         <div class="card">
             <div class="contact-profile card-header bg-transparent" id="userSection">
-                <img src="data:image/png;base64,<?= $imageData ?>" alt="" class="rounded-circle" />
+                <img src="data:image/png;base64,<?= $imageData ?>" alt="" class="logolineOA rounded-circle" />
                 <span> <?= $friend['name'] ?> </span>
                 <span id="<?php echo $friend['_id'] ?>" class="getiduser<?php echo $friend['_id'] ?>" name="<?php echo $friend['_id'] ?>"> </span>
                 <button id="friendinfo" class="friendinfo" data-toggle="collapse" data-target="#friendinfo<?php echo $friend['_id'] ?>">

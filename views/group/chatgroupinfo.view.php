@@ -1,5 +1,6 @@
 <?php
 foreach ($groups as $group) {
+    
 
 ?>
     <div class="content col collapse " id="groupinfo<?= $group['group_id'] ?>">
@@ -29,9 +30,9 @@ foreach ($groups as $group) {
                             foreach ($members as $member) {
                                 $imageUrl = base64_encode($member['profile']);
                                 if ($member['role'] == "head") { ?>
-                                    <li class="list-group-item groupinfo"><img src="data:image/png;base64,<?= $imageUrl ?>" alt="" class="rounded-circle" /> <?= $member['name'] ?> (หัวหน้า)</li>
+                                    <li class="list-group-item groupinfo"><img class="logolineOA" src="data:image/png;base64,<?= $imageUrl ?>" alt="" class="rounded-circle" /> <?= $member['name'] ?> (หัวหน้า)</li>
                                 <?php  } elseif ($member['role'] == "member") { ?>
-                                    <li class="list-group-item groupinfo"><img src="data:image/png;base64,<?= $imageUrl ?>" alt="" class="rounded-circle" /> <?= $member['name'] ?></li>
+                                    <li class="list-group-item groupinfo"><img class="logolineOA" src="data:image/png;base64,<?= $imageUrl ?>" alt="" class="rounded-circle" /> <?= $member['name'] ?></li>
                                 <?php } ?>
 
 
@@ -82,7 +83,9 @@ foreach ($groups as $group) {
                                 </thead>
 
                                 <tbody>
-                                    <?php foreach ($friends as $friend) { ?>
+                                    <?php 
+                                    $friends = $db->getFriends($userid, $group['group_id'], $db);
+                                    foreach ($friends as $friend) { ?>
                                         <tr>
 
                                             <th class="name" style="width: 90%;">
