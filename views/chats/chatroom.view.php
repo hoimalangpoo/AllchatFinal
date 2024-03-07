@@ -2,9 +2,10 @@
 foreach ($fromline as $line) {
     $getalluser = $db->getAllid($line['lineOAid'], $db);
     $chats = $db->lineOAgetchats($userid, $line['id'], $getalluser, $db);
-    // check($chats);
+    $lastchatNotans = $db->getlastchatsNotans($chats, $db);
 
 
+    // check($lastchatNotans);
 ?>
 
     <div class="content col-6 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">
@@ -14,8 +15,11 @@ foreach ($fromline as $line) {
                 <span> <?= $line['lineOaDisplayName'] ?> </span>
                 <span id="<?= $line['lineOAid'] ?>" class="getiduser<?= $line['lineOAid'] ?>" name="<?= $line['lineOAid'] ?>"> </span>
             </div>
-
+            <div class="bg-light align-center text-center pt-3">
+                <p class="searchchat" id="lastchat<?= $lastchatNotans[0]['chat_id'] ?>line<?= $lastchatNotans[0]['recieve_id'] ?>boxforline<?=  $line['lineOAid'] ?>" style="cursor: pointer;">กดเพื่อค้นหาคำถามที่ยังไม่ได้ตอบ</p>
+            </div>
             <div class="card-body shadow p-4 rounded d-flex flex-column messages" id="conversation<?= $line['lineOAid'] ?>">
+
                 <?php
                 foreach ($chats as $chat) {
                     // check($chat);
@@ -24,7 +28,7 @@ foreach ($fromline as $line) {
 
 
                     if (($chat['sender_id'] == $_SESSION['user']) || $chat_id) { ?>
-                        <p class="rtext align-self-end border rounded p-2 mb-2">
+                        <p class="rtext align-self-end border rounded p-2 mb-2" >
                             <?= $chat['messages'] ?>
                             <small class="d-block">
                                 <?= date("h:i a", strtotime($chat['created_at'])) ?>

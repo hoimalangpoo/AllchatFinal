@@ -195,6 +195,15 @@ class Database
         return $all_chat;
     }
 
+    public function getlastchatsNotans($chats, $db)
+    {
+        foreach ($chats as $chat) {
+            $lastchat = $db->query("SELECT * FROM line_chat WHERE reply = 0 ORDER BY created_at DESC LIMIT 1", [])->findAll();
+        }
+
+        return $lastchat;
+    }
+
     public function getreply($userid, $chat_id, $linech, $db)
     {
         $reply = $db->query("SELECT line_reply.*
@@ -213,20 +222,25 @@ class Database
         return $reply;
     }
 
+    public function getLastchat()
+    {
+    }
+
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-    public function getMembersByGroupId($groupid, $db){
+    public function getMembersByGroupId($groupid, $db)
+    {
         $members = $db->query("SELECT users.name, users._id, group_users.role, group_users.group_id, users.profile FROM users JOIN group_users 
         ON users._id = group_users.user_id WHERE group_id = :groupid AND group_users.deleted_at IS NULL;", [
             "groupid" => $groupid
         ])->findAll();
-      
+
         return $members;
-      
     }
 
-    
-    public function getFriends($userid, $groupid, $db){
+
+    public function getFriends($userid, $groupid, $db)
+    {
         $friends = $db->query("SELECT users.name, users._id FROM users 
         LEFT JOIN group_users ON users._id = group_users.user_id AND group_users.group_id = :groupid
         JOIN friend ON users._id = friend._from 
@@ -240,15 +254,15 @@ class Database
         return $friends;
     }
 
-    public function checkrole($user_id, $group_id, $db){
+    public function checkrole($user_id, $group_id, $db)
+    {
         $role = $db->query("SELECT group_users.role FROM users JOIN group_users 
         ON users._id = group_users.user_id WHERE user_id = :user_id AND group_id = :group_id;", [
             "user_id" => $user_id,
             "group_id" => $group_id
-            
+
         ])->findAll();
-      
+
         return $role;
-      
     }
 }
