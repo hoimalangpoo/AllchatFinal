@@ -159,3 +159,59 @@ small{
 .grouplist{
     cursor: pointer;
 }
+
+.deletegroup{
+  
+    color: white;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1.5rem;
+}
+
+thead {
+
+    position: sticky;
+    top: 0px;
+
+  }
+
+  table {
+    border: 1px solid #5D6D7E;
+    text-align: center;
+  }
+
+
+  th {
+    height: 50px;
+    vertical-align: center;
+
+  }
+
+  tr th .check {
+    margin: 0 auto;
+    margin-right: 10rem;
+
+  }
+
+
+  tbody {
+    max-height: 200px;
+    /* กำหนดความสูงสูงสุดของ tbody */
+    overflow-y: auto;
+    /* ทำให้ tbody เป็น scrollable ในแนวตั้ง */
+    display: block;
+    /* ทำให้ tbody เป็น block element */
+  }
+
+  .addmember{
+    margin-top: 1rem;
+    display: block;
+    margin: 0 auto;
+  
+  }
+
+  .settinggroup{
+    border: 1;
+    background-color: #ffc107;
+    
+  }

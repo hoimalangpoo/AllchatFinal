@@ -15,7 +15,7 @@ SELECT line_oa.*
 FROM line_oa
 JOIN groups ON line_oa.id = groups.for_line
 JOIN group_users ON groups.group_id = group_users.group_id
-WHERE (groups.created_by != :userid AND group_users.user_id = :userid)
+WHERE (groups.created_by != :userid AND group_users.user_id = :userid) AND groups.deleted_at IS NULL AND group_users.deleted_at IS NULL
 
 UNION
 
@@ -30,7 +30,7 @@ UNION
 SELECT line_oa.*
 FROM line_oa
 JOIN groups ON line_oa.id = groups.for_line
-WHERE groups.created_by = :userid",[
+WHERE groups.created_by = :userid ",[
     "userid" => $userid
 ])->findAll();
 

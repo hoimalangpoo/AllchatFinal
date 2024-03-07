@@ -13,13 +13,13 @@
         $fdecline = $conn->db("UPDATE friend SET deleted_at = :timedelete, status = 'D' WHERE _from = :friend_id AND _to = :user_id",[
             "user_id" => $user_id,
             "friend_id" => $friend_id,
-            "timedelete" => $timedelete,
+            "timedelete" => $date,
         ]);
      
         $fdecline = $conn->prepare("UPDATE friend SET deleted_at = :timedelete, status = 'D' WHERE _from = :user_id AND _to = :friend_id",[
             "user_id" => $user_id,
             "friend_id" => $friend_id,
-            "timedelete" => $timedelete,
+            "timedelete" => $date,
         ]);
 
         header("location: /chatfriend");

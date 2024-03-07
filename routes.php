@@ -61,3 +61,8 @@ $router->post('/insertgroup', 'controllers/group/insertgroup.php');
 $router->get('/chatgroup', 'controllers/group/chatgroup.php')->only('auth');
 $router->post('/getgroupmsg', 'controllers/group/getgroupmsg.php')->only('auth');
 $router->post('/insert_groupchat', 'controllers/group/insert_groupchat.php')->only('auth');
+$router->post('/deletegroup', 'controllers/group/deletegroup.php')->only('auth');
+$router->post('/renamegroup', 'controllers/group/renamegroup.php')->only('auth');
+$router->post('/kickmember', 'controllers/group/kickmember.php')->only('auth');
+$router->post('/addmember', 'controllers/group/addmember.php')->only('auth');
+
