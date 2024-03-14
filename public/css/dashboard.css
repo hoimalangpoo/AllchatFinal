@@ -1,0 +1,211 @@
+
+  body {
+    background-image: url(ภาพ/background.jpg);
+  }
+
+
+
+  .btn:hover {
+    background-color: #ffffff;
+
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+  }
+
+  body {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #F2F3F4;
+    color: #273746;
+  }
+
+  .container {
+    display: flex;
+  }
+  
+
+  .item {
+    margin-top: 3rem;
+    width: 500px;
+    height: 150px;
+   
+    padding: 1em;
+    font-weight: 700;
+    
+    text-align: center;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+  }
+
+  .item1 {
+    margin-top: 3rem;
+    width: 500px;
+    height: 100px;
+  }
+
+  .item-2 {
+    color: rgb(255, 255, 255);
+    margin-left: 3rem;
+    background-color: rgb(157, 85, 250);
+  }
+
+  .item-3 {
+    color: rgb(255, 255, 255);
+    margin-left: 3rem;
+    background-color: rgb(62, 143, 255);
+  }
+
+  .item-4 {
+    color: rgb(255, 255, 255);
+    margin-left: 3rem;
+    margin-right: 3rem;
+    background-color: rgb(255, 70, 196);
+  }
+
+  .col-3 {
+    margin-top: 1rem;
+    margin-left: 3rem;
+    width: 90%;
+    height: 30rem;
+    display: flex;
+  }
+
+  .item-5 {
+    width: 25rem;
+    height: 20rem;
+    margin-left: 3rem;
+    
+  }
+
+  .item-6 {
+    width: 25rem;
+    height: 20rem;
+    margin-left: 2rem;
+
+  }
+
+  .item-7 {
+    width: 25rem;
+    height: 20rem;
+    margin-left: 2rem;
+  }
+
+  #result table {
+    
+    /* กำหนดขอบของตารางให้เป็นเส้นกรอบ 3px สีเทาเข้ม (#D3D3D3) */
+    width: 20rem;
+    /* กำหนดความกว้างของตารางให้เต็ม container ในขนาด 30rem */
+    border-collapse: collapse;
+    /* กำหนดให้ขอบของตารางมีการถูกตัดกลางเมื่อมีการผสมผสานกัน */
+    margin: 0 auto;
+    /* กำหนดให้ตารางอยู่ตรงกลางของ container */
+    margin-top: 2rem;
+    /* กำหนดระยะห่างด้านบนของตาราง */
+  }
+
+
+  #result th {
+    border: 2px solid #D3D3D3;
+    /* กำหนดขอบของเซลล์ในตารางเป็นเส้นกรอบ 1px สีเทาเข้ม (#333) */
+    padding: 8px;
+    /* กำหนดระยะห่างของข้อความภายในเซลล์ */
+    text-align: center;
+    /* จัดเนื้อหาของเซลล์ให้อยู่ชิดซ้าย */
+    background-color: #0c63fa;
+    color: rgb(255, 255, 255);
+  }
+
+  #result td {
+    border: 2px solid #D3D3D3;
+    /* กำหนดขอบของเซลล์ในตารางเป็นเส้นกรอบ 1px สีเทาเข้ม (#333) */
+    padding: 8px;
+    /* กำหนดระยะห่างของข้อความภายในเซลล์ */
+    text-align: left;
+
+    color: #000000;
+    /* เปลี่ยนสีของข้อมูลเป็นสีน้ำเงิน */
+    cursor: pointer;
+    ;
+  }
+
+  .userlist.active {
+    background-color: #9c9c9c; 
+    
+}
+.userlist {
+    
+    background-color: #8cb6fd;
+}
+.numuserlist {
+    
+  background-color: #3c82fb;
+}
+.filterusergroup.active {
+  background-color: #9c9c9c; 
+  
+}
+.filterusergroup {
+  background-color: #8cb6fd;
+}
+.filternumuserlist {
+    
+  background-color: #3c82fb;
+}
+
+#lineOaDropdown {
+  width: 200px; 
+  height: 30px;
+}
+
+#resetButton {
+  width: 100px;
+  height: 30px;
+  background-color: initial; 
+  transition: background-color 0.3s ease; 
+  border-radius: 4px;
+  border: 1px solid #bebebe;
+}
+
+#resetButton:hover {
+  background-color: #ffc107; 
+}
+
+
+table {
+  width: 50%; /* หรือความกว้างที่คุณต้องการ */
+}
+#userTable th,
+  #userTable td {
+    font-size: 15px; /* หรือขนาดที่คุณต้องการ */
+  }
+
+/* To display the block as level element */
+table.scrolldown tbody,
+table.scrolldown thead {
+  display: block;
+}
+
+
+
+table.scrolldown tbody {
+ 
+  /* Set the height of table body */
+  height: 10rem;
+
+  /* Set vertical scroll */
+  overflow-y: auto;
+
+  /* Hide the horizontal scroll */
+  overflow-x: hidden;
+}
+
+
+tbody td,
+thead th {
+  width: 200px;
+  
+}

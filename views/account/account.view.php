@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+
+<body>
+  <section class=" min-vh-100">
+    <?php require base_path('views/navbar/navbar.php'); ?>
+    <div class="container-fluid">
+      <div class="row mt-3">
+        <?php require base_path('views/navbar/slidebar.php'); ?>
+        <div class="col d-flex justify-content-center align-items-center ">
+          <div class="card-sm  ">
+            <div class="card-body ">
+              <div class="row d-flex justify-content-center">
+                <div class="col-sm-5">
+                  <img src="data:image/png;base64,<?= $imageUrl ?>" class="w-100  rounded-circle">
+                </div>
+
+              </div>
+              <h2 class="data mt-5">ข้อมูลส่วนตัว</h2>
+              <hr>
+              <table class="table table-borderless my-4">
+                <tbody>
+                  <tr>
+                    <td>
+                      <h5>ชื่อผู้ใช้</h5>
+                    </td>
+                    <td><?= $account['name'] ?></td>
+                    <td>
+                      <button type="button" class="btn bg-warning" data-bs-toggle="modal" data-bs-target="#modalEditname">
+                        แก้ไข
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h5>อีเมล</h5>
+                    </td>
+                    <td><?= $account['email'] ?></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h5>เบอร์โทรศัพท์</h5>
+                    </td>
+                    <td><?= $account['telephone'] ?></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h5>แผนก</h5>
+                    </td>
+                    <td><?= $account['agency'] ?></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-----------------Modal Add friend---------------------------------------->
+
+  <div class="modal fade" id="modalEditname" tabindex="-1" aria-labelledby="modalEditnameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalEditnameLabel">แก้ไขข้อมูลส่วนตัว</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/updated_account" method="POST" enctype="multipart/form-data">
+          <div class="modal-body">
+            <div class="mb-3">
+
+              <label for="profileImage">รูปโปรไฟล์</label><br>
+              <input type="file" id="profileImage" name="profileImage"><br><br>
+
+
+
+              ชื่อ <input type="text" name="renameuser" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
+
+              อีเมล <input type="text" name="reemail" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['email'] ?>">
+
+              เบอร์โทรศัพท์ <input name="rephone" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" name="rephone" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['telephone'] ?>">
+
+              แผนก <select name="agency" class="form-select" aria-label="Default select example">
+                <option selected value="<?= $account['id'] ?>"><?= $account['agency'] ?></option>
+                <option value="1">งานบริหารและสารสนเทศ</option>
+                <option value="2">งานรับเข้าศึกษาและการตลาด</option>
+                <option value="3">งานบริการและทะเบียนการศึกษา</option>
+                <option value="4">งานหลักสูตรและสหกิจศึกษา</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button name="rename" type="submit" class="btn btn-warning">เสร็จสิ้น</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+<style>
+  
+  body {
+    background-image: url(ภาพ/background.jpg);
+  }
+
+  .social-login-element {
+    width: 27rem;
+    height: 3.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    border: 0.5px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .social-login-element img {
+    width: 1.875rem;
+    height: 1.875rem;
+    position: relative;
+    top: 0;
+    left: -0.625rem;
+  }
+
+  .social-login-element:hover {
+    background-color: #fff9c4;
+  }
+
+  
+</style>
+
+</html>

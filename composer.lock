@@ -1,0 +1,52 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a77fcde1ab432fd31920f48d83d51d4c",
+    "packages": [
+        {
+            "name": "notyes/thsplitlib",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/notyes/thsplitlib.git",
+                "reference": "7d30720c56919c5f15df274caf51eb3baa411943"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/notyes/thsplitlib/zipball/7d30720c56919c5f15df274caf51eb3baa411943",
+                "reference": "7d30720c56919c5f15df274caf51eb3baa411943",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "thsplitlib": "THSplitLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Lib ตัดคำภาษาไทย สำหรับ PHP in composer",
+            "support": {
+                "source": "https://github.com/notyes/thsplitlib/tree/master"
+            },
+            "time": "2018-04-30T08:44:07+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

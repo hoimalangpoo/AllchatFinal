@@ -1,0 +1,235 @@
+textarea{
+    resize: none !important;
+    overflow: auto !important;
+    }
+    
+    
+    img {  
+        width: auto;  
+        max-height: calc(1.275rem + .3vw);  
+    }  
+    
+      .friendlist {
+        text-decoration: none;
+        color: black;
+      }
+    
+      .friendlist:hover {
+        cursor: pointer;
+      }
+    
+      .active .friendlist{
+        color: red;
+      }
+    
+      .btn:hover {
+        background-color: #ffffff;
+    
+      }
+    
+    .chatMessage{
+        width: 90%;
+        height: auto;
+    }
+    
+    .chatButton{
+        width: auto;
+        height: auto;
+    }
+    
+    a:hover {
+        cursor:pointer;
+       }
+    
+    .message-input .wrap .attachment {
+        position: absolute;
+        z-index: 4;
+        font-size: 1.1em;
+        color: #435f7a;
+        opacity: .5;
+        cursor: pointer;
+    }
+    .message-input .wrap button {
+        float: right;
+        border: none;
+        width: 50px;
+        cursor: pointer;
+        background: #32465a;
+        color: #f5f5f5;
+    }
+    .wrap button {
+    
+        padding-bottom: 7px;
+        padding-left: 10px;
+        margin-right: 7px;
+    }
+    
+    
+    
+    .message-input .wrap button:hover {
+        background: #435f7a;
+      }
+    
+      input:focus {
+        outline: 0px !important;
+        box-shadow: none !important;
+    }
+    
+    .card-text {
+        border: 2px solid #ddd;
+        border-radius: 8px;
+    }
+    
+    ul.listmsg {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .messages{
+        max-height: 50rem;
+        overflow-y: auto;
+    }
+    
+    .list-group{
+        max-height: 27.5rem;
+        margin-bottom: 10px;
+        overflow:scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .QNA{
+        max-height: 30rem;
+        overflow-y: auto;
+    }
+    
+    .card-body{
+        height: 60vh;
+        max-height: 60vh;
+    }
+    
+    .rtext{
+        width: auto;
+        max-width: 50%;
+    }
+    .ltext{
+        cursor: pointer;
+        width: auto;
+        max-width: 50%;
+    }
+    small{
+        color: #bbb;
+        font-size: 0.7rem;
+        text-align: right;
+    }
+    
+    *::-webkit-scrollbar{
+        width: 3px;
+    }
+    
+    
+    *::-webkit-scrollbar-thumb{
+        background-color: #bbb;
+    }
+    
+    *::-webkit-scrollbar-thumb:hover{
+        background-color: #ffc107;
+    }
+    
+    .friendinfo{
+        border: none;
+        float: right;
+        color: black;
+        background-color: #ffffff;
+        font-size: 21px;
+    }
+    
+    #finfo{
+        margin-bottom: 0;
+    }
+    
+    .linelist{
+        cursor: pointer;
+    }
+    
+    .groupinfo{
+        cursor: pointer;
+    }
+    
+    .grouplist{
+        cursor: pointer;
+    }
+    
+    .deletegroup{
+      
+        color: white;
+        position: absolute;
+        bottom: 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    thead {
+    
+        position: sticky;
+        top: 0px;
+    
+      }
+    
+      table {
+        border: 1px solid #5D6D7E;
+        text-align: center;
+      }
+    
+    
+      th {
+        height: 50px;
+        vertical-align: center;
+    
+      }
+    
+      tr th .check {
+        margin: 0 auto;
+        margin-right: 10rem;
+    
+      }
+    
+    
+      tbody {
+        max-height: 200px;
+        /* กำหนดความสูงสูงสุดของ tbody */
+        overflow-y: auto;
+        /* ทำให้ tbody เป็น scrollable ในแนวตั้ง */
+        display: block;
+        /* ทำให้ tbody เป็น block element */
+      }
+    
+      .addmember{
+        margin-top: 1rem;
+        display: block;
+        margin: 0 auto;
+      
+      }
+    
+      .settinggroup{
+        border: 1;
+        background-color: #ffc107;
+        
+      }
+
+      #logoin {
+        width: 500px;
+        height: 500px;
+      }
+
+      .searchqabutton {
+        width: 100px;
+        height: 30px;
+        background-color: initial; 
+        transition: background-color 0.3s ease; 
+        border-radius: 4px;
+        border: 1px solid #bebebe;
+      }
+      
+      .searchqabutton:hover {
+        background-color: #ffc107; 
+      }
