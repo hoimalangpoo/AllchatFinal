@@ -4,16 +4,16 @@
             <h5>คำถามที่พบบ่อย</h5>
             <button class="btn bg-warning" data-bs-toggle="modal" data-bs-target="#modalAddQ">เพิ่มQ&A</button>
         </div>
-        <form method="post" class="d-inline-flex justify-content-center align-items-center" action="/searchQA">
+        <form method="post" class="d-inline-flex justify-content-center align-items-center" action="/search">
             <label for="searchKeyword" class="mx-2">ค้นหา:</label>
             <input type="text" name="searchKeyword" id="searchKeyword">
 
-            <button type="submit" class="btn btn-primary mx-2">ค้นหา</button>
-            <a href="/chat" class="btn btn-danger mx-2">รีเซ็ต</a>
+            <button type="submit" class="btn mx-2 searchqabutton">ค้นหา</button>
+            <a href="/chat" class="btn mx-2 searchqabutton">ทั้งหมด</a>
         </form>
 
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+            <li id="searchResults" class="list-group-item">
                 <?php
                 $qasearch = isset($_SESSION['search']) ? $_SESSION['search'] : null;
                 $Keyword = isset($_SESSION['Keyword']) ? $_SESSION['Keyword'] : null;
@@ -26,19 +26,16 @@
                         echo "<a href=\"/delQA?id=" . $search_question['qa_id'] . "\"><button type=\"button\" class=\"btn btn-danger btn-sm text-dark pull-right\">ลบ</button></a>";
                         echo "<hr>";
                     }
+                } elseif (!empty($Keyword)) {
+                    echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
                 } else {
-                    if (empty($Keyword)) {
-                        foreach ($announces as $announce) {
-                            echo "<b>คำถาม:</b> " . $announce['question'] . "<br>";
-                            echo "<b>คำตอบ:</b> " . $announce['answer'] . "<br>";
-                            echo "<a href=\"/delQA?id=" . $announce['qa_id'] . "\"><button type=\"button\" class=\"btn btn-danger btn-sm text-dark pull-right\">ลบ</button></a>";
-                            echo "<hr>";
-                        }
-                    } else {
-                        echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
+                    foreach ($announces as $announce) {
+                        echo "<b>คำถาม:</b> " . $announce['question'] . "<br>";
+                        echo "<b>คำตอบ:</b> " . $announce['answer'] . "<br>";
+                        echo "<a href=\"/delQA?id=" . $announce['qa_id'] . "\"><button type=\"button\" class=\"btn btn-danger btn-sm text-dark pull-right\">ลบ</button></a>";
+                        echo "<hr>";
                     }
                 }
-
                 ?>
             </li>
         </ul>

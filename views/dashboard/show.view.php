@@ -58,7 +58,7 @@ if ($conn->connect_error) {
                     }
                     ?>
                   </select>
-                  <button id="resetButton">รีเซ็ตข้อมูล</button>
+                  <button id="resetButton">ข้อมูลทั้งหมด</button>
                   <script>
                       document.getElementById('resetButton').addEventListener('click', function() {
                           
@@ -94,7 +94,7 @@ if ($conn->connect_error) {
             </div>
             <div class="col-3">
                 <div class="item item-5">
-                  <P class="linechart">จำนวนคำถามในแต่ละเดือน(6เดือนย้อนหลัง)</P>
+                  <P class="linechart">จำนวนคำถามในแต่ละเดือน</P>
                   <canvas id="linechart"></canvas><br>
                 </div>
                 <div class="item item-7">
@@ -126,7 +126,7 @@ if ($conn->connect_error) {
                         ?>
                           <tr >
                             <td class="userlist" id="<?= $top_user["_id"] ?>"> <?= $top_user['name'] ?> </td>
-                            <td> <?= $top_user['message_count'] ?></td>
+                            <td class="numuserlist"> <?= $top_user['message_count'] ?></td>
                           </tr>
                         <?php
                         } ?>
@@ -138,6 +138,7 @@ if ($conn->connect_error) {
 
                 </div>
           </div>
+          
           <script src="js/dashboard.js"></script>
         </div>
       </div>

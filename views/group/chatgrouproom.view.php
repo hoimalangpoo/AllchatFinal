@@ -44,7 +44,7 @@ foreach ($groups as $group) {
             <div class="message-input" id="replySection">
                 <div class="message-input" id="replyContainer">
                     <div class="wrap">
-                        <input type="text" class="chatMessage" id="message<?= $group['group_id'] ?>" placeholder="Write your message..." />
+                        <input type="text" class="chatMessage" id="message<?= $group['group_id'] ?>" style="width: 86%;" placeholder="Write your message..." />
 
                         <button class="chatButton" id="<?= $group['group_id'] ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     $(document).ready(function() {
-        // โหลดข้อมูลและสร้างกราฟเริ่มต้น
+        // โหลดข้อมูลและสร้างกราฟตอนแรก
         loadDataAndCreateChart();
         loadDataNumber();
     function loadDataAndCreateChart() {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
             dataType: 'json',
             success: function(data) {
                
-                createLineChart(data);
+                createBarChart2(data);
             }
         });
         $.ajax({
@@ -21,7 +21,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-
+    function loadDataNumber() {
+        $.ajax({
+            url: 'dropdownfilter',
+            dataType: 'json',
+            success: function(data) {
+                // ประมวลผลข้อมูลและสร้างกราฟ กำหนดไว้เพื่อเอาไอดีพวกนี้ไปแทนที่
+                $('#totalContacts').text(data.totalContacts);
+                $('#totalQuestion').text(data.totalQuestion);
+                $('#totalReplies').text(data.totalReplies);
+            }
+        });
+    }
 
     // ****************************************************FUNCTION CREATE CHARTS**************************************************
     function createBarChart(data) {    
@@ -43,10 +54,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     
         var message_count = data.map(function(item) {
-            return item.message_count
+            return item.message_count //เอาจำนวนข้อความ
         });
     
-        var ctx = document.getElementById("barchart").getContext("2d");
+        var ctx = document.getElementById("barchart").getContext("2d");//ตั้งไอดี
         var chart = new Chart(ctx, {
             type: "bar",
             data: {
@@ -71,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-    function createLineChart(data){
+    function createBarChart2(data){
                     var monthNamesThai = [
                         "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
                         "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
@@ -93,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     });
                 var ctx = document.getElementById("linechart").getContext("2d");
                 var chart = new Chart(ctx, {
-                    type: "line",
+                    type: "bar",
                     data: {
                         labels: month_year,
                         datasets:[{
@@ -127,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function() {
         $(".userlist").removeClass("active");
         $(this).addClass("active");
 
-
+        //เอาไอดีไปหาในฐานข้อมูล
         var id = $(this).attr('id');
         console.log(id);
         
@@ -150,20 +161,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
   // **************************************************************FILTER DROPDOWN************************************
-  function loadDataNumber() {
-    $.ajax({
-        url: 'dropdownfilter',
-        dataType: 'json',
-        success: function(data) {
-            // ประมวลผลข้อมูลและสร้างกราฟ
-            $('#totalContacts').text(data.totalContacts);
-            $('#totalQuestion').text(data.totalQuestion);
-            $('#totalReplies').text(data.totalReplies);
-        }
-    });
-}
+
   $('#lineOaDropdown').change(function() {
-    var selectedValue = $(this).val();
+    var selectedValue = $(this).val();//ค่าที่เลือกเพื่อส่ง
     console.log(selectedValue);
     $.ajax({
         type: 'POST',
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
             $('#totalQuestion').text(response.totalQuestion);
             $('#totalReplies').text(response.totalReplies);
             updateBarChart(response.BarchartData);
-            updateLineChart(response.LinechartData);
+            updateBarChart2(response.LinechartData);
             updateTable(response.userData);
         },
         error: function(xhr, status, error) {
@@ -183,24 +183,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
+//ลบตัวเดิม
 function updateBarChart(data) {
     var existingChart = Chart.getChart('barchart');
 if (existingChart) {
     existingChart.destroy();
 }
-
+//สร้างตัวใหม่
     createBarChart(data);
 }
-function updateLineChart(data) {
+function updateBarChart2(data) {
     var existingChart = Chart.getChart('linechart');
 if (existingChart) {
     existingChart.destroy();
 }
 
-    createLineChart(data);
+    createBarChart2(data);
 }
-
+//สร้างตารางใหม่
 function updateTable(userData) {
     var tbody = document.querySelector("#userTable tbody");
     tbody.innerHTML = ""; 
@@ -212,14 +212,15 @@ function updateTable(userData) {
     headerRow.appendChild(nameHeader);
     headerRow.appendChild(messageCountHeader);
     
-
+//loop สร้างแถว
     userData.forEach(function(user) {
         var row = document.createElement("tr");
         var nameCell = document.createElement("td");
         nameCell.textContent = user.name;
         nameCell.className = "filterusergroup"; 
-        nameCell.id = user._id + "lineOAid" + user.lineOAid;
+        nameCell.id = user._id + "lineOAid" + user.from_ch;
         var messageCountCell = document.createElement("td");
+        messageCountCell.className = "filternumuserlist";
         messageCountCell.textContent = user.message_count;
 
         row.appendChild(nameCell);
@@ -233,11 +234,13 @@ function updateTable(userData) {
 
         $(".filterusergroup").removeClass("active");
         $(this).addClass("active");
-       
+        
+       var raw = $(this).attr('id');
         var lineOAid = $(this).attr('id').split("lineOAid")[1];
         var userid = $(this).attr('id').split("lineOAid")[0];
     
         console.log('userid: ' + userid + ', lineOAid: ' + lineOAid);
+        console.log(raw);
      
         let fetchData = function() {
             $.post("/getreplydata", {
@@ -257,25 +260,7 @@ function updateTable(userData) {
 }
 
 //******************************************************************************************************* */
-function loadDataAndCreateChart() {
-    // โหลดข้อมูลกราฟแท่ง
-    $.ajax({
-        url: 'getreplydata',
-        dataType: 'json',
-        success: function(data) {
-            createBarChart(data);
-        }
-    });
 
-    // โหลดข้อมูลกราฟเส้น
-    $.ajax({
-        url: 'getdata',
-        dataType: 'json',
-        success: function(data) {
-            createLineChart(data);
-        }
-    });
-}
 
 
 

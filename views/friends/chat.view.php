@@ -51,6 +51,7 @@
 
 </body>
 <script src="js/chat.js"></script>
+
 <style>
     body {
     background-image: url(ภาพ/background.jpg);

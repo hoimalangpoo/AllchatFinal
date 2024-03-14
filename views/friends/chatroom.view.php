@@ -44,9 +44,9 @@ foreach ($friends as $friend) {
             <div class="message-input" id="replySection">
                 <div class="message-input" id="replyContainer">
                     <div class="wrap">
-                        <input type="text" class="chatMessage" id="message<?php echo $friend['_id'] ?>" placeholder="Write your message..." />
+                        <input type="text" class="chatMessage" id="message<?php echo $friend['_id'] ?>" style="width: 86%;" placeholder="Write your message..." />
 
-                        <button class="chatButton" id="<?php echo $friend['_id'] ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                        <button class="replyButton" id="<?php echo $chat['chat_id'] ?>chat_id<?= $chat['recieve_id'] ?>"><i class="fa fa-paper-plane " aria-hidden="true"></i></button>
 
                     </div>
                 </div>

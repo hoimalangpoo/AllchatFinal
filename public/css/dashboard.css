@@ -32,10 +32,10 @@
     margin-top: 3rem;
     width: 500px;
     height: 150px;
-    background-color: whitesmoke;
+   
     padding: 1em;
     font-weight: 700;
-    color: black;
+    
     text-align: center;
     border: 1px solid #DCDCDC;
     border-radius: 8px;
@@ -48,19 +48,26 @@
   }
 
   .item-2 {
-    margin-left: 5rem;
+    color: rgb(255, 255, 255);
+    margin-left: 3rem;
+    background-color: rgb(157, 85, 250);
   }
 
   .item-3 {
-    margin-left: 5rem;
+    color: rgb(255, 255, 255);
+    margin-left: 3rem;
+    background-color: rgb(62, 143, 255);
   }
 
   .item-4 {
-    margin-left: 5rem;
+    color: rgb(255, 255, 255);
+    margin-left: 3rem;
+    margin-right: 3rem;
+    background-color: rgb(255, 70, 196);
   }
 
   .col-3 {
-    margin-top: 3rem;
+    margin-top: 1rem;
     margin-left: 3rem;
     width: 90%;
     height: 30rem;
@@ -69,21 +76,21 @@
 
   .item-5 {
     width: 25rem;
-    height: 25rem;
+    height: 20rem;
     margin-left: 3rem;
-
+    
   }
 
   .item-6 {
     width: 25rem;
-    height: 25rem;
+    height: 20rem;
     margin-left: 2rem;
 
   }
 
   .item-7 {
     width: 25rem;
-    height: 25rem;
+    height: 20rem;
     margin-left: 2rem;
   }
 
@@ -108,7 +115,8 @@
     /* กำหนดระยะห่างของข้อความภายในเซลล์ */
     text-align: center;
     /* จัดเนื้อหาของเซลล์ให้อยู่ชิดซ้าย */
-    background-color: #ffc107;
+    background-color: #0c63fa;
+    color: rgb(255, 255, 255);
   }
 
   #result td {
@@ -118,9 +126,10 @@
     /* กำหนดระยะห่างของข้อความภายในเซลล์ */
     text-align: left;
 
-    color: #ffc107;
+    color: #000000;
     /* เปลี่ยนสีของข้อมูลเป็นสีน้ำเงิน */
     cursor: pointer;
+    ;
   }
 
   .userlist.active {
@@ -128,14 +137,23 @@
     
 }
 .userlist {
-    background-color: white; 
+    
+    background-color: #8cb6fd;
+}
+.numuserlist {
+    
+  background-color: #3c82fb;
 }
 .filterusergroup.active {
   background-color: #9c9c9c; 
   
 }
 .filterusergroup {
-  background-color: white; 
+  background-color: #8cb6fd;
+}
+.filternumuserlist {
+    
+  background-color: #3c82fb;
 }
 
 #lineOaDropdown {

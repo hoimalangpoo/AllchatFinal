@@ -5,10 +5,7 @@ use Core\Database;
 
 $db = App::resolve(Database::class);
 
-
-
 $userid = $_SESSION['user'];
-
 $fromline = $db->query("
 -- กรณีที่มีกลุ่มและเป็นสมาชิกในกลุ่ม
 SELECT line_oa.*
@@ -30,14 +27,24 @@ UNION
 SELECT line_oa.*
 FROM line_oa
 JOIN groups ON line_oa.id = groups.for_line
-WHERE groups.created_by = :userid ",[
-    "userid" => $userid
+WHERE groups.created_by = :userid ", [
+  "userid" => $userid
 ])->findAll();
 
-// check($fromline);
+foreach ($fromline as $line) {
+  $lineOA_id = $line["id"];
+  $not_reply = $db->query("SELECT COUNT(*) as not_reply FROM line_chat where (reply = 0 AND recieve_id = :lineOA_id)", [
+    "lineOA_id" => $lineOA_id
+  ])->find();
+
+  $response[] = array(
+    'lineOAid' => $line['lineOAid'],
+    'not_reply' => $not_reply['not_reply']
+  );
+}
+
+echo json_encode($response);
 
 
 
 
-
-include base_path("views/chats/chat.view.php");

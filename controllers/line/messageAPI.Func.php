@@ -15,7 +15,7 @@ function saveContact($user_id, $display_name, $lineOAid, $db)
     WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid", [
         "user_id" => $user_id,
         "lineOAid" => $lineOAid,
-    ])->find();
+    ])->find(); 
     if ($check_id) {
         exit;
     } else {
@@ -192,6 +192,8 @@ function sendLineMessage($userId, $messages, $quoteToken, $access_token)
     }
 
     curl_close($ch);
+
+
 }
 
 function isQuestion($text)

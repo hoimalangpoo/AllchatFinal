@@ -12,7 +12,8 @@ $db = App::resolve(Database::class);
                 "answer" => $answer
             ]);
 
-                header("location: /chat");
+            header("location: /chat");
+            exit;  
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

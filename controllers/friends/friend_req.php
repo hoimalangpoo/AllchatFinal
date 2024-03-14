@@ -32,7 +32,7 @@ try {
     ($check_friend['_from'] == $friend_id && $check_friend['_to'] == $user_id && $check_friend['status'] == 'P')) {
     
         echo "<script>alert('มีการส่งคำขอแล้วกรุณาตรวจสอบอีกครั้ง');window.location.replace('/addfriend');</script>";
-    
+        
     } else {
         
         $stmt = $db->query("INSERT INTO friend(_from,_to,status)VALUES(:user_id, :friend_id, 'P')",[
@@ -43,6 +43,6 @@ try {
     
     }
 } catch (\Throwable $th) {
-    echo $e->getMessage();
+    // echo $e->getMessage();
 }
 

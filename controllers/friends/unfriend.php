@@ -5,7 +5,7 @@ use Core\Database;
 
 $db = App::resolve(Database::class);
 
-$friend_id = $_GET['id'];
+$friend_id = $_POST['firend_id'];
 $user_id = $_SESSION['user'];
 
 try {
@@ -15,11 +15,12 @@ try {
     $fdecline = $db->query("UPDATE friend SET deleted_at = :timedelete, status = 'D' WHERE _from = :friend_id AND _to = :user_id",[
         "user_id" => $user_id,
         "friend_id" => $friend_id,
-        "timedelete" => $timedelete
+        "timedelete" => $date
     ]);
-    $fdecline = $db->query("DELETE FROM friend WHERE _from = :user_id AND _to = :friend_id",[
+    $fdecline = $db->query("UPDATE friend SET deleted_at = :timedelete, status = 'D' WHERE _from = :user_id AND _to = :friend_id",[
         "user_id" => $user_id,
-        "friend_id" => $friend_id
+        "friend_id" => $friend_id,
+        "timedelete" => $date
     ]);
 
     header("location: /chatfriend");

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	$(".chatButton").on('click', function(){
 		
 		var rawid = $(this).attr('id');
@@ -23,19 +24,20 @@ $(document).ready(function() {
 				let chatBox = document.getElementById('conversation'+id);
 				chatBox.scrollTop = chatBox.scrollHeight;
 			})
-		if(lineOA == "1"){
-			$.post("/webhookch1",
-			{
-				message: message,
-				lineOAid: chatwith
-			})
-		}else if(lineOA == "2"){
-			$.post("/webhookch2",
-			{
-				message: message,
-				lineOAid: chatwith
-			})
-		}	
+			$.post("/getlinetoken", {lineOAid : id}, function(data, status){
+				if(status === "success"){
+					let token = data['access_token'];
+					console.log("Token :", token);
+
+					$.post("/webhook", {
+						message: message,
+						lineOAid: chatwith,
+						token: token
+					}, function(data, status){
+						console.log("Access Token: ", data);
+					})
+				}
+			});
 	});
 
 	$("input[id^='message']").on("keypress", function(e){
@@ -49,7 +51,7 @@ $(document).ready(function() {
 			console.log(message);
 			if(message == "") return;
 			chatwith = $('#'+id).attr('id');
-			// console.log(lineid);
+			console.log(id);
 		
 
 			$.post("/line_oa_chat",
@@ -65,19 +67,21 @@ $(document).ready(function() {
 					let chatBox = document.getElementById('conversation'+id);
 					chatBox.scrollTop = chatBox.scrollHeight;
 				})
-			if(lineid == "1"){
-				$.post("/webhookch1",
-				{
-					message: message,
-					lineOAid: chatwith
-				})
-			}else if(lineid == "2"){
-				$.post("/webhookch2",
-				{
-					message: message,
-					lineOAid: chatwith
-				})
-			}
+
+				$.post("/getlinetoken", {lineOAid : id}, function(data, status){
+					if(status === "success"){
+						let token = data['access_token'];
+						console.log("Token :", token);
+	
+						$.post("/webhook", {
+							message: message,
+							lineOAid: chatwith,
+							token: token
+						}, function(data, status){
+							console.log("Access Token: ", data);
+						})
+					}
+				});
                 
         }
     });
@@ -92,7 +96,7 @@ $(document).ready(function() {
 		};
 
 		let fechData = function() {
-			console.log("lineOAid =" + id + " AND " + "linech = " + lineid); 
+			// console.log("lineOAid =" + id + " AND " + "linech = " + lineid); 
 			$.post("/getlineOAmsg", {
 				lineOAid: id,
 				linech:lineid 	
@@ -108,7 +112,7 @@ $(document).ready(function() {
 			  });
 		  }
 		  scrollToBottom();
-		  setInterval(fechData, 1000);
+		  setInterval(fechData, 2000);
 
 	});
 	
@@ -124,5 +128,34 @@ $(document).ready(function() {
 		$("#inputField2").toggleClass("d-none"); 
 
 	});
+
+	$(".searchchat").on('click', function(){
+        var rawsearchid = this.id;
+		inline = rawsearchid.split("line")[1].split("boxfor")[0];
+		lastchat = rawsearchid.split("line")[0].split("lastchat")[1];
+		forbox = rawsearchid.split("boxforline")[1];
+        console.log("ไอดี: " + rawsearchid + " แยก: " + inline + " แยกอีกที: " + lastchat + " แยกอีกีอก: " + forbox);
+
+		var targetId = "chatuser" + lastchat + "lineOAid" + inline;
+
+		console.log("ไอดีเป้าหมาย: " + targetId);
+
+		
+
+		   if ($('#' + targetId).length) {
+	
+			var targetOffset = $('#' + targetId).position().top;
+	
+
+			$('#conversation' + forbox).animate({
+				scrollTop: targetOffset - $('#conversation' + forbox).offset().top + $('#conversation' + forbox).scrollTop()
+			}, 1000);
+	
+			console.log("เลื่อนไปยังตำแหน่งของ " + targetId + " ภายใน #conversation' + forbox");
+		} else {
+			console.log("ไม่พบไอดีที่ต้องการเลื่อนไปหา");
+		}
+
+    });
 	
 });

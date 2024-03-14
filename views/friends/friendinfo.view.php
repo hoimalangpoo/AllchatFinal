@@ -11,7 +11,7 @@ foreach ($friends as $friend) {
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#info<?= $friend['_id'] ?>">ข้อมูล</a>
                     </li>
-                   
+
                 </ul>
 
             </div>
@@ -25,13 +25,17 @@ foreach ($friends as $friend) {
                         <p>อีเมล : <?= $friend['email'] ?></p>
                         <p>แผนก : <?= $friend['agency'] ?></p>
 
-                        <a href="unfriend.php?id=<?php echo $friend["_id"] ?>">
-                            <button type="button" class="btn btn-danger text-dark pull-right">ลบเพื่อน</button>
-                        </a>
+
+                        <form action="/unfriend" method="POST">
+                            <input type="hidden" name="firend_id" value="<?= $friend["_id"] ?>">
+                            <button type="submit" class="btn btn-danger text-dark pull-right">ลบเพื่อน</button>
+                        </form>
+
+
                     </div>
                 </div>
 
-              
+
 
 
             </div>

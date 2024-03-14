@@ -7,7 +7,7 @@
         <div class="message-input" id="replyContainer">
             <div class="wrap">
 
-                <input type="text" class="chatMessage" id="reply<?php echo $chat['chat_id'] ?>chat_id<?= $chat['recieve_id'] ?>" placeholder="Reply to ..." />
+                <input type="text" class="chatMessage" id="reply<?php echo $chat['chat_id'] ?>chat_id<?= $chat['recieve_id'] ?>lineid<?= $line['lineOAid'] ?>" placeholder="Reply to ..." />
 
                 <button class="replyButton" id="<?php echo $chat['chat_id'] ?>chat_id<?= $chat['recieve_id'] ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 
@@ -15,4 +15,3 @@
         </div>
     </div>
 </div>
-

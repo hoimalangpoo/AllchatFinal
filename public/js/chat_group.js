@@ -73,10 +73,10 @@ $(document).ready(function() {
 	});
 	
 	
-	
-	
 });
-
+function confirmDelete() {
+	return confirm("ยืนยันที่จะลบหรือไม่?");
+}
 
 
 

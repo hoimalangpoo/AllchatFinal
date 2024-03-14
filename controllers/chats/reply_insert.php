@@ -4,12 +4,12 @@ use Core\App;
 use Core\Database;
 
 $db = App::resolve(Database::class);
-if (isset($_POST['message']) && isset($_POST['chat_id']) && isset($_POST['linech'])) {
+if (isset($_POST['message']) && isset($_POST['chat_id']) && isset($_POST['reply_linech'])) {
 
     $messages = $_POST['message'];
     $chat_id = $_POST['chat_id'];
     $user_id = $_SESSION['user'];
-    $linech = $_POST['linech'];
+    $linech = $_POST['reply_linech'];
 
     $sendmsg = $db->query("INSERT INTO line_reply(messages, sender_id, chat_id, from_ch)VALUES(:messages, :user_id, :chat_id, :linech)", [
         "messages" => $messages,
@@ -38,4 +38,4 @@ if (isset($_POST['message']) && isset($_POST['chat_id']) && isset($_POST['linech
     </p>
 
 <?php
-}
+}   

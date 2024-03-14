@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 
@@ -21,7 +22,7 @@
             <div class="card-body ">
               <div class="row d-flex justify-content-center">
                 <div class="col-sm-5">
-                  <img src="data:image/png;base64,<?= $imageUrl ?>" class="w-100   rounded-circle">
+                  <img src="data:image/png;base64,<?= $imageUrl ?>" class="w-100  rounded-circle">
                 </div>
 
               </div>
@@ -58,6 +59,7 @@
                     </td>
                     <td><?= $account['agency'] ?></td>
                   </tr>
+
                 </tbody>
               </table>
             </div>
@@ -83,7 +85,7 @@
 
               <label for="profileImage">รูปโปรไฟล์</label><br>
               <input type="file" id="profileImage" name="profileImage"><br><br>
-           
+
 
 
               ชื่อ <input type="text" name="renameuser" class="form-control mb-3" id="FormControlInput1" placeholder="กรอกชื่อผู้ใช้ใหม่" value="<?php echo $account['name'] ?>">
@@ -110,10 +112,11 @@
     </div>
   </div>
 
-  <script src="js/bootstrap.esm.min.js"></script>
+
 
 </body>
 <style>
+  
   body {
     background-image: url(ภาพ/background.jpg);
   }
@@ -143,6 +146,8 @@
   .social-login-element:hover {
     background-color: #fff9c4;
   }
+
+  
 </style>
 
 </html>

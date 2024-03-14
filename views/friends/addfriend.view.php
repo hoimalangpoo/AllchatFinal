@@ -8,6 +8,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </head>
 
@@ -33,9 +34,9 @@
                 $friend = $db->query("SELECT * FROM users WHERE _id = :fid", [
                   "fid" => $request
                 ])->find();
-                $id = $friend['_id']; 
-                 ?>
-                <li class="list-group-item mb-3 shadow-sm bg-body rounded ">  <?= $friend['name'] ?>
+                $id = $friend['_id'];
+              ?>
+                <li class="list-group-item mb-3 shadow-sm bg-body rounded "> <?= $friend['name'] ?>
                   <div class="text-right">
                     <a href="/faccept?id=<?= $id ?>"><button type="button" class=" btn btn-success btn-lg text-dark">รับคำขอ</button></a>
                     <a href="/fdecline?id=<?= $id ?>"><button type="button" class="btn btn-danger btn-lg text-dark pull-right">ไม่ยอมรับคำขอ</button></a>
@@ -68,36 +69,24 @@
         <div class="modal-body">
           <a href="#" class="list-group-item list-group-item-action fs-1 bi bi-person-plus-fill"></a>
           <div class="mb-3 mt-3">
-            <form method="POST" action="/searchfriend">
-              <div class="form-group">
-                <input type="text" name="friendSearch" class="form-control mb-2" id="FormControlInput1" placeholder="ค้นหาด้วยอีเมลหรือเบอร์โทรศัพท์">
-                <input type="submit" name="search" class="btn btn-warning text-dark" value="ค้นหา">
-              </div>
-            </form>
+
+            <div class="form-group">
+              <input type="text" name="friendSearch" class="form-control mb-2" id="frienduser" placeholder="ค้นหาด้วยอีเมลหรือชื่อผู้ใช้">
+              <button id="searchButton" class="btn btn-warning text-dark">ค้นหา</button>
+            </div>
 
           </div>
         </div>
-        <ul class="list-group list-group-flush">
-
-          <?php
-          if ($searchFriend) {
-            foreach ($searchFriend as $sFriend) {
-          ?>
-              <li class="list-group-item"><i class="fs-4 bi-person-circle"></i>
-                <?= $sFriend['name'] ?>
-                <a href="/friend_req?id=<?= $sFriend['_id'] ?>" class="btn btn-success btn-lg text-dark ml-2" role="button" aria-disabled="true">ส่งคำขอ</a>
-              </li>
-            <?php }
-          } else if ($searchFriend == NULL){   
-          }else { ?>
-            <li class="list-group-item"><i class="fs-4 bi-person-circle"></i> ไม่พบข้อมูลในระบบ </li>
-          <?php }
-          ?>
+        <ul class="list-group list-group-flush" id="searchResults">
+           
         </ul>
+      </div>
+    </div>
+  </div>
 
 
 </body>
-
+<script src="js/searchfriend.js"></script>
 <style>
   body {
     background-image: url(ภาพ/background.jpg);

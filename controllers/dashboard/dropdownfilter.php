@@ -2,7 +2,7 @@
 
 use Core\App;
 use Core\Database;
-
+//เอาไอดีไลน์ไปหาจำนวนข้อความในไลน์นั้นๆ
 $db = App::resolve(Database::class);
 if (isset($_POST['selectedValue'])) {
     $lineOA_id = $_POST['selectedValue'];
@@ -17,14 +17,14 @@ if (isset($_POST['selectedValue'])) {
     $resultQuestion = $db->query($sqlQuestion, ['lineOAid' => $lineOA_id])->findAll();
     $resultReplies = $db->query($sqlReplies, ['lineOAid' => $lineOA_id])->findAll();
 
-
+    //ตอบกลับ
     $BarchartData = $db->query("SELECT CONCAT(MONTHNAME(created_at),' 
     ',YEAR(created_at)) AS month_year, 
     COUNT(*) AS message_count FROM line_reply WHERE from_ch = :lineOAid GROUP BY month_year ORDER BY created_at", [
         "lineOAid" => $lineOA_id
     ])->findAll();
 
-
+    //คนที่ถามเข้ามา
     $LinechartData = $db->query("SELECT CONCAT(MONTHNAME(created_at),' 
     ',YEAR(created_at)) AS month_year, 
     COUNT(*) AS message_count FROM line_chat WHERE recieve_id = :lineOAid GROUP BY month_year ORDER BY created_at ", [
@@ -32,7 +32,7 @@ if (isset($_POST['selectedValue'])) {
     ])->findAll();
 
 
-    $userData = $db->query("SELECT users._id, users.name, COUNT(*) as message_count FROM line_reply 
+    $userData = $db->query("SELECT users._id, users.name, COUNT(*) as message_count, line_reply.from_ch FROM line_reply 
                 JOIN users ON line_reply.sender_id = users._id
                 WHERE line_reply.from_ch = :lineOAid
                 GROUP BY users._id, users.name ORDER BY message_count DESC", [

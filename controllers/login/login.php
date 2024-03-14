@@ -13,7 +13,7 @@ if (isset($_POST['login'])){
     if($check_email){
         if (password_verify($password, $check_email['password'])){
             $_SESSION['user'] = $check_email['_id'];
-            header("location: /");
+            header("location: /chat");
             exit();
         }else{
             header("location: /login");

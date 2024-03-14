@@ -35,7 +35,7 @@
               ?>
                 <li class="list-group-item linelist" id="<?= $line["lineOAid"] ?>lineOAid<?= $line["id"] ?>" data-touserid="<?= $line["lineOAid"] ?>" data-toggle="collapse" data-target="#collapse<?= $line["lineOAid"] ?>" aria-expanded="true" aria-controls="collapse<?= $line["lineOAid"] ?>">
                   <img class="logolineOA" src="<?= $line["profile"] ?>" class="img-fluid rounded-circle" alt="Responsive image"> <?= $line["lineOaDisplayName"] ?>
-                  <span class="badge badge-secondary text-warning rounded-circle bg-dark mx-2"><?= $not_reply["not_reply"] ?></span>
+                  <span class="badge badge-secondary text-warning rounded-circle bg-dark mx-2" id="notReplyBadge<?= $line["lineOAid"] ?>"><?= $not_reply["not_reply"] ?></span>
                 </li>
 
               <?php } ?>
@@ -46,11 +46,15 @@
         <?php require base_path('controllers/chats/chatroom.php'); ?>
 
         <?php require base_path('controllers/chats/announce.php'); ?>
-        
-        <br>
-        <?php require base_path('controllers/chats/translate.php'); ?>
 
       </div>
+
+      <div class="row mt-3 d-flex justify-content-end">
+
+        <?php require base_path('controllers/chats/translate.php');?>
+      </div>
+
+    </div>
 
     </div>
   </section>
@@ -59,7 +63,8 @@
 </body>
 <script src="js/line_OA_chat.js"></script>
 <script src="js/reply.js"></script>
-
+<script src="js/searchQA.js"></script>
+<script src="js/notificationchat.js"></script>
 <style>
   body {
     background-image: url(ภาพ/background.jpg);

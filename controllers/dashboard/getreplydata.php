@@ -4,10 +4,10 @@ use Core\App;
 use Core\Database;
 
 $db = App::resolve(Database::class);
-
+//รับ $filter_user_id 
 if (isset($_POST['filter_user_id'])) {
     $filter_user_id = $_POST['filter_user_id'];
-    
+    //นับจำนวนตอบกลับของคนที่จะฟิลเตอร์
     $count_msg = $db->query("SELECT CONCAT(MONTHNAME(created_at),' 
     ',YEAR(created_at)) AS month_year, 
     COUNT(*) AS message_count FROM line_reply WHERE sender_id = :filter_user_id GROUP BY month_year ORDER BY created_at",[

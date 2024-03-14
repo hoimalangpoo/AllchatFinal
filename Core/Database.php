@@ -195,6 +195,17 @@ class Database
         return $all_chat;
     }
 
+    public function getlastchatsNotans($chats, $lineid, $db)
+    {
+        foreach ($chats as $chat) {
+            $lastchat = $db->query("SELECT * FROM line_chat WHERE reply = 0 AND recieve_id = :lineid ORDER BY created_at DESC LIMIT 1", [
+                "lineid" => $lineid
+            ])->findAll();
+        }
+
+        return $lastchat;
+    }
+
     public function getreply($userid, $chat_id, $linech, $db)
     {
         $reply = $db->query("SELECT line_reply.*
@@ -213,25 +224,29 @@ class Database
         return $reply;
     }
 
+
+
     // ////////////////////////////////LINEOACHATROOM///////////////////////////////////////////
 
-    public function getMembersByGroupId($groupid, $db){
-        $members = $db->query("SELECT users.name, users._id, group_users.role, users.profile FROM users JOIN group_users 
-        ON users._id = group_users.user_id WHERE group_id = :groupid;", [
+    public function getMembersByGroupId($groupid, $db)
+    {
+        $members = $db->query("SELECT users.name, users._id, group_users.role, group_users.group_id, users.profile FROM users JOIN group_users 
+        ON users._id = group_users.user_id WHERE group_id = :groupid AND group_users.deleted_at IS NULL;", [
             "groupid" => $groupid
         ])->findAll();
 
         return $members;
     }
 
-    
-    public function getFriends($userid, $groupid, $db){
+
+    public function getFriends($userid, $groupid, $db)
+    {
         $friends = $db->query("SELECT users.name, users._id FROM users 
         LEFT JOIN group_users ON users._id = group_users.user_id AND group_users.group_id = :groupid
         JOIN friend ON users._id = friend._from 
         WHERE friend.status = 'F' AND friend._to = :userid 
         AND users._id != :userid 
-        AND group_users.user_id IS NULL ", [
+       	AND (group_users.user_id IS NULL OR group_users.deleted_at IS NOT NULL);", [
             "userid" => $userid,
             "groupid" => $groupid
         ])->findAll();
@@ -239,4 +254,15 @@ class Database
         return $friends;
     }
 
+    public function checkrole($user_id, $group_id, $db)
+    {
+        $role = $db->query("SELECT group_users.role FROM users JOIN group_users 
+        ON users._id = group_users.user_id WHERE user_id = :user_id AND group_id = :group_id;", [
+            "user_id" => $user_id,
+            "group_id" => $group_id
+
+        ])->findAll();
+
+        return $role;
+    }
 }
