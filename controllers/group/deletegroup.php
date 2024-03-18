@@ -12,7 +12,7 @@ if(isset($_POST['id_for_del'])){
 
     $group_id = $_POST['id_for_del'];
 
-    $del_group = $db->query("UPDATE groups SET deleted_at = :timedelete WHERE group_id = :group_id ",[
+    $del_group = $db->query("UPDATE group_data SET deleted_at = :timedelete WHERE group_id = :group_id ",[
         "group_id" => $group_id,
         "timedelete" => $date
     ]);

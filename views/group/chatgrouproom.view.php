@@ -1,7 +1,7 @@
 <?php
 foreach ($groups as $group) {
     $groupchat = $db->getgroupchats($userid, $group['group_id'], $db);
-    $db->openedgroup($userid, $db, $groupchat);
+   
     // check($groupchat);
 
 ?>

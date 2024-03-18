@@ -18,16 +18,22 @@ if (isset($_POST['selectedValue'])) {
     $resultReplies = $db->query($sqlReplies, ['lineOAid' => $lineOA_id])->findAll();
 
     //ตอบกลับ
-    $BarchartData = $db->query("SELECT CONCAT(MONTHNAME(created_at),' 
-    ',YEAR(created_at)) AS month_year, 
-    COUNT(*) AS message_count FROM line_reply WHERE from_ch = :lineOAid GROUP BY month_year ORDER BY created_at", [
+    $BarchartData = $db->query("SELECT CONCAT(MONTHNAME(created_at),' ',YEAR(created_at)) AS month_year, 
+    COUNT(*) AS message_count 
+    FROM line_reply 
+    WHERE from_ch = :lineOAid
+    GROUP BY CONCAT(MONTHNAME(created_at),' ',YEAR(created_at)) 
+    ORDER BY MIN(created_at)", [
         "lineOAid" => $lineOA_id
     ])->findAll();
 
     //คนที่ถามเข้ามา
-    $LinechartData = $db->query("SELECT CONCAT(MONTHNAME(created_at),' 
-    ',YEAR(created_at)) AS month_year, 
-    COUNT(*) AS message_count FROM line_chat WHERE recieve_id = :lineOAid GROUP BY month_year ORDER BY created_at ", [
+    $LinechartData = $db->query("SELECT CONCAT(MONTHNAME(created_at),' ',YEAR(created_at)) AS month_year, 
+    COUNT(*) AS message_count 
+    FROM line_chat 
+    WHERE recieve_id = :lineOAid
+    GROUP BY CONCAT(MONTHNAME(created_at),' ',YEAR(created_at)) 
+    ORDER BY MIN(created_at) ", [
         "lineOAid" => $lineOA_id
     ])->findAll();
 
@@ -47,7 +53,6 @@ if (isset($_POST['selectedValue'])) {
         "LinechartData" => $LinechartData,
         "userData" => $userData
     ]);
-
     // check($LinechartData);
 } else {
     $sqlContacts = "SELECT COUNT(*) AS totalContacts FROM line_contact";

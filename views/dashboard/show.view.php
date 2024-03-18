@@ -16,21 +16,6 @@
 
 </head>
 
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "allchat";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-
-?>
-
 <body>
   <section class=" min-vh-100">
     <?php require base_path('views/navbar/navbar.php'); ?>
@@ -43,30 +28,26 @@ if ($conn->connect_error) {
               <h5>แดชบอร์ด</h5>
               <div class="item-1">
 
-                  <select name="lineOa" id="lineOaDropdown" >
-                    <option value="NULL">เลือกบัญชีไลน์</option>
-                    <?php
-                    $sql = "SELECT * FROM line_oa";
-                    $result = $conn->query($sql);
+                <select name="lineOa" id="lineOaDropdown">
+                  <option value="0">เลือกบัญชีไลน์</option>
+                  <?php
+                  $filterlineOA = $db->query("SELECT * FROM line_oa")->findAll();
 
-                    if ($result->num_rows > 0) {
-                      while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row["id"] . "'>" . $row["lineOaDisplayName"] . "</option>";
-                      }
-                    } else {
-                      echo "<option value=''>ไม่พบข้อมูล</option>";
-                    }
-                    ?>
-                  </select>
-                  <button id="resetButton">ข้อมูลทั้งหมด</button>
-                  <script>
-                      document.getElementById('resetButton').addEventListener('click', function() {
-                          
-                          location.reload();
-                      });
-                  </script>
-                </div>
-                
+                  foreach ($filterlineOA as $lineOA) {
+                    echo "<option value='" . $lineOA["id"] . "'>" . $lineOA["lineOaDisplayName"] . "</option>";
+                  }
+
+                  ?>
+                </select>
+                <button id="resetButton">ข้อมูลทั้งหมด</button>
+                <script>
+                  document.getElementById('resetButton').addEventListener('click', function() {
+
+                    location.reload();
+                  });
+                </script>
+              </div>
+
             </div>
             <div class="container">
 
@@ -93,60 +74,61 @@ if ($conn->connect_error) {
 
             </div>
             <div class="col-3">
-                <div class="item item-5">
-                  <P class="linechart">จำนวนคำถามในแต่ละเดือน</P>
-                  <canvas id="linechart"></canvas><br>
-                </div>
-                <div class="item item-7">
-                  <P class="barchart">จำนวนตอบกลับในแต่ละเดือน</P>
-                  <canvas id="barchart"></canvas><br>
-                </div>
-                <div class="item item-6">
-                  <p class="topmost clickable">รายชื่อผู้ตอบกลับข้อความทั้งหมด</p>
-                  <div id="result" >
-                    <table id="userTable" class="scrolldown">
-                      <thead>
-                        <tr>
-                          <th>ชื่อผู้ใช้</th>
-                          <th>จำนวนตอบกลับ</th>
-                        </tr>
-                      </thead>
+              <div class="item item-5">
+                <P class="linechart">จำนวนคำถามในแต่ละเดือน</P>
+                <canvas id="linechart"></canvas><br>
+              </div>
+              <div class="item item-7">
+                <P class="barchart">จำนวนตอบกลับในแต่ละเดือน</P>
+                <canvas id="barchart"></canvas><br>
+              </div>
+              <div class="item item-6">
+                <p class="topmost clickable">รายชื่อผู้ตอบกลับข้อความทั้งหมด</p>
+                <p>คลิกชื่อเพื่อดูกราฟการตอบกลับในแต่ละเดือน</p>
+                <div id="result">
+                  <table id="userTable" class="scrolldown">
+                    <thead>
+                      <tr>
+                        <th>ชื่อผู้ใช้</th>
+                        <th>จำนวนตอบกลับ</th>
+                      </tr>
+                    </thead>
 
-                      <tbody >
-                        <?php
+                    <tbody>
+                      <?php
 
-                        $top_users = $db->query("SELECT u._id, u.name, COUNT(*) as message_count FROM line_reply r
+                      $top_users = $db->query("SELECT u._id, u.name, COUNT(*) as message_count FROM line_reply r
                                               JOIN users u ON r.sender_id = u._id
                                               GROUP BY r.sender_id
                                               ORDER BY message_count DESC")->findAll();
 
 
-                        // check($top_users);
-                        foreach ($top_users as $top_user) {
-                        ?>
-                          <tr >
-                            <td class="userlist" id="<?= $top_user["_id"] ?>"> <?= $top_user['name'] ?> </td>
-                            <td class="numuserlist"> <?= $top_user['message_count'] ?></td>
-                          </tr>
-                        <?php
-                        } ?>
-                      </tbody>
-                    </table>
-                  </div>
-
-
-
+                      // check($top_users);
+                      foreach ($top_users as $top_user) {
+                      ?>
+                        <tr>
+                          <td class="userlist" id="<?= $top_user["_id"] ?>"> <?= $top_user['name'] ?> </td>
+                          <td class="numuserlist"> <?= $top_user['message_count'] ?></td>
+                        </tr>
+                      <?php
+                      } ?>
+                    </tbody>
+                  </table>
                 </div>
+
+
+
+              </div>
+            </div>
+
+            <script src="js/dashboard.js"></script>
           </div>
-          
-          <script src="js/dashboard.js"></script>
         </div>
+
+
       </div>
 
 
-    </div>
-
-    
   </section>
 
 

@@ -16,10 +16,10 @@ if (isset($_POST['searchKeyword'])) {
     $query = "SELECT * FROM announceqa WHERE ";
 
     foreach ($array_search as $word) {
+    
         $query .= "question LIKE '%$word%' OR ";
     }
     $query = rtrim($query, " OR ");
-    $query .= " GROUP BY question";
 
     $search = $db->query($query, [
         "message_text" => '%' . $Keyword . '%'

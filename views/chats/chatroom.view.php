@@ -5,7 +5,7 @@ foreach ($fromline as $line) {
     $lastchatNotans = $db->getlastchatsNotans($chats, $line['id'], $db);
 
 
-    // check($line);
+    // check($chats);
 ?>
 
     <div class="content col-5 collapse" id="collapse<?= $line['lineOAid'] ?>" aria-labelledby="heading<?= $line['lineOAid'] ?>" data-parent="#accordionExample">

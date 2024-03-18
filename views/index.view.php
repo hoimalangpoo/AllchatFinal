@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>รวมแชท</title>
+  <title>Chathelper</title>
 
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -28,6 +28,7 @@
                 <div>
                     <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" id="imglogoin">
                 </div>
+             
                 
             </div>
         </div>

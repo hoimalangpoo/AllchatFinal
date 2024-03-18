@@ -13,12 +13,13 @@ class Database
     public function __construct($config)
     {
 
-        $dsn = "mysql:" . http_build_query($config, '', ';');
+        $dsn = "mysql:host=" . $config['host'] . ";dbname=" . $config['dbname'];
 
-        $this->conn = new PDO($dsn, "root", "", [
+        $this->conn = new PDO($dsn, $config['username'], $config['password'], [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
     }
+
     public function query($query, $params = [])
     {
 
@@ -139,29 +140,27 @@ class Database
             (SELECT line_chat.*
             FROM line_chat
             JOIN line_oa ON line_chat.recieve_id = line_oa.id 
-            JOIN groups ON line_oa.id = groups.for_line
-            JOIN group_users ON groups.group_id = group_users.group_id
-            WHERE (groups.created_by != :userid AND group_users.user_id = :userid) AND 
-            (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
-            
+            JOIN group_data ON line_oa.id = group_data.for_line
+            JOIN group_users ON group_data.group_id = group_users.group_id
+            WHERE (group_data.created_by != :userid AND group_users.user_id = :userid) AND 
+            (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId)) 
+
             UNION
-            
-            -- กรณีที่ไม่มีกลุ่มและเป็นคนสร้าง
-            SELECT line_chat.*
+
+            (SELECT line_chat.*
             FROM line_chat
             JOIN line_oa ON line_chat.recieve_id = line_oa.id
-            WHERE line_oa.by_user = :userid AND line_oa.id NOT IN (SELECT for_line FROM groups)
-            AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) 
-            
-            -- กรณีที่มีกลุ่มและเป็นคนสร้าง
+            WHERE line_oa.by_user = :userid AND line_oa.id NOT IN (SELECT for_line FROM group_data)
+            AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId))
+
             UNION
-            
-            SELECT line_chat.*
+
+            (SELECT line_chat.*
             FROM line_chat
             JOIN line_oa ON line_chat.recieve_id = line_oa.id
-            JOIN groups ON line_oa.id = groups.for_line
-            WHERE groups.created_by = :userid AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId) )
-            ORDER BY created_at", [
+            JOIN group_data ON line_oa.id = group_data.for_line
+            WHERE group_data.created_by = :userid AND (line_chat.sender_id = :lineuser AND line_chat.recieve_id = :lineId))
+            ", [
                 "userid" => $userid,
                 "lineId" => $lineId,
                 "lineuser" => $lineuser

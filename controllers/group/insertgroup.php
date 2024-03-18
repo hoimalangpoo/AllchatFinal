@@ -14,7 +14,7 @@ if (isset($_POST['selected_values']) && isset($_POST['groupname']) && isset($_PO
     $selectedfriend = $_POST['selected_values'];
 
     // check($userid);
-    $addgroup = $db->query("INSERT INTO groups (group_name, created_by, for_line) VALUES (:groupname, :userid, :lineoaID)", [
+    $addgroup = $db->query("INSERT INTO group_data (group_name, created_by, for_line) VALUES (:groupname, :userid, :lineoaID)", [
         "groupname" => $groupname,
         "userid" => $userid,
         "lineoaID" => $lineoaID

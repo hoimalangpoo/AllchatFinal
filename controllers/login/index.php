@@ -2,3 +2,4 @@
 
     
 view("register/login.view.php");
+

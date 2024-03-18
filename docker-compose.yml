@@ -1,0 +1,39 @@
+# version: "3.8"
+# services:
+#   php-apache-environment:
+#     container_name: php-apache
+#     image: yiisoftware/yii2-php:7.4-apache
+#     volumes:
+#       - .:/var/www/html/
+#       - ./apache2:/etc/apache2
+#       # - .htacess:/etc/apache2/.htacess
+#     ports:
+#       - "8080:80"
+#     depends_on:
+#       - mysql-db
+#   mysql-db:
+#     image: mysql:8.0
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password
+#       MYSQL_DATABASE: allchat
+#       MYSQL_USER: db_user
+#       MYSQL_PASSWORD: password
+#     ports:
+#       - "3306:3306"
+#   phpmyadmin:
+#     image: phpmyadmin/phpmyadmin
+#     links:
+#       - mysql-db
+#     ports:
+#       - "8081:80"
+#     environment:
+#       PMA_HOST: mysql-db
+#       MYSQL_ROOT_PASSWORD: password
+  # ngrok:
+  #   container_name: ngrok
+  #   image: ngrok/ngrok:latest
+  #   environment:
+  #     - NGROK_AUTHTOKEN=2EcPyQcJIGIJZqvJ2XRA4n0u1d6_7FZixeut7qj2Zjiy988DU
+  #   ports:
+  #     - "4040:4040" 
+  #   command: ngrok http --region jp 8000

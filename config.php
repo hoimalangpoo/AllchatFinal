@@ -1,10 +1,9 @@
 <?php
-
 return [
-
     "database" => [
-        "host" => "localhost",
-        "dbname" => "allchat"
+        "host" => "mysql-db",
+        "dbname" => "allchat",  
+        "username" => "db_user",
+        "password" => "password"
     ]
-
 ];
