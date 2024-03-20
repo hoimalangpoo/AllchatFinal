@@ -9,33 +9,40 @@ $db = App::resolve(Database::class);
 /////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////
 function saveContact($user_id, $display_name, $lineOAid, $db)
 {
-    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_user AS recieve_id 
-    FROM line_contact JOIN line_oa 
-    ON line_contact.lineOAid = line_oa.id
-    WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid", [
-        "user_id" => $user_id,
-        "lineOAid" => $lineOAid,
-    ])->find(); 
-    if ($check_id) {
-        exit;
-    } else {
-        $OAid = $db->query("SELECT id FROM line_oa WHERE lineOAid = :lineOAid", [
-            "lineOAid" => $lineOAid,
-        ])->find();
-
-        $id = $OAid['id'];
-
-        $db->query("INSERT INTO line_contact(user_id, display_name, lineOAid)
-        VALUES(:user_id, :display_name, :id)", [
+    try {
+        $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.by_user AS recieve_id 
+        FROM line_contact JOIN line_oa 
+        ON line_contact.lineOAid = line_oa.id
+        WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid", [
             "user_id" => $user_id,
-            "display_name" => $display_name,
-            "id" => $id
+            "lineOAid" => $lineOAid,
+        ])->find(); 
+        
+        if ($check_id) {
+            return;
+        } else {
+            $OAid = $db->query("SELECT id FROM line_oa WHERE lineOAid = :lineOAid", [
+                "lineOAid" => $lineOAid,
+            ])->find();
 
-        ]);
+            $id = $OAid['id'];
 
-        exit;
+            $db->query("INSERT INTO line_contact(user_id, display_name, lineOAid)
+            VALUES(:user_id, :display_name, :id)", [
+                "user_id" => $user_id,
+                "display_name" => $display_name,
+                "id" => $id
+
+            ]);
+
+            return; 
+        }
+    } catch (Exception $e) {
+  
+        echo 'Error: ' . $e->getMessage();
     }
 }
+
 function checkmsg($message_text, $db)
 {
     $segment = new Segment();
@@ -49,7 +56,9 @@ function checkmsg($message_text, $db)
     $query = rtrim($query, " OR ");
     $query .= " GROUP BY question ";
 
-    $message = $db->query($query)->findAll();
+    $message = $db->query($query, [
+        "message_text" => '%' . $message_text . '%'
+    ])->findAll();
 
     if (!empty($message)) {
         foreach ($message as $sentence) {
@@ -72,44 +81,53 @@ function checkmsg($message_text, $db)
 
 function saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db)
 {
-    //////////////////////////////////////////Line_USER/////////////////////////
-    $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.id AS recieve_id
-    FROM line_contact JOIN line_oa 
-    ON line_contact.lineOAid = line_oa.id
-    WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid ", [
-        "user_id" => $user_id,
-        "lineOAid" => $lineOAid,
-    ])->find();
-    if ($check_id) {
-        $sender_id = $check_id['sender_id'];
-        $recieve_id = $check_id['recieve_id'];
-        $match_qa = checkmsg($message_text, $db);
-        
-        if ($match_qa > 3) {
-            $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token, match_qa)
-            VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken, :match_qa)", [
-                "message_text" => $message_text,
-                "message_type" => $message_type,
-                "sender_id" => $sender_id,
-                "recieve_id" => $recieve_id,
-                "quoteToken" => $quoteToken,
-                "match_qa" => $match_qa
+    try {
+        //////////////////////////////////////////Line_USER/////////////////////////
+        $check_id = $db->query("SELECT line_contact.id AS sender_id, line_oa.id AS recieve_id
+        FROM line_contact JOIN line_oa 
+        ON line_contact.lineOAid = line_oa.id
+        WHERE line_contact.user_id = :user_id AND line_oa.lineOAid = :lineOAid ", [
+            "user_id" => $user_id,
+            "lineOAid" => $lineOAid,
+        ])->find();
 
-            ]);
+        if ($check_id) {
+            $sender_id = $check_id['sender_id'];
+            $recieve_id = $check_id['recieve_id'];
+            $match_qa = checkmsg($message_text, $db);
+            
+            if ($match_qa > 3) {
+                
+                $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token, match_qa)
+                VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken, :match_qa)", [
+                    "message_text" => $message_text,
+                    "message_type" => $message_type,
+                    "sender_id" => $sender_id,
+                    "recieve_id" => $recieve_id,
+                    "quoteToken" => $quoteToken,
+                    "match_qa" => $match_qa
+    
+                ]);
+            } else {
+                $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token)
+                VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken)", [
+                    "message_text" => $message_text,
+                    "message_type" => $message_type,
+                    "sender_id" => $sender_id,
+                    "recieve_id" => $recieve_id,
+                    "quoteToken" => $quoteToken,
+    
+                ]);
+            }
         } else {
-            $db->query("INSERT INTO line_chat(messages, message_type, sender_id, recieve_id, reply_token)
-            VALUES(:message_text, :message_type, :sender_id, :recieve_id, :quoteToken)", [
-                "message_text" => $message_text,
-                "message_type" => $message_type,
-                "sender_id" => $sender_id,
-                "recieve_id" => $recieve_id,
-                "quoteToken" => $quoteToken,
-
-            ]);
+            throw new Exception("Error: Failed to find sender or receiver ID.");
         }
-    } else {
-
-        exit();
+    } catch (Exception $e) {
+        // Send error message back to client-side for logging
+        $error_message = $e->getMessage();
+        http_response_code(500); // Set HTTP response code to indicate internal server error
+        echo json_encode(array("error" => $error_message)); // Send error message as JSON response
+        exit(); // Terminate script execution
     }
 }
 

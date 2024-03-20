@@ -24,6 +24,7 @@ if (isset($_POST['searchKeyword'])) {
     $search = $db->query($query, [
         "message_text" => '%' . $Keyword . '%'
     ])->findAll();
+    
 // check($array_search);
 
     // check($search);

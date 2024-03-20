@@ -118,7 +118,7 @@
 <style>
   
   body {
-    background-image: url(ภาพ/background.jpg);
+    background-image: url(image_folder/background.jpg);
   }
 
   .social-login-element {

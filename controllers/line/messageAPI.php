@@ -6,10 +6,6 @@ include base_path("controllers/line/messageAPI.Func.php");
 // $access_token = $_POST['token'];    
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // if (isset($_POST['token'])) {
-    //     $access_token = $_POST['token'];
-    //     var_dump($access_token);
-    // }
     if (isset($_POST['message']) && isset($_POST['lineOAid']) && isset($_POST['token'])) {
         $messages = $_POST['message'];
         $lineOAid = $_POST['lineOAid'];
@@ -42,11 +38,11 @@ $events = json_decode($content, true);
 
 if (isset($events['events']) && is_array($events['events'])) {
 
-    $id_for_lineoa = $events['destination']; 
+    $id_for_lineoa = $events['destination'];
     $token_line = $db->query("SELECT access_token FROM line_oa WHERE lineOAid = :lineOAid", [
         "lineOAid" => $id_for_lineoa
     ])->find();
-    
+
     $access_token = $token_line['access_token'];
     foreach ($events['events'] as $event) {
         if ($event['type'] == 'follow') {
@@ -70,47 +66,29 @@ if (isset($events['events']) && is_array($events['events'])) {
                 $display_name = $profile_data['displayName'];
             }
 
-            $chID = curl_init('https://api.line.me/v2/bot/info');
-            curl_setopt($chID, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($chID, CURLOPT_HTTPHEADER, [
-                'Authorization: Bearer ' . $access_token
-            ]);
-
-            $response = curl_exec($chID);
-            curl_close($chID);
-            if ($response) {
-                $data = json_decode($response, true);
-
-                $lineOAid = $data['userId'];
-
-                saveContact($user_id, $display_name, $lineOAid, $db);
-            }
+            $lineOAid = $events['destination'];
+            file_put_contents("user_id" . ".text", $user_id);
+            file_put_contents("display_name" . ".text", $display_name);
+            file_put_contents("lineOAid" . ".text", $lineOAid);
+            saveContact($user_id, $display_name, $lineOAid, $db);
         } else if ($event['type'] == 'message') {
-           
+
             $user_id = $event['source']['userId'];
             $message_text = $event['message']['text'];
             $message_type = $event['message']['type'];
             $quoteToken = $event['message']['quoteToken'];
 
-            $chID = curl_init('https://api.line.me/v2/bot/info');
-            curl_setopt($chID, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($chID, CURLOPT_HTTPHEADER, [
-                'Authorization: Bearer ' . $access_token
-            ]);
+            $lineOAid = $events['destination'];
 
-            $response = curl_exec($chID);
-            curl_close($chID);
-            if ($response) {
-                $data = json_decode($response, true);
+            if (isQuestion($message_text)) {
 
-                $lineOAid = $data['userId'];
-
-                if (isQuestion($message_text)) {
-                    saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db);
-                }
+                // file_put_contents("user_id" . ".text", $user_id);
+                // file_put_contents("message_type" . ".text", $message_type);
+                // file_put_contents("message_text" . ".text", $message_text);
+                // file_put_contents("lineOAid" . ".text", $lineOAid);
+                // file_put_contents("quoteToken" . ".text", $quoteToken);
+                saveChat($user_id, $message_type, $message_text, $lineOAid, $quoteToken, $db);
             }
         }
     }
-
-
 }

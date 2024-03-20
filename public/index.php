@@ -1,6 +1,9 @@
 <?php
-const BASE_PATH = __DIR__ . '/../';
 
+use Core\Router;
+
+const BASE_PATH = __DIR__ . '/../';
+require BASE_PATH . 'Core/router.php';
 require BASE_PATH . 'vendor/autoload.php';
 
 session_start();
@@ -8,10 +11,11 @@ session_start();
 
 require BASE_PATH . 'Core/functions.php';
 
+header('Content-Type: text/html; charset=utf-8'); 
 
 require base_path('bootstrap.php');
 
-$router = new \Core\Router();
+$router = new Router(); 
 
 $routes = require base_path("routes.php");
 

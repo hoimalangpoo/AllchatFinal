@@ -11,7 +11,7 @@ if (isset($_POST['register'])){
     $telephone = $_POST['tel'];
     $agency = $_POST['agency'];
  
-    $default_image_path = "ภาพ/default_user.jpg";
+    $default_image_path = "image_folder/default_user.jpg";
     $default_image_data = file_get_contents($default_image_path);
   
     if($password != $confirm_password){

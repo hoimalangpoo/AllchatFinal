@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row ">
                 <div class="col-lg-5">
-                <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" id="" >
+                <img src="/image_folder/logocolor.jpg" alt="img-fluid" alt="" id="" >
                 </div>
                 <div class="col-lg-7 my-2">
                     <h1 class="font-weight-bold py-3 pl-5">เริ่มใช้งาน รวมแชท</h1>
@@ -53,11 +53,11 @@
                         <div class="form-row">
                             <div class="col-lg-7 pl-5">
                                 <select name="agency" class="form-select" aria-label="Default select example">
-                                    <option disabled selected>กลุ่มงาน</option>
-                                    <option value="งานบริหารและสารสนเทศ">งานบริหารและสารสนเทศ</option>
-                                    <option value="งานรับเข้าศึกษาและการตลาด">งานรับเข้าศึกษาและการตลาด</option>
-                                    <option value="งานบริการและทะเบียนการศึกษา">งานบริการและทะเบียนการศึกษา</option>
-                                    <option value="งานหลักสูตรและสหกิจศึกษา">งานหลักสูตรและสหกิจศึกษา</option>
+                                    <option value="0" selected>กลุ่มงาน</option>
+                                    <option value="1">งานบริหารและสารสนเทศ</option>
+                                    <option value="2">งานรับเข้าศึกษาและการตลาด</option>
+                                    <option value="3">งานบริการและทะเบียนการศึกษา</option>
+                                    <option value="4">งานหลักสูตรและสหกิจศึกษา</option>
                                 </select>
                             </div>
 
@@ -89,7 +89,7 @@
     }
 
     body {
-        background-image: url(ภาพ/background.jpg);
+        background-image: url(image_folder/background.jpg);
     }
 
     .row {

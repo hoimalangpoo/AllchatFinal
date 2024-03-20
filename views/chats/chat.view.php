@@ -15,6 +15,7 @@
 </head>
 
 <body>
+
   <section class=" min-vh-100">
     <?php require base_path('views/navbar/navbar.php'); ?>
     <div class="container-fluid">
@@ -67,7 +68,7 @@
 <script src="js/notificationchat.js"></script>
 <style>
   body {
-    background-image: url(ภาพ/background.jpg);
+    background-image: url(image_folder/background.jpg);
   }
 
   .btn:hover {

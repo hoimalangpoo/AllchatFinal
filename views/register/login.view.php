@@ -21,7 +21,7 @@
         <div class="container" style="margin-top: 5rem;">
             <div class="row ">
                 <div class="col-lg-5">
-                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="">
+                    <img src="/image_folder/logocolor.jpg" alt="img-fluid" alt="">
                 </div>
                 <div class="col-lg-7 my-4">
                     <h1 class="font-weight-bold py-4 pl-5">เข้าสู่ระบบ รวมแชท</h1>
@@ -88,7 +88,7 @@
     }
 
     body {
-        background-image: url(../ภาพ/background.jpg);
+        background-image: url(../image_folder/background.jpg);
     }
 
     .row {

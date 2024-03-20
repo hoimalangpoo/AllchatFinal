@@ -26,7 +26,7 @@
           <?php require base_path('views/navbar/slidebar.php'); ?>
           <div class="col ">
                 <div>
-                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" id="imglogoin">
+                    <img src="/image_folder/logocolor.jpg" alt="img-fluid" alt="" id="imglogoin">
                 </div>
              
                 
@@ -43,7 +43,7 @@
       include('navbar/navbar.php'); ?>
       <div class="col ">
                 <div>
-                    <img src="ภาพ/logocolor.JPG" alt="img-fluid" alt="" id="imglogoout">
+                    <img src="/image_folder/logocolor.jpg" alt="img-fluid" alt="" id="imglogoout">
                 </div>
                 
             </div>
@@ -66,7 +66,7 @@
   }
 
   body {
-    background-image: url(ภาพ/background.jpg);
+    background-image: url(image_folder/background.jpg);
   }
 
   .social-login-element {

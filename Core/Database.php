@@ -13,7 +13,7 @@ class Database
     public function __construct($config)
     {
 
-        $dsn = "mysql:host=" . $config['host'] . ";dbname=" . $config['dbname'];
+        $dsn = "mysql:host=" . $config['host'] . ";dbname=" . $config['dbname'] . ";charset=utf8";
 
         $this->conn = new PDO($dsn, $config['username'], $config['password'], [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
